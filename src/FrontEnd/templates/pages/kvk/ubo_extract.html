@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}UBO Extract - KvK{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.kvk') }}">KvK</a></li>
+                    <li class="breadcrumb-item active">UBO Extract</li>
+                </ol>
+            </nav>
+            <h1 class="display-5 fw-bold">UBO Extract</h1>
+            <p class="lead text-muted">View UBO extract information</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">UBO Extract</h5>
+                    <p class="card-text">This page will contain functionality for viewing UBO extract information.</p>
+                    <p class="text-muted">Content coming soon...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

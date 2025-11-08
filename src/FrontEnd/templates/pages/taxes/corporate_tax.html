@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Corporate Tax (VPB) - Taxes{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.taxes') }}">Taxes</a></li>
+                    <li class="breadcrumb-item active">Corporate Tax (VPB)</li>
+                </ol>
+            </nav>
+            <h1 class="display-5 fw-bold">Corporate Tax (VPB)</h1>
+            <p class="lead text-muted">Corporate tax filing</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Corporate Tax (VPB)</h5>
+                    <p class="card-text">This page will contain functionality for corporate tax filing.</p>
+                    <p class="text-muted">Content coming soon...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

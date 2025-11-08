@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy / GDPR - Settings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.settings') }}">Settings</a></li>
+                    <li class="breadcrumb-item active">Privacy / GDPR</li>
+                </ol>
+            </nav>
+            <h1 class="display-5 fw-bold">Privacy / GDPR</h1>
+            <p class="lead text-muted">Privacy and GDPR settings</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Privacy / GDPR</h5>
+                    <p class="card-text">This page will contain privacy and GDPR settings.</p>
+                    <p class="text-muted">Content coming soon...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

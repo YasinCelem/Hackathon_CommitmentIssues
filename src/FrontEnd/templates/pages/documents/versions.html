@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Versions - Documents{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.documents') }}">Documents</a></li>
+                    <li class="breadcrumb-item active">Versions</li>
+                </ol>
+            </nav>
+            <h1 class="display-5 fw-bold">Versions</h1>
+            <p class="lead text-muted">Document version history</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Versions</h5>
+                    <p class="card-text">This page will contain functionality for viewing document version history.</p>
+                    <p class="text-muted">Content coming soon...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

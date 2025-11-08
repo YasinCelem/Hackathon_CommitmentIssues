@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Personal Settings - Settings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.settings') }}">Settings</a></li>
+                    <li class="breadcrumb-item active">Personal Settings</li>
+                </ol>
+            </nav>
+            <h1 class="display-5 fw-bold">Personal Settings</h1>
+            <p class="lead text-muted">Manage your personal preferences and profile</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Profile Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" placeholder="Enter your full name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" placeholder="Enter your email">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" placeholder="Enter your phone number">
+                    </div>
+                    <button type="button" class="btn btn-primary">Save Profile</button>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Preferences</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Language</label>
+                        <select class="form-select">
+                            <option selected>English</option>
+                            <option>Dutch</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Timezone</label>
+                        <select class="form-select">
+                            <option selected>Europe/Amsterdam (CET)</option>
+                            <option>UTC</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                            <label class="form-check-label" for="emailNotifications">Email notifications</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="smsNotifications">
+                            <label class="form-check-label" for="smsNotifications">SMS notifications</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="darkMode">
+                            <label class="form-check-label" for="darkMode">Dark mode</label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary">Save Preferences</button>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Security</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Current Password</label>
+                        <input type="password" class="form-control" placeholder="Enter current password">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">New Password</label>
+                        <input type="password" class="form-control" placeholder="Enter new password">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" placeholder="Confirm new password">
+                    </div>
+                    <button type="button" class="btn btn-primary">Change Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
