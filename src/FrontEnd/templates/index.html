@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Commitment Issues{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Welcome</h1>
+        <p class="lead text-muted">Manage your commitments with ease</p>
+    </div>
+
+    <div class="row g-4 mb-5">
+        {% for action in frequent %}
+        <div class="col-md-4">
+            <a href="{{ url_for(action.endpoint) }}" class="text-decoration-none">
+                <div class="card h-100 action-card">
+                    <div class="card-body text-center">
+                        <i class="bi bi-{{ action.icon }} display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">{{ action.title }}</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-primary">
+                <div class="card-body text-center py-4">
+                    <i class="bi bi-cloud-upload display-4 text-primary mb-3"></i>
+                    <h4 class="card-title mb-3">Upload Documents</h4>
+                    <p class="text-muted mb-3">Upload and manage your documents</p>
+                    <button class="btn btn-primary">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h3 class="mb-3">Approvals Due</h3>
+            <div class="list-group">
+                {% for approval in approvals[:3] %}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">{{ approval.title }}</h6>
+                        <p class="mb-0 text-muted small">{{ approval.description }}</p>
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-sm btn-outline-primary me-2">Open</a>
+                        <button class="btn btn-sm btn-success">OK</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

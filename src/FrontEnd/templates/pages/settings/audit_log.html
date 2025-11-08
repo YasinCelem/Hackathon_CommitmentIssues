@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Audit Log - Settings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.settings') }}">Settings</a></li>
+                    <li class="breadcrumb-item active">Audit Log</li>
+                </ol>
+            </nav>
+            <h1 class="display-5 fw-bold">Audit Log</h1>
+            <p class="lead text-muted">View audit log</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Audit Log</h5>
+                    <p class="card-text">This page will contain functionality for viewing the audit log.</p>
+                    <p class="text-muted">Content coming soon...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
