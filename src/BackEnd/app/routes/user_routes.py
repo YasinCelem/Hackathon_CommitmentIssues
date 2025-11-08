@@ -30,6 +30,7 @@ def create_user():
             properties:
               username: { type: string }
               email: { type: string }
+              
             required: [username, email]
             example: { username: "johndoe", email: "john@example.com" }
     responses:
