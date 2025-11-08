@@ -27,6 +27,13 @@
             "icon": "file-earmark-text",
             "count": 1,
             "last_visited": "2025-11-08T16:53:24.556422"
+        },
+        {
+            "endpoint": "frontend.settings",
+            "title": "Settings",
+            "icon": "gear",
+            "count": 2,
+            "last_visited": "2025-11-08T19:24:19.355057"
         }
     ]
 }
