@@ -1,0 +1,196 @@
+RESIDENTIAL RENTAL AGREEMENT
+
+Date: 8 November 2025
+Agreement No.: RL-2025-1047
+
+1) Parties
+
+Landlord: Sofia van Dijk, ID: NL-987654321
+Address for notices: Keizersgracht 221, 1016 DV Amsterdam, Netherlands
+Email: landlord@vandijk-realestate.example
+
+Tenant: Marcus Lee, ID: NL-123456789
+Current address: Spaarndammerstraat 14, 1013 SR Amsterdam, Netherlands
+Email: marcus.lee@examplemail.com
+
+2) Premises
+
+Property: Apartment 12B, Lindenstraat 74, 1015 AB Amsterdam, Netherlands
+Type: 1-bedroom residential apartment, approx. 56 m², 3rd floor
+Included fixtures/appliances: Refrigerator, oven, induction hob, dishwasher, washer, dryer, light fixtures, window coverings.
+Common areas: Entry hall, bike storage, courtyard (shared).
+
+3) Term
+
+Fixed term: 12 months, Start: 1 December 2025, End: 30 November 2026.
+
+Holding over: Month-to-month thereafter unless either party gives notice per §14.
+
+Early delivery of keys: Allowed 29–30 November 2025 for move-in; rent pro-rated if occupied.
+
+4) Rent & Payments
+
+Monthly rent: €1,650.00
+
+Due date: 1st of each month (in advance).
+
+Payment method: Bank transfer to IBAN NL91ABNA0417164300 (Acct: S. van Dijk).
+
+Late fee: €30 if received after the 5th; additional default interest at 3% per month on overdue sums.
+
+Returned payment fee: €25 per failed transfer.
+
+5) Security Deposit
+
+Amount: €3,300.00 (two months’ rent).
+
+Held in a separate account and refundable within 14 days after move-out, less lawful deductions for unpaid rent, excessive cleaning, repair of tenant-caused damage (beyond fair wear and tear), or replacement of missing items per the Move-Out Checklist (Annex A).
+
+Deposit may not be used as last month’s rent.
+
+6) Utilities & Services
+
+Tenant pays: Electricity, gas, water, internet/TV, and any usage-based service charges.
+
+Landlord pays: Building insurance (structure), property tax on the building, HOA/service charges not usage-based.
+
+Meters: Separate metering for gas/electric; water is sub-metered. Tenant must set up supplier accounts by start date.
+
+7) Use & Occupancy
+
+Residential use only. Maximum occupants: 2 adults.
+
+No business or short-term rentals (e.g., Airbnb) without written consent.
+
+Tenant must comply with all house rules (Annex B) and building/HOA regulations.
+
+8) Condition, Repairs & Maintenance
+
+Premises delivered clean and in good working order (see Check-In Report, Annex A).
+
+Tenant responsibilities:
+
+Keep premises clean; promptly report defects.
+
+Minor maintenance up to €100 per incident (e.g., light bulbs, fuses, clogged drains not caused by building issues).
+
+Reasonable care of appliances; replace filters as applicable.
+
+Landlord responsibilities:
+
+Structural, roof, exterior, major systems (heating, electrical, plumbing) and appliance failures not caused by misuse.
+
+Alterations require written approval; any approved work must be performed by qualified contractors.
+
+9) Access
+
+Landlord may enter with 24 hours’ notice for inspections, repairs, or to show the unit in last 2 months of the term.
+
+In emergencies, entry without prior notice is permitted.
+
+10) Pets & Smoking
+
+Pets: One cat or small dog allowed with prior written consent and pet deposit €300; tenant liable for pet damage/odor mitigation.
+
+Smoking: Strictly prohibited inside the apartment and stairwell.
+
+11) Insurance
+
+Tenant is strongly encouraged to maintain contents/liability insurance of at least €1,000,000 personal liability and contents coverage suitable for belongings.
+
+Landlord insures the building structure; tenant’s belongings are not covered by landlord’s policy.
+
+12) Assignment & Subletting
+
+No assignment or subletting without Landlord’s prior written consent. Unauthorised subletting is a material breach.
+
+13) Defaults & Remedies
+
+Monetary default: Failure to pay rent within 7 days of due date.
+
+Non-monetary default: Breach of this Agreement not cured within 7 days of written notice (or immediately for illegal activity).
+
+Remedies include termination according to law, recovery of possession, damages, and reasonable collection/legal costs.
+
+14) Termination & Move-Out
+
+Notice to end after fixed term: Either party must give at least 1 full calendar month’s written notice before the end date.
+
+Move-out condition: Professional standard cleaning; all keys/fobs returned; remove personal items; repair tenant-caused damage; complete Move-Out Checklist (Annex A).
+
+Abandoned property will be handled per applicable law.
+
+15) Data Protection
+
+Parties may process personal data strictly for contract performance and legal compliance. Basic contact and ID details may be shared with building management, utility providers, or service contractors as needed.
+
+16) Governing Law & Disputes
+
+Governed by the laws of the Netherlands.
+
+Parties will first attempt to resolve disputes amicably; failing that, exclusive jurisdiction lies with the competent court in Amsterdam.
+
+17) Notices
+
+Notices must be in writing and delivered by hand, courier, or email to the addresses above. Email is effective upon confirmed delivery/read receipt.
+
+18) Entire Agreement & Miscellaneous
+
+This Agreement (with annexes) is the entire understanding; amendments must be in writing and signed.
+
+If any provision is invalid, the remainder remains enforceable.
+
+Headings are for convenience only.
+
+Signatures
+
+Landlord
+Name: _________ (Sofia van Dijk)
+Signature: _______
+Date: ________
+
+Tenant
+Name: _________ (Marcus Lee)
+Signature: _______
+Date: ________
+
+Annex A – Check-In / Check-Out Report (Sample)
+
+Date of check-in: 30 November 2025
+Meter readings: Gas 004512 m³; Electric 012345 kWh; Water 000278 m³
+Keys/fobs provided: 2 door keys, 1 mailbox key, 1 bike-room fob
+Room-by-room condition (check/notes):
+
+Living room: Walls clean (✔) | Floors good (✔) | Windows intact (✔)
+
+Bedroom: Wardrobe doors aligned (✔) | Mattress not included (N/A)
+
+Kitchen: Appliances working (✔) | Countertop small scratch near sink (note)
+
+Bathroom: Ventilation fan working (✔) | No leaks (✔)
+Inventory count: 6 ceiling lights, 4 curtains, 1 refrigerator, 1 oven, 1 hob, 1 dishwasher, 1 washer, 1 dryer.
+Photos: Stored at link/reference: Move-in photos folder (tenant & landlord).
+Signatures (acknowledging condition): ______ (LL) / ______ (T)
+
+Annex B – House Rules (Sample)
+
+Quiet hours: 22:00–07:00.
+
+No items stored in common hallways; bikes in bike room only.
+
+Rubbish disposal per city schedule; glass/paper separated.
+
+No smoking/vaping in building.
+
+Notify neighbors and landlord at least 48 hours before large deliveries or works.
+
+Satellite dishes, external signage, or window decals require written consent.
+
+Annex C – Banking & Contact Sheet
+
+Rent IBAN: NL91ABNA0417164300 (Name: S. van Dijk)
+
+Maintenance requests: maintenance@vandijk-realestate.example
+ | +31 20 123 4567
+
+Emergency (water leak, gas smell): Call 112, then notify landlord.
