@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Commitment Issues{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-5 fw-bold">{{ title }}</h1>
+            <p class="lead text-muted">AI-powered assistance and insights</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for item in items %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 action-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="card-text text-muted">{{ item.description }}</p>
+                    <div class="d-flex gap-2">
+                        {% if item.endpoint %}
+                            <a href="{{ url_for(item.endpoint) }}" class="btn btn-sm btn-outline-primary">Open</a>
+                        {% else %}
+                            <a href="#" class="btn btn-sm btn-outline-primary">Open</a>
+                        {% endif %}
+                        {% if item.info_url %}
+                            <a href="{{ item.info_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-info">Info</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

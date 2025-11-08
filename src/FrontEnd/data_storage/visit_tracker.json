@@ -1,0 +1,32 @@
+{
+    "visits": [
+        {
+            "endpoint": "frontend.assistant_chat",
+            "title": "Chat",
+            "icon": "robot",
+            "count": 1,
+            "last_visited": "2025-11-08T16:52:04.338728"
+        },
+        {
+            "endpoint": "frontend.bank_connections",
+            "title": "Bank Connections",
+            "icon": "cash-coin",
+            "count": 1,
+            "last_visited": "2025-11-08T16:52:10.986328"
+        },
+        {
+            "endpoint": "frontend.assistant_recommendations",
+            "title": "Recommendations",
+            "icon": "robot",
+            "count": 1,
+            "last_visited": "2025-11-08T16:53:19.544689"
+        },
+        {
+            "endpoint": "frontend.contracts_drafts",
+            "title": "Drafts",
+            "icon": "file-earmark-text",
+            "count": 1,
+            "last_visited": "2025-11-08T16:53:24.556422"
+        }
+    ]
+}

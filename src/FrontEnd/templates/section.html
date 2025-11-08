@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} Overview - Commitment Issues{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-5 fw-bold">{{ title }} Overview</h1>
+            <p class="lead text-muted">Manage and monitor all {{ title|lower }} related activities</p>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card border-primary clickable-card" style="cursor: pointer;" onclick="switchTab('all-tab')">
+                <div class="card-body text-center">
+                    <h3 class="text-primary">{{ items|length }}</h3>
+                    <p class="text-muted mb-0">Total Items</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            {% set need_attention_count = items|selectattr("status", "equalto", "need_attention")|list|length %}
+            <div class="card {% if need_attention_count == 0 %}border-success{% else %}border-danger{% endif %} clickable-card" style="cursor: pointer;" onclick="switchTab('need-attention-tab')">
+                <div class="card-body text-center">
+                    <h3 class="{% if need_attention_count == 0 %}text-success{% else %}text-danger{% endif %}">{{ need_attention_count }}</h3>
+                    <p class="text-muted mb-0">Need Attention</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            {% set pending_count = items|selectattr("status", "equalto", "pending")|list|length %}
+            <div class="card border-warning clickable-card" style="cursor: pointer;" onclick="switchTab('pending-tab')">
+                <div class="card-body text-center">
+                    <h3 class="text-warning">{{ pending_count }}</h3>
+                    <p class="text-muted mb-0">Pending</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            {% set completed_count = items|selectattr("status", "equalto", "completed")|list|length %}
+            <div class="card border-success clickable-card" style="cursor: pointer;" onclick="switchTab('completed-tab')">
+                <div class="card-body text-center">
+                    <h3 class="text-success">{{ completed_count }}</h3>
+                    <p class="text-muted mb-0">Completed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4" id="statusTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="need-attention-tab" data-bs-toggle="tab" data-bs-target="#need-attention" type="button" role="tab" aria-controls="need-attention" aria-selected="true">Need Attention</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="false">Pending</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">Completed</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="false">Available Actions</button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="statusTabsContent">
+        <div class="tab-pane fade show active" id="need-attention" role="tabpanel" aria-labelledby="need-attention-tab">
+            <div class="row g-4">
+                {% for item in items %}
+                    {% if item.status == "need_attention" %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 action-card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.title }}</h5>
+                                <p class="card-text text-muted">{{ item.description }}</p>
+                                {% if item.endpoint %}
+                                    <a href="{{ url_for(item.endpoint) }}" class="btn btn-sm btn-outline-primary">View</a>
+                                {% else %}
+                                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+            <div class="row g-4">
+                {% for item in items %}
+                    {% if item.status == "pending" %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 action-card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.title }}</h5>
+                                <p class="card-text text-muted">{{ item.description }}</p>
+                                {% if item.endpoint %}
+                                    <a href="{{ url_for(item.endpoint) }}" class="btn btn-sm btn-outline-primary">View</a>
+                                {% else %}
+                                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+            <div class="row g-4">
+                {% for item in items %}
+                    {% if item.status == "completed" %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 action-card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.title }}</h5>
+                                <p class="card-text text-muted">{{ item.description }}</p>
+                                {% if item.endpoint %}
+                                    <a href="{{ url_for(item.endpoint) }}" class="btn btn-sm btn-outline-primary">View</a>
+                                {% else %}
+                                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <div class="row g-4">
+                {% for item in items %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 action-card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.title }}</h5>
+                            <p class="card-text text-muted">{{ item.description }}</p>
+                            <div class="d-flex gap-2">
+                                {% if item.endpoint %}
+                                    <a href="{{ url_for(item.endpoint) }}" class="btn btn-sm btn-outline-primary">Open</a>
+                                {% else %}
+                                    <a href="#" class="btn btn-sm btn-outline-primary">Open</a>
+                                {% endif %}
+                                {% if item.info_url %}
+                                    <a href="{{ item.info_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-info">Info</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchTab(tabId) {
+    var tabElement = document.getElementById(tabId);
+    if (tabElement) {
+        var tab = new bootstrap.Tab(tabElement);
+        tab.show();
+    }
+}
+</script>
+{% endblock %}
+
