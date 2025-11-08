@@ -1,55 +1,51 @@
-from flask import Flask, jsonify, redirect
+from flask import Flask, jsonify, request, redirect
 from flasgger import Swagger
 from pymongo import MongoClient
 from bson import ObjectId
 import os
+from datetime import datetime
 
-# ----------------------------
-# Flask setup
-# ----------------------------
+# --- App setup ---
 app = Flask(__name__)
-Swagger(app)  # Swagger UI available at /apidocs
+Swagger(app)  # Swagger UI at /apidocs
 
-# ----------------------------
-# MongoDB setup
-# ----------------------------
+# --- MongoDB connection ---
 MONGO_URI = os.getenv(
     "MONGO_URI",
     "mongodb+srv://testdb:test12345@commitment-issues-clust.2uplkb6.mongodb.net/?retryWrites=true&w=majority",
 )
+DB_NAME = "financial_commitments"
+COLL_NAME = "data"
 
-# Connect to MongoDB
 client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=8000)
-db = client["financial_commitments"]  # Database
-col = db["data"]                      # Collection
+db = client[DB_NAME]
+col = db[COLL_NAME]
 
-# ----------------------------
-# Utility functions
-# ----------------------------
+# --- Helpers ---
 def to_json(doc: dict) -> dict:
-    """Convert MongoDB ObjectId to string for JSON serialization"""
-    return {**doc, "_id": str(doc["_id"])}
+    """Convert ObjectId to string for JSON serialization."""
+    d = dict(doc)
+    if "_id" in d:
+        d["_id"] = str(d["_id"])
+    return d
 
-# ----------------------------
-# Routes
-# ----------------------------
-
+# --- Routes ---
 @app.get("/")
 def home():
-    """Redirect to Swagger UI"""
+    """Redirect root to Swagger docs."""
     return redirect("/apidocs")
 
 @app.get("/health")
 def health():
-    """Health check endpoint
+    """Health check
     ---
     tags:
       - Meta
     responses:
       200:
-        description: API is healthy
+        description: OK
     """
-    return {"status": "ok"}
+    return {"status": "ok", "db": DB_NAME, "collection": COLL_NAME}
 
 @app.get("/data")
 def get_data():
@@ -60,19 +56,13 @@ def get_data():
     responses:
       200:
         description: List of documents
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: object
     """
-    docs = [to_json(d) for d in col.find()]
+    docs = [to_json(d) for d in col.find().sort("_id", -1)]
     return jsonify(docs), 200
 
 @app.post("/data")
 def create_data():
-    """Insert a new document
+    """Insert a new record
     ---
     tags:
       - Data
@@ -82,22 +72,55 @@ def create_data():
         application/json:
           schema:
             type: object
+            properties:
+              name:
+                type: string
+              amount:
+                type: number
+              category:
+                type: string
+            required:
+              - name
+              - amount
             example:
-              name: "Expense A"
-              amount: 100
+              name: "Groceries"
+              amount: 75.5
               category: "Food"
     responses:
       201:
         description: Created
+      400:
+        description: Bad Request
     """
-    from flask import request
-    data = request.json
+    try:
+        data = request.get_json(force=True)
+    except Exception:
+        return jsonify({"error": "Invalid or missing JSON body"}), 400
+
+    # Basic validation
+    if not isinstance(data, dict):
+        return jsonify({"error": "Request body must be an object"}), 400
+
+    name = data.get("name")
+    amount = data.get("amount")
+
+    if not name or not isinstance(name, str):
+        return jsonify({"error": "'name' must be a string"}), 400
+    if not isinstance(amount, (int, float)):
+        return jsonify({"error": "'amount' must be a number"}), 400
+
+    data["created_at"] = datetime.utcnow()
+
     result = col.insert_one(data)
-    return jsonify({"_id": str(result.inserted_id)}), 201
+    return jsonify({
+        "_id": str(result.inserted_id),
+        "message": "Record created successfully"
+    }), 201
+
 
 @app.put("/data/<string:item_id>")
 def update_data(item_id):
-    """Update a document by ID
+    """Update an existing record
     ---
     tags:
       - Data
@@ -108,27 +131,36 @@ def update_data(item_id):
         schema:
           type: string
     requestBody:
-      required: true
       content:
         application/json:
           schema:
             type: object
             example:
-              amount: 200
+              amount: 80
     responses:
       200:
         description: Updated
+      404:
+        description: Not found
     """
-    from flask import request
-    update = request.json
-    result = col.update_one({"_id": ObjectId(item_id)}, {"$set": update})
+    try:
+        oid = ObjectId(item_id)
+    except Exception:
+        return jsonify({"error": "Invalid ID"}), 400
+
+    update = request.get_json(silent=True) or {}
+    if not update:
+        return jsonify({"error": "Empty request body"}), 400
+
+    result = col.update_one({"_id": oid}, {"$set": update})
     if result.matched_count == 0:
         return jsonify({"error": "Not found"}), 404
+
     return jsonify({"updated": True}), 200
 
 @app.delete("/data/<string:item_id>")
 def delete_data(item_id):
-    """Delete a document by ID
+    """Delete a record
     ---
     tags:
       - Data
@@ -141,15 +173,20 @@ def delete_data(item_id):
     responses:
       200:
         description: Deleted
+      404:
+        description: Not found
     """
-    result = col.delete_one({"_id": ObjectId(item_id)})
+    try:
+        oid = ObjectId(item_id)
+    except Exception:
+        return jsonify({"error": "Invalid ID"}), 400
+
+    result = col.delete_one({"_id": oid})
     if result.deleted_count == 0:
         return jsonify({"error": "Not found"}), 404
+
     return jsonify({"deleted": True}), 200
 
-# ----------------------------
-# Run the app
-# ----------------------------
+# --- Run the app ---
 if __name__ == "__main__":
-    # host="0.0.0.0" allows access from other devices on the network
     app.run(debug=True, host="0.0.0.0", port=5000)
