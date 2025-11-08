@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
-from app.services import user_service
-from app.helpers import to_json
+from ..services import user_service
+from ..helpers import to_json
 
 user_bp = Blueprint("users", __name__)
     
@@ -30,8 +30,13 @@ def create_user():
             properties:
               username: { type: string }
               email: { type: string }
-              
-            required: [username, email]
+              password: { type: string }
+              phone: { type: string }
+              company: { type: string }
+              language: { type: string }
+              timezone: { type: string }
+
+            required: [username, email, password]
             example: { username: "johndoe", email: "john@example.com" }
     responses:
       201:
@@ -42,3 +47,40 @@ def create_user():
         return jsonify({"error": "username and email required"}), 400
     inserted_id = user_service.create(user)
     return jsonify({"_id": inserted_id}), 201
+
+
+# Put: Update user
+@user_bp.put("/<user_id>")
+def update_user(user_id):
+    """Update an existing user
+    ---
+    tags: [Users]
+    parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username: { type: string }
+              email: { type: string }
+            example: { username: "janedoe", email: "jane@example.com" }   
+    responses:
+      200:
+        description: OK
+      404:
+        description: Not Found
+    """
+    user = request.get_json(silent=True) or {}
+    updated_count = user_service.update(user_id, user)
+    if updated_count == 0:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify({"updated": updated_count}), 200
+  

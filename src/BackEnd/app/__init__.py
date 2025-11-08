@@ -1,12 +1,12 @@
 from flask import Flask, redirect
 from flasgger import Swagger
-from .routes.data_routes import data_bp
-from .routes.user_routes import user_bp  # if you have users
 
 def create_app() -> Flask:
     app = Flask(__name__)
 
     # Register blueprints first
+    from .routes.data_routes import data_bp
+    from .routes.user_routes import user_bp  # if you have users
     app.register_blueprint(data_bp, url_prefix="/api/data")
     app.register_blueprint(user_bp, url_prefix="/api/users")  # optional
 

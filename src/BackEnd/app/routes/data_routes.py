@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from datetime import datetime
 from ..db import get_db
-from ..helpers import to_json, to_oid
+from ..helpers import to_json
 
 data_bp = Blueprint("data", __name__)
 
