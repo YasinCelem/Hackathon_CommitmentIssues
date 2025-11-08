@@ -20,12 +20,36 @@ client = openai.OpenAI(
 # * deadlines & obligations
 # * EFFECT: save key fields and deadlines & obligations to the database
 def document_analyzer(file_to_analyze):
+    text = read_text(file_to_analyze)   # ← this converts the PDF to UTF-8 text
 
-    text = read_text(file_to_analyze)
+    prompt = f"""
+    You are a precise secretary/financial & logistical assistant.
+    Extract key personal details (tenant), deadlines present in the document, 
+    and a concise factual explanation. Be literal; do not guess—use null for missing values.
+    Dates must be YYYY-MM-DD (assume Europe/Amsterdam if needed). 
+    Emails are plain strings (no mailto:). Output exactly the template below,
+    inside one fenced code block, and nothing else.
 
-    prompt = (
-        f"You are a helpful secretary/financial and logistical assistant. You will go over the provided legal file (such as a rental contract), and you will get the most important information out of it. Specifically, you will pay attention to the following information: key fields (personal information of the parties signing the document) and deadlines and obligations present in the document. You will also explain the key points of the document in natural language. The provided document is: {text}"
-    )
+    Key personal details:
+    {{
+    "name": null,
+    "id": null,
+    "current_address": null,
+    "email": null
+    }}
+
+    Deadlines: []
+    Natural Language Explanation: <120 words max. Factual, plain language, no legal advice.>
+
+    Rules:
+    - If a field is missing, set scalars to null and lists to [].
+    - If there are multiple tenants, list only the primary tenant (first named).
+    - For recurring items (e.g., rent due monthly), use "day N each month" or "after day N each month".
+    - Do not include any content outside the single code block.
+
+    The provided document is:
+    {text}
+    """
 
     response = client.chat.completions.create(
         model="gpt-5-nano",
@@ -38,6 +62,7 @@ def document_analyzer(file_to_analyze):
 
     return response.choices[0].message.content
 
+
 def read_text(path: str):
     if path.lower().endswith(".pdf"):
         try:
@@ -46,7 +71,8 @@ def read_text(path: str):
                 r = PyPDF2.PdfReader(f)
                 for p in r.pages:
                     pages.append(p.extract_text() or "")
-            return "\n".join(pages)
+            print("\n".join(pages))
+            return "\n".join(pages) # i need this to be utf-8
         except Exception:
             raise RuntimeError("PDF read failed. ")
     else:

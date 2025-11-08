@@ -1,7 +1,7 @@
 import llm_functions 
 
 def main():
-    path = "../test_files/test1.txt"
+    path = "../test_files/rental_contract_pdf.pdf"
     text = llm_functions.document_analyzer(path)
     print(text)
 
