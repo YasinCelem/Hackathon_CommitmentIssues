@@ -1,0 +1,41 @@
+RESIDENTIAL RENTAL AGREEMENT
+
+Date: 8 November 2025
+Agreement No.: RL-2025-1047
+
+1) Parties
+
+Landlord: Sofia van Dijk, ID: NL-987654321
+Address for notices: Keizersgracht 221, 1016 DV Amsterdam, Netherlands
+Email: landlord@vandijk-realestate.example
+
+Tenant: ..., ID: NL-123456789
+Current address: Spaarndammerstraat 14, 1013 SR Amsterdam, Netherlands
+Email: 
+
+2) Premises
+
+Property: Apartment 12B, Lindenstraat 74, 1015 AB Amsterdam, Netherlands
+Type: 1-bedroom residential apartment, approx. 56 m², 3rd floor
+Included fixtures/appliances: Refrigerator, oven, induction hob, dishwasher, washer, dryer, light fixtures, window coverings.
+Common areas: Entry hall, bike storage, courtyard (shared).
+
+3) Term
+
+Fixed term: 12 months, Start: 1 December 2025, End: 30 November 2026.
+
+Holding over: Month-to-month thereafter unless either party gives notice per §14.
+
+Early delivery of keys: Allowed 29–30 November 2025 for move-in; rent pro-rated if occupied.
+
+4) Rent & Payments
+
+Monthly rent: €1,650.00
+
+Due date: 1st of each month (in advance).
+
+Payment method: Bank transfer to IBAN NL91ABNA0417164300 (Acct: S. van Dijk).
+
+Late fee: €30 if received after the 5th; additional default interest at 3% per month on overdue sums.
+
+Returned payment fee: €25 per failed transfer.
