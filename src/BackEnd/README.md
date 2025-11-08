@@ -22,3 +22,19 @@ BackEnd/
 └─ README.md
 
 ```
+
+
+## FRONTEND IMPLEMENTATION
+
+- LOGIN FORM
+    - compulsory field
+        - username_or_email: value 
+        - password: value
+- REGISTER FORM
+    - compulsory field
+        - username: value
+        - email: value
+        - password: value
+- DELETE ACCOUNT
+    - compulsory field
+        - user_id
