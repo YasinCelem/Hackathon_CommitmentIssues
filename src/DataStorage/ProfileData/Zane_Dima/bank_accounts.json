@@ -1,0 +1,19 @@
+[
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439013"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "bank": "ING Bank",
+    "iban": "NL91ABNA0417164300",
+    "account_name": "AISO B.V. - Hoofdrekening",
+    "currency": "EUR"
+  },
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439014"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "bank": "bunq",
+    "iban": "NL44BUNQ2034789012",
+    "account_name": "AISO B.V. - Bunq Rekening",
+    "currency": "EUR"
+  }
+]
+

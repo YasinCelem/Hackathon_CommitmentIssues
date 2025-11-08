@@ -1,0 +1,33 @@
+[
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439201"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "connections": [
+      {
+        "source": "Bank",
+        "connected": true,
+        "connected_on": "2024-01-15"
+      },
+      {
+        "source": "Gmail",
+        "connected": false,
+        "connected_on": null
+      },
+      {
+        "source": "MijnOverheid",
+        "connected": false,
+        "connected_on": null
+      },
+      {
+        "source": "DigiD",
+        "connected": false,
+        "connected_on": null
+      }
+    ],
+    "privacy": {
+      "retention": 7,
+      "export_available": true
+    }
+  }
+]
+

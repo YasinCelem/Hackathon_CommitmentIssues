@@ -1,0 +1,21 @@
+[
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439011"},
+    "first_name": "Zane",
+    "last_name": "Dima",
+    "gender": "male",
+    "date_of_birth": "1985-03-15",
+    "email": "zane.dima@aiso.nl",
+    "Username": "ZaneDima",
+    "password": "BertiDung",
+    "phone": "+31612345678",
+    "address": {
+      "street": "Hoofdstraat 123",
+      "postcode": "1012 AB",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "bsn": "123456789"
+  }
+]
+

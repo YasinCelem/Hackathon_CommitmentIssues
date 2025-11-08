@@ -1,0 +1,21 @@
+[
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "legal_name": "AISO B.V.",
+    "tradename": ["AISO"],
+    "kvk_number": "12345678",
+    "rsin": "123456789B01",
+    "vat_number": "NL123456789B01",
+    "sbi_code": "62010",
+    "incorporation_date": "2020-01-15",
+    "registered_address": {
+      "street": "Hoofdstraat 123",
+      "postcode": "1012 AB",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "directors": ["Zane Dima"],
+    "owner_user_id": {"$oid": "507f1f77bcf86cd799439011"}
+  }
+]
+
