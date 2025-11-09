@@ -29,6 +29,15 @@
             </div>
         </div>
     </div>
+    {% block extra_js %}
+    <script>
+        // Trigger notification when document is updated
+        document.addEventListener('DOMContentLoaded', function() {
+            addNotification('transaction', 'Document Comparison', 'Changes detected in contract v2.0', {docId: '123'});
+        });
+    </script>
+    {% endblock %}
 </div>
 {% endblock %}
+
 

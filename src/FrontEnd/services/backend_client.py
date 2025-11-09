@@ -3,7 +3,7 @@ import os
 from typing import Optional, Dict, List, Any
 
 # Backend API base URL - defaults to localhost:5001
-BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:5001")
+BACKEND_URL = os.getenv("BACKEND_URL", "http://95.179.191.126:5001")
 
 
 class BackendClient:

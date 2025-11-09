@@ -28,6 +28,46 @@
     transform: scale(1.1);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
+.toast {
+    min-width: 350px;
+}
+
+.toast-body p {
+    margin-bottom: 0.5rem;
+}
+
+#notificationBell {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#notificationBell:hover {
+    background-color: #f8f9fa !important;
+}
+
+#notificationModal .card {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -60%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+#notificationModal .card-body {
+    font-size: 1.1rem;
+    padding: 1.5rem;
+}
+
+#notificationModal .card-footer {
+    padding: 1rem 1.5rem;
+}
+
 
 @media (max-width: 768px) {
     .ai-action-btn {

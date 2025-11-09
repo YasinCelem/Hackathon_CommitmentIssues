@@ -60,15 +60,15 @@
             "endpoint": "frontend.documents_recent",
             "title": "Recent",
             "icon": "folder2",
-            "count": 8,
-            "last_visited": "2025-11-09T06:02:15.797700"
+            "count": 23,
+            "last_visited": "2025-11-09T14:46:28.389852"
         },
         {
             "endpoint": "frontend.taxes",
             "title": "Taxes",
             "icon": "receipt",
-            "count": 60,
-            "last_visited": "2025-11-09T10:33:47.593974"
+            "count": 64,
+            "last_visited": "2025-11-09T14:22:19.040426"
         },
         {
             "endpoint": "frontend.vat_oss",
@@ -88,8 +88,8 @@
             "endpoint": "frontend.documents",
             "title": "Documents",
             "icon": "folder2",
-            "count": 2,
-            "last_visited": "2025-11-09T06:39:32.493324"
+            "count": 4,
+            "last_visited": "2025-11-09T14:22:47.346098"
         },
         {
             "endpoint": "frontend.finances",

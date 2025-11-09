@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, session, redirect, url_for
 from .data_storage.visit_tracker import get_top_visits, get_recent_visits, track_visit
 from .nav import NAV
+from .notification_helper import create_compare_notification
 from .services import backend_client
 from .auth import login_required, is_authenticated, get_current_user
 
@@ -702,3 +703,9 @@ def api_create_data():
     if result:
         return jsonify(result), 201
     return jsonify({"error": "Failed to create data"}), 500
+
+@bp.route('/trigger-notification')
+def trigger_notification():
+    # Example: Send notification data to frontend
+    notification = create_compare_notification('doc123', 'New Comparison Available')
+    return jsonify(notification)
