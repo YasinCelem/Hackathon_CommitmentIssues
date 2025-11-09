@@ -1,487 +1,508 @@
 [
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439103"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439103"
+    },
     "category": "KvK > UBO Extract",
     "name": "2024-06-01 - UBO Extract - KvK - UBO Extract AISO B.V.",
     "date_received": "2024-06-01",
     "deadlines": [],
-    "title": "UBO Extract",
-    "type": "ubo_extract",
-    "date": "2024-06-01",
-    "period": null,
-    "tags": ["kvk", "ubo", "compliance"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "ubo_extract_2024.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2024-06-01T19:10:46.500425",
+    "updated_at": "2024-06-01T19:10:46.500425"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439104"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439104"
+    },
     "category": "KvK > Annual Report Filing (SBR)",
     "name": "2025-03-31 - Annual Report Filing (SBR) - AISO B.V. - Jaarrekening 2024",
     "date_received": "2025-03-31",
     "deadlines": [
-      ["2026-05-31", "Annual report filing deadline for 2025", "every year"]
+      {
+        "_state_id": "4146c23481d737ecfadb2417",
+        "date": "2026-05-31",
+        "description": "Annual report filing deadline for 2025",
+        "recurrence": "every year"
+      }
     ],
-    "title": "Jaarrekening 2024",
-    "type": "annual_report",
-    "date": "2025-03-31",
-    "period": "2024",
-    "tags": ["financial", "annual", "accounting"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "jaarrekening_2024.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-03-31T18:17:35.371804",
+    "updated_at": "2025-03-31T18:17:35.371804"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439108"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439108"
+    },
     "category": "Taxes > VAT Return & Payment",
     "name": "2025-04-30 - VAT Return & Payment - Belastingdienst - BTW Aangifte Q1 2025",
     "date_received": "2025-04-30",
     "deadlines": [
-      ["2025-07-31", "BTW payment due Q1 2025", "every quarter"],
-      ["2025-07-31", "BTW return due Q2 2025", "every quarter"]
+      {
+        "_state_id": "64424b56d78dd59ab7547c1f",
+        "date": "2025-07-31",
+        "description": "BTW payment due Q1 2025",
+        "recurrence": "every quarter"
+      },
+      {
+        "_state_id": "c334d527e563bc453efd424a",
+        "date": "2025-07-31",
+        "description": "BTW return due Q2 2025",
+        "recurrence": "every quarter"
+      }
     ],
-    "title": "BTW Aangifte Q1 2025",
-    "type": "tax_return_btw",
-    "date": "2025-04-30",
-    "period": "2025-Q1",
-    "tags": ["btw", "tax", "vat", "q1"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "btw_aangifte_q1_2025.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-04-30T10:14:52.208802",
+    "updated_at": "2025-04-30T10:14:52.208802"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439109"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439109"
+    },
     "category": "Taxes > VAT Return & Payment",
     "name": "2025-07-31 - VAT Return & Payment - Belastingdienst - BTW Aangifte Q2 2025",
     "date_received": "2025-07-31",
     "deadlines": [
-      ["2025-10-31", "BTW payment due Q2 2025", "every quarter"],
-      ["2025-10-31", "BTW return due Q3 2025", "every quarter"]
+      {
+        "_state_id": "2dcaec8d7cb1a3900f412c13",
+        "date": "2025-10-31",
+        "description": "BTW payment due Q2 2025",
+        "recurrence": "every quarter"
+      },
+      {
+        "_state_id": "38ea967d3fc6220b292606de",
+        "date": "2025-10-31",
+        "description": "BTW return due Q3 2025",
+        "recurrence": "every quarter"
+      }
     ],
-    "title": "BTW Aangifte Q2 2025",
-    "type": "tax_return_btw",
-    "date": "2025-07-31",
-    "period": "2025-Q2",
-    "tags": ["btw", "tax", "vat", "q2"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "btw_aangifte_q2_2025.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-07-31T22:09:48.625879",
+    "updated_at": "2025-07-31T22:09:48.625879"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439110"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439110"
+    },
     "category": "Taxes > VAT Return & Payment",
     "name": "2025-10-31 - VAT Return & Payment - Belastingdienst - BTW Aangifte Q3 2025",
     "date_received": "2025-10-31",
     "deadlines": [
-      ["2026-01-31", "BTW payment due Q3 2025", "every quarter"],
-      ["2026-01-31", "BTW return due Q4 2025", "every quarter"]
+      {
+        "_state_id": "f8c618cfff826a39480ac91a",
+        "date": "2026-01-31",
+        "description": "BTW payment due Q3 2025",
+        "recurrence": "every quarter"
+      },
+      {
+        "_state_id": "71af5907c0bcd8dde4e905f2",
+        "date": "2026-01-31",
+        "description": "BTW return due Q4 2025",
+        "recurrence": "every quarter"
+      }
     ],
-    "title": "BTW Aangifte Q3 2025",
-    "type": "tax_return_btw",
-    "date": "2025-10-31",
-    "period": "2025-Q3",
-    "tags": ["btw", "tax", "vat", "q3"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "btw_aangifte_q3_2025.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-10-31T12:27:32.331087",
+    "updated_at": "2025-10-31T12:27:32.331087"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439111"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439111"
+    },
     "category": "Taxes > VAT ICP Report",
     "name": "2025-10-15 - VAT ICP Report - Belastingdienst - ICP Rapport Q3 2025",
     "date_received": "2025-10-15",
     "deadlines": [
-      ["2026-01-15", "ICP report due Q4 2025", "every quarter"]
+      {
+        "_state_id": "1fcf34fbb7aa730b32742e7a",
+        "date": "2026-01-15",
+        "description": "ICP report due Q4 2025",
+        "recurrence": "every quarter"
+      }
     ],
-    "title": "ICP Rapport Q3 2025",
-    "type": "vat_icp_report",
-    "date": "2025-10-15",
-    "period": "2025-Q3",
-    "tags": ["icp", "vat", "tax", "q3"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "icp_rapport_q3_2025.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-10-15T10:44:06.866872",
+    "updated_at": "2025-10-15T10:44:06.866872"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439112"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439112"
+    },
     "category": "Taxes > Corporate Tax (VPB)",
     "name": "2025-05-31 - Corporate Tax (VPB) - Belastingdienst - VPB Aangifte 2024",
     "date_received": "2025-05-31",
     "deadlines": [
-      ["2026-05-31", "VPB return due for 2025", "every year"]
+      {
+        "_state_id": "7ffca3a08fc0ca21c1ef0548",
+        "date": "2026-05-31",
+        "description": "VPB return due for 2025",
+        "recurrence": "every year"
+      }
     ],
-    "title": "VPB Aangifte 2024",
-    "type": "corporate_tax_return",
-    "date": "2025-05-31",
-    "period": "2024",
-    "tags": ["vpb", "corporate_tax", "tax"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "vpb_aangifte_2024.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-05-31T10:22:13.926856",
+    "updated_at": "2025-05-31T10:22:13.926856"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439113"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439113"
+    },
     "category": "Taxes > Corporate Tax (VPB)",
     "name": "2025-08-15 - Corporate Tax (VPB) - Belastingdienst - Definitieve Aanslag VPB 2024",
     "date_received": "2025-08-15",
     "deadlines": [
-      ["2025-09-15", "VPB payment due 2024", null]
+      {
+        "_state_id": "b0f541b3f3589acd87babc32",
+        "date": "2025-09-15",
+        "description": "VPB payment due 2024",
+        "recurrence": null
+      }
     ],
-    "title": "Definitieve Aanslag VPB 2024",
-    "type": "tax_assessment_notice",
-    "date": "2025-08-15",
-    "period": "2024",
-    "tags": ["vpb", "tax", "assessment", "aanslag"],
-    "counterparty": null,
-    "amount": 12500.00,
-    "currency": "EUR",
-    "file_name": "definitieve_aanslag_vpb_2024.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-08-15T04:53:33.256170",
+    "updated_at": "2025-08-15T04:53:33.256170"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439114"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439114"
+    },
     "category": "Taxes > VAT Return & Payment",
     "name": "2025-10-20 - VAT Return & Payment - Belastingdienst - Betaling BTW Q3 2025",
     "date_received": "2025-10-20",
     "deadlines": [],
-    "title": "Betaling BTW Q3 2025",
-    "type": "tax_payment_confirmation",
-    "date": "2025-10-20",
-    "period": "2025-Q3",
-    "tags": ["btw", "payment", "tax", "q3"],
-    "counterparty": null,
-    "amount": 3450.00,
-    "currency": "EUR",
-    "file_name": "betaling_btw_q3_2025.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-10-20T00:36:53.348465",
+    "updated_at": "2025-10-20T00:36:53.348465"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439115"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439115"
+    },
     "category": "Taxes > Payroll Tax",
     "name": "2025-09-15 - Payroll Tax - Belastingdienst - Loonaangifte Augustus 2025",
     "date_received": "2025-09-15",
     "deadlines": [
-      ["2025-10-15", "Loonaangifte due September 2025", "every month"]
+      {
+        "_state_id": "c9a8d5f371aa7cc55ee02898",
+        "date": "2025-10-15",
+        "description": "Loonaangifte due September 2025",
+        "recurrence": "every month"
+      }
     ],
-    "title": "Loonaangifte Augustus 2025",
-    "type": "payroll_tax_declaration",
-    "date": "2025-09-15",
-    "period": "2025-08",
-    "tags": ["loonheffing", "payroll", "tax"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "loonaangifte_08_2025.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-09-15T11:34:01.227802",
+    "updated_at": "2025-09-15T11:34:01.227802"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439122"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439122"
+    },
     "category": "Contracts > Obligations & Renewals",
     "name": "2020-01-15 - Obligations & Renewals - Vastgoed BV - Huurcontract Kantoor",
     "date_received": "2020-01-15",
     "deadlines": [
-      ["2026-01-15", "Office lease renewal due", null],
-      ["2026-01-15", "Monthly rent due", "every month"]
+      {
+        "_state_id": "9a1488550bb87bd2f3e52f08",
+        "date": "2026-01-15",
+        "description": "Office lease renewal due",
+        "recurrence": null
+      },
+      {
+        "_state_id": "6df31e0f8499717818f08398",
+        "date": "2026-01-15",
+        "description": "Monthly rent due",
+        "recurrence": "every month"
+      }
     ],
-    "title": "Huurcontract Kantoor",
-    "type": "lease_agreement",
-    "date": "2020-01-15",
-    "period": null,
-    "tags": ["lease", "kantoor", "contract"],
-    "counterparty": "Vastgoed BV",
-    "amount": 2500.00,
-    "currency": "EUR",
-    "renewal_date": "2026-01-15",
-    "expiry_date": "2026-01-15",
-    "file_name": "huurcontract_kantoor.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2020-01-15T13:22:24.084724",
+    "updated_at": "2020-01-15T13:22:24.084724"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439123"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439123"
+    },
     "category": "Contracts > Obligations & Renewals",
     "name": "2024-01-01 - Obligations & Renewals - Verzekeraar XYZ - AVB Verzekeringspolis",
     "date_received": "2024-01-01",
     "deadlines": [
-      ["2026-01-01", "AVB insurance policy renewal due", "every year"]
+      {
+        "_state_id": "dbccce361c6cd8a587334d61",
+        "date": "2026-01-01",
+        "description": "AVB insurance policy renewal due",
+        "recurrence": "every year"
+      }
     ],
-    "title": "AVB Verzekeringspolis",
-    "type": "insurance_policy",
-    "date": "2024-01-01",
-    "period": "2024",
-    "tags": ["insurance", "avb", "polis"],
-    "counterparty": "Verzekeraar XYZ",
-    "amount": null,
-    "currency": null,
-    "renewal_date": "2026-01-01",
-    "expiry_date": "2026-01-01",
-    "file_name": "avb_verzekeringspolis.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2024-01-01T08:41:53.997741",
+    "updated_at": "2024-01-01T08:41:53.997741"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439124"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439124"
+    },
     "category": "Contracts > Repository",
     "name": "2024-05-20 - Repository - AISO B.V. - Privacyverklaring",
     "date_received": "2024-05-20",
     "deadlines": [],
-    "title": "Privacyverklaring",
-    "type": "privacy_policy",
-    "date": "2024-05-20",
-    "period": null,
-    "tags": ["privacy", "legal", "compliance"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "privacyverklaring.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2024-05-20T18:43:36.099973",
+    "updated_at": "2024-05-20T18:43:36.099973"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439125"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439125"
+    },
     "category": "Contracts > Repository",
     "name": "2024-06-01 - Repository - CloudProvider B.V. - Verwerkersovereenkomst",
     "date_received": "2024-06-01",
     "deadlines": [],
-    "title": "Verwerkersovereenkomst",
-    "type": "data_processing_agreement",
-    "date": "2024-06-01",
-    "period": null,
-    "tags": ["gdpr", "verwerker", "compliance"],
-    "counterparty": "CloudProvider B.V.",
-    "amount": null,
-    "currency": null,
-    "file_name": "verwerkersovereenkomst.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2024-06-01T22:52:24.920304",
+    "updated_at": "2024-06-01T22:52:24.920304"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439126"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439126"
+    },
     "category": "Contracts > Repository",
     "name": "2024-05-20 - Repository - AISO B.V. - Algemene Voorwaarden",
     "date_received": "2024-05-20",
     "deadlines": [],
-    "title": "Algemene Voorwaarden",
-    "type": "terms_conditions",
-    "date": "2024-05-20",
-    "period": null,
-    "tags": ["legal", "terms", "voorwaarden"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "algemene_voorwaarden.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2024-05-20T09:06:37.757144",
+    "updated_at": "2024-05-20T09:06:37.757144"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439127"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439127"
+    },
     "category": "KvK > UBO Register",
     "name": "2024-05-15 - UBO Register - KvK - UBO Register Form AISO B.V.",
     "date_received": "2024-05-15",
     "deadlines": [],
-    "title": "UBO Register Form",
-    "type": "ubo_register_form",
-    "date": "2024-05-15",
-    "period": null,
-    "tags": ["kvk", "ubo", "register"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "ubo_register_form.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2024-05-15T22:00:24.936083",
+    "updated_at": "2024-05-15T22:00:24.936083"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439128"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439128"
+    },
     "category": "KvK > Self-File Annual Report",
     "name": "2025-04-15 - Self-File Annual Report - AISO B.V. - Zelfindiening Jaarrekening 2024",
     "date_received": "2025-04-15",
     "deadlines": [
-      ["2026-04-15", "Self-file annual report for 2025", "every year"]
+      {
+        "_state_id": "b5bdf10530c54efbc1c6bcae",
+        "date": "2026-04-15",
+        "description": "Self-file annual report for 2025",
+        "recurrence": "every year"
+      }
     ],
-    "title": "Zelfindiening Jaarrekening 2024",
-    "type": "annual_report",
-    "date": "2025-04-15",
-    "period": "2024",
-    "tags": ["annual", "self-file", "sbr"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "zelfindiening_jaarrekening_2024.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-04-15T16:49:05.101556",
+    "updated_at": "2025-04-15T16:49:05.101556"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439129"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439129"
+    },
     "category": "Contracts > Drafts",
     "name": "2025-09-01 - Drafts - Supplier ABC - Service Agreement Draft",
     "date_received": "2025-09-01",
     "deadlines": [],
-    "title": "Service Agreement Draft",
-    "type": "service_agreement",
-    "date": "2025-09-01",
-    "period": null,
-    "tags": ["contract", "draft", "service"],
-    "counterparty": "Supplier ABC B.V.",
-    "amount": null,
-    "currency": null,
-    "file_name": "service_agreement_draft.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-09-01T07:10:57.815380",
+    "updated_at": "2025-09-01T07:10:57.815380"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439130"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439130"
+    },
     "category": "Contracts > Negotiations",
     "name": "2025-09-10 - Negotiations - Customer XYZ - Partnership Agreement Negotiation",
     "date_received": "2025-09-10",
     "deadlines": [
-      ["2025-10-10", "Negotiation deadline", null]
+      {
+        "_state_id": "fe8b7b0528b3684332f718fc",
+        "date": "2025-10-10",
+        "description": "Negotiation deadline",
+        "recurrence": null
+      }
     ],
-    "title": "Partnership Agreement Negotiation",
-    "type": "partnership_agreement",
-    "date": "2025-09-10",
-    "period": null,
-    "tags": ["contract", "negotiation", "partnership"],
-    "counterparty": "Customer XYZ B.V.",
-    "amount": null,
-    "currency": null,
-    "file_name": "partnership_agreement_negotiation.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-09-10T15:09:04.247554",
+    "updated_at": "2025-09-10T15:09:04.247554"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439131"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439131"
+    },
     "category": "Contracts > Approvals",
     "name": "2025-09-20 - Approvals - TechProvider BV - Software License Approval",
     "date_received": "2025-09-20",
     "deadlines": [
-      ["2025-10-05", "Approval deadline", null]
+      {
+        "_state_id": "cd8fa1cfcf9db3f8ecf48021",
+        "date": "2025-10-05",
+        "description": "Approval deadline",
+        "recurrence": null
+      }
     ],
-    "title": "Software License Approval",
-    "type": "license_agreement",
-    "date": "2025-09-20",
-    "period": null,
-    "tags": ["contract", "approval", "license"],
-    "counterparty": "TechProvider BV",
-    "amount": null,
-    "currency": null,
-    "file_name": "software_license_approval.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-09-20T00:33:11.407138",
+    "updated_at": "2025-09-20T00:33:11.407138"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439132"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439132"
+    },
     "category": "Contracts > Signatures",
     "name": "2025-10-01 - Signatures - Marketing Agency BV - Marketing Agreement Signed",
     "date_received": "2025-10-01",
     "deadlines": [],
-    "title": "Marketing Agreement Signed",
-    "type": "service_agreement",
-    "date": "2025-10-01",
-    "period": null,
-    "tags": ["contract", "signed", "marketing"],
-    "counterparty": "Marketing Agency BV",
-    "amount": null,
-    "currency": null,
-    "file_name": "marketing_agreement_signed.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-10-01T17:20:59.351954",
+    "updated_at": "2025-10-01T17:20:59.351954"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439133"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439133"
+    },
     "category": "Taxes > VAT OSS (One-Stop Shop)",
     "name": "2025-09-30 - VAT OSS (One-Stop Shop) - Belastingdienst - OSS Declaration Q3 2025",
     "date_received": "2025-09-30",
     "deadlines": [
-      ["2025-12-31", "OSS declaration due Q4 2025", "every quarter"]
+      {
+        "_state_id": "a44bab6bd94c3d180e60f016",
+        "date": "2025-12-31",
+        "description": "OSS declaration due Q4 2025",
+        "recurrence": "every quarter"
+      }
     ],
-    "title": "OSS Declaration Q3 2025",
-    "type": "vat_oss_declaration",
-    "date": "2025-09-30",
-    "period": "2025-Q3",
-    "tags": ["oss", "vat", "eu"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "oss_declaration_q3_2025.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-09-30T18:00:30.006846",
+    "updated_at": "2025-09-30T18:00:30.006846"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439134"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439134"
+    },
     "category": "Taxes > VAT KOR",
     "name": "2025-08-01 - VAT KOR - Belastingdienst - KOR Application 2025",
     "date_received": "2025-08-01",
     "deadlines": [],
-    "title": "KOR Application 2025",
-    "type": "vat_kor_application",
-    "date": "2025-08-01",
-    "period": "2025",
-    "tags": ["kor", "vat", "small-business"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "kor_application_2025.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-08-01T08:47:45.635081",
+    "updated_at": "2025-08-01T08:47:45.635081"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439135"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439135"
+    },
     "category": "Taxes > VAT Article 23 (Import)",
     "name": "2025-08-15 - VAT Article 23 (Import) - Belastingdienst - Article 23 Form Import",
     "date_received": "2025-08-15",
     "deadlines": [],
-    "title": "Article 23 Form Import",
-    "type": "vat_article23_form",
-    "date": "2025-08-15",
-    "period": null,
-    "tags": ["article23", "vat", "import"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "article23_form_import.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-08-15T16:05:04.625657",
+    "updated_at": "2025-08-15T16:05:04.625657"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439136"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439136"
+    },
     "category": "Taxes > Income Tax (IB)",
     "name": "2025-05-15 - Income Tax (IB) - Belastingdienst - Inkomstenbelasting Aangifte 2024",
     "date_received": "2025-05-15",
     "deadlines": [
-      ["2026-05-01", "Income tax return due for 2025", "every year"]
+      {
+        "_state_id": "eda03710c42fcc4b953b646c",
+        "date": "2026-05-01",
+        "description": "Income tax return due for 2025",
+        "recurrence": "every year"
+      }
     ],
-    "title": "Inkomstenbelasting Aangifte 2024",
-    "type": "income_tax_return",
-    "date": "2025-05-15",
-    "period": "2024",
-    "tags": ["income_tax", "ib", "personal"],
-    "counterparty": null,
-    "amount": null,
-    "currency": null,
-    "file_name": "inkomstenbelasting_aangifte_2024.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2025-05-15T01:55:03.409669",
+    "updated_at": "2025-05-15T01:55:03.409669"
   },
   {
-    "_id": {"$oid": "507f1f77bcf86cd799439137"},
-    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439137"
+    },
     "category": "Contracts > Obligations & Renewals",
     "name": "2024-06-15 - Obligations & Renewals - IT Services BV - Maintenance Contract",
     "date_received": "2024-06-15",
     "deadlines": [
-      ["2026-06-15", "Maintenance contract renewal due", "every year"],
-      ["2025-12-15", "Monthly maintenance fee due", "every month"]
+      {
+        "_state_id": "9a0303d71c09d5e0118f41a1",
+        "date": "2026-06-15",
+        "description": "Maintenance contract renewal due",
+        "recurrence": "every year"
+      },
+      {
+        "_state_id": "b96259506ccf27e39ffc4a45",
+        "date": "2025-12-15",
+        "description": "Monthly maintenance fee due",
+        "recurrence": "every month"
+      }
     ],
-    "title": "Maintenance Contract",
-    "type": "service_agreement",
-    "date": "2024-06-15",
-    "period": null,
-    "tags": ["contract", "maintenance", "it"],
-    "counterparty": "IT Services BV",
-    "amount": 500.00,
-    "currency": "EUR",
-    "renewal_date": "2026-06-15",
-    "expiry_date": "2026-06-15",
-    "file_name": "maintenance_contract.pdf"
+    "pending": [],
+    "complete": [],
+    "overdue": [],
+    "created_at": "2024-06-15T04:21:07.234177",
+    "updated_at": "2024-06-15T04:21:07.234177"
   }
 ]
