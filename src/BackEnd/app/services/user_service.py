@@ -67,7 +67,7 @@ def login(username_or_email: str, password: str) -> Optional[dict]:
     Verify credentials.
     Returns user dict if success, None otherwise.
     """
-    user = find_by_username(username_or_email) or find_by_email(username_or_email)
+    user = find_by_username(username)
     if not user:
         return None
 

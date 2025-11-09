@@ -1,71 +1,90 @@
-# from ..db import get_db
-# from bson import ObjectId
-# from werkzeug.security import generate_password_hash, check_password_hash
-# from typing import Optional
+from ..db import get_db
+from flask import jsonify, request
+from datetime import datetime
+from bson import ObjectId
+from datetime import datetime, date
 
-# def _collection():
-#     return get_db()["documents"]
+def _now_iso():
+    return datetime.utcnow().isoformat()
 
-# def list_documents(category: str | None = None) -> list[dict]:
-#     query = {"category": category} if category else {}
-#     docs = list(_collection().find(query))
-#     for d in docs:
-#         d["_id"] = str(d["_id"])
-#     return docs
+def _today_str():
+    return date.today().strftime("%Y-%m-%d")
 
-# def _validate_and_normalize(payload: dict) -> tuple[bool, str | None, dict | None]:
-#     if not payload:
-#         return False, "Invalid or missing JSON body", None
+def _mk_item(date_val, desc, recurrence):
+    return {
+        "_state_id": str(ObjectId()),
+        "date": date_val,            # may be None
+        "description": desc,
+        "recurrence": recurrence,    # may be None
+    }
 
-#     required = ["category", "name", "deadlines"]
-#     missing = [f for f in required if f not in payload]
-#     if missing:
-#         return False, f"Missing fields: {', '.join(missing)}", None
+def _col():
+    return get_db()["documents"]
 
-#     # date_received normalization
-#     dr = payload.get("date_received")
-#     if dr and dr != "null":
-#         try:
-#             datetime.strptime(dr, "%Y-%m-%d")
-#         except ValueError:
-#             return False, "Invalid date_received format, expected YYYY-MM-DD", None
-#     else:
-#         payload["date_received"] = None
+def _json_error(msg, code=400):
+    return jsonify(success=False, message=msg), code
 
-#     # deadlines: list of [date, description, recurrence/null]
-#     for item in payload.get("deadlines", []):
-#         if not isinstance(item, list) or len(item) != 3:
-#             return False, "Each deadline must be [date, description, recurrence/null]", None
+def _json_ok(payload=None, code=200, **kw):
+    base = {"success": True}
+    if payload is not None:
+        base |= payload
+    if kw:
+        base |= kw
+    return jsonify(base), code
 
-#     payload["created_at"] = datetime.utcnow().isoformat()
-#     return True, None, payload
+def _load_json(required=()):
+    data = request.get_json(silent=True)
+    if not data:
+        return None, "Invalid or missing JSON body"
+    missing = [k for k in required if k not in data]
+    if missing:
+        return None, f"Missing fields: {', '.join(missing)}"
+    return data, None
 
-# def create_document(payload: dict) -> tuple[bool, str, str | None]:
-#     ok, err, normalized = _validate_and_normalize(payload)
-#     if not ok:
-#         return False, err, None
-#     res = _collection().insert_one(normalized)
-#     return True, "Document added successfully", str(res.inserted_id)
+def _validate_date_yyyy_mm_dd(value, field_name="date"):
+    if value in (None, "", "null"):
+        return None, None  # normalize emptyish to None
+    try:
+        datetime.strptime(value, "%Y-%m-%d")
+        return value, None
+    except ValueError:
+        return None, f"Invalid {field_name} format, expected YYYY-MM-DD"
 
-# def update_document(doc_id: str, updates: dict) -> tuple[bool, str]:
-#     if not updates:
-#         return False, "Missing update data"
-#     try:
-#         oid = ObjectId(doc_id)
-#     except Exception:
-#         return False, "Invalid document id"
+def _validate_and_normalize_deadlines(deadlines):
+    """
+    Accepts:
+      - list of arrays: [date, description] or [date, description, recurrence]
+    Normalizes:
+      -> each entry becomes [date_or_None, description, recurrence_or_None]
+    """
+    if not isinstance(deadlines, list):
+        return None, "deadlines must be an array"
 
-#     result = _collection().update_one({"_id": oid}, {"$set": updates})
-#     if result.matched_count == 0:
-#         return False, "Document not found"
-#     return True, "Document updated successfully"
+    normalized = []
+    for idx, item in enumerate(deadlines):
+        if not isinstance(item, (list, tuple)):
+            return None, f"deadlines[{idx}] must be an array"
 
-# def delete_document(doc_id: str) -> tuple[bool, str]:
-#     try:
-#         oid = ObjectId(doc_id)
-#     except Exception:
-#         return False, "Invalid document id"
-#     result = _collection().delete_one({"_id": oid})
-#     if result.deleted_count == 0:
-#         return False, "Document not found"
-#     return True, "Document deleted successfully"
+        if not (2 <= len(item) <= 3):
+            return None, "Each deadline must be [date, description] or [date, description, recurrence]"
+
+        date_val, desc = item[0], item[1]
+        recurrence = item[2] if len(item) == 3 else None
+
+        # date format
+        date_val, err = _validate_date_yyyy_mm_dd(date_val, f"deadlines[{idx}].date")
+        if err:
+            return None, err
+
+        # description must be a non-empty string
+        if not isinstance(desc, str) or not desc.strip():
+            return None, f"deadlines[{idx}].description must be a non-empty string"
+
+        # recurrence: null/None or string
+        if recurrence not in (None, "null") and not isinstance(recurrence, str):
+            return None, f"deadlines[{idx}].recurrence must be null or string"
+        recurrence = None if recurrence in (None, "null") else recurrence
+
+        normalized.append([date_val, desc, recurrence])
+
+    return normalized, None
