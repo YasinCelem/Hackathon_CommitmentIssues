@@ -15,9 +15,13 @@ def _load_state() -> set[str]:
 def _save_state(ids: set[str]):
     STATE_PATH.write_text(json.dumps(sorted(ids)))
 
+import time
+from .config import QUERY, POLL_SECONDS
+from .gmail_client import gmail_service
+from .saver import save_attachments_with_metadata
+
 def run_poller():
     svc = gmail_service()
-    processed = _load_state()
     print("[gmail] poller started (saving attachments + metadata)")
 
     while True:
@@ -25,17 +29,12 @@ def run_poller():
             resp = svc.users().messages().list(userId="me", q=QUERY, maxResults=20).execute() or {}
             for m in resp.get("messages", []):
                 mid = m["id"]
-                if mid in processed:
-                    continue
-
                 full = svc.users().messages().get(userId="me", id=mid, format="full").execute()
                 items = save_attachments_with_metadata(full)
                 if items:
                     print(f"[gmail] saved {len(items)} attachment(s) from message {mid}")
-                processed.add(mid)
-
-            _save_state(processed)
         except Exception as e:
             print("[gmail] error:", e)
 
         time.sleep(POLL_SECONDS)
+

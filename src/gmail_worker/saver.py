@@ -34,6 +34,7 @@ def save_attachments_with_metadata(message: Dict) -> List[Dict]:
     For each attachment in the Gmail message:
       - save <docId>_<safe-filename> into ATTACH_DIR
       - write <same-name>.json with email + attachment metadata
+      - mark email as read after processing
     Returns: list of {"file", "meta"} for saved items.
     """
     svc = gmail_service()
@@ -86,5 +87,16 @@ def save_attachments_with_metadata(message: Dict) -> List[Dict]:
         tmp_json.replace(out_json)
 
         saved.append({"file": str(out_pdf), "meta": meta})
+
+    # Mark email as read if we saved any attachments
+    if saved:
+        try:
+            svc.users().messages().modify(
+                userId="me",
+                id=msg_id,
+                body={"removeLabelIds": ["UNREAD"]}
+            ).execute()
+        except Exception as e:
+            print(f"[gmail] warning: could not mark message {msg_id} as read: {e}")
 
     return saved

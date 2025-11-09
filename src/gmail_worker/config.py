@@ -15,7 +15,7 @@ TOKEN_PATH       = Path(os.environ.get("GOOGLE_TOKEN_JSON",       BASE_DIR / "to
 SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]
 
 # Poll settings (keep broad; we de-dupe by message id)
-QUERY = os.environ.get("GMAIL_POLL_QUERY", "in:inbox newer_than:7d")
+QUERY = os.environ.get("GMAIL_POLL_QUERY", "in:inbox is:unread newer_than:7d")
 POLL_SECONDS = int(os.environ.get("GMAIL_POLL_SECONDS", "5"))
 
 # Simple de-dupe state
