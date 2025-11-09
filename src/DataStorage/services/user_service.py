@@ -1,10 +1,10 @@
 import sys
 from pathlib import Path
 
-project_root = Path(__file__).parent.parent.parent.parent
+project_root = Path(_file_).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from src.DataStorage.db import get_client, username_to_db_name, get_user_db
+from src.DataStorage.db import get_client, username_to_db_name, get_user_db, get_db
 from bson import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import Optional
@@ -157,7 +157,7 @@ def register_user(document: dict) -> Optional[str]:
     
     document["password"] = generate_password_hash(password)
     document["username"] = username
-    document["Username"] = username
+    document["email"] = email
 
     res = users_col.insert_one(document)
     return str(res.inserted_id)
@@ -181,4 +181,3 @@ def delete_user(user_id: str, db_name: Optional[str] = None) -> bool:
         return res.deleted_count > 0
     except Exception:
         return False
-
