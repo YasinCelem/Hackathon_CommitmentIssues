@@ -74,14 +74,13 @@ def document_analyzer(file_to_analyze):
     - date_received = the document's own issue/creation date, if clearly present. Otherwise null.
 
     DEADLINES
-    - Return a list of deadline objects with the following structure:
-    - Each deadline must have: "date", "description", and "recurrence" fields.
-    - "date": an exact calendar date in YYYY-MM-DD format (ISO format).
-    - "description": brief description of the obligation (e.g., "Monthly rent due", "BTW payment due Q1 2026").
-    - "recurrence": 
+    - Return a list of triples: [ "<YYYY-MM-DD>", "<what/why>", "<recurrence>" ].
+    - <YYYY-MM-DD>: an exact calendar date only (ISO format).
+    - <what/why>: brief description of the obligation (e.g., "Monthly rent due", "BTW payment due Q1 2026").
+    - <recurrence>: 
     - Use short text like "every month", "every 2 weeks", "every quarter", "every year" when the document clearly states a cadence.
     - Otherwise use null.
-    - If the document describes a recurring obligation, include the nearest explicit date for the first element and put the cadence in "recurrence".
+    - If the document describes a recurring obligation, include the nearest explicit date for the first element and put the cadence in <recurrence>.
     - Do not use RRULEs or relative expressions (no "REL:+14d", no "day 1 each month" in the date field).
     - If no explicit calendar dates exist, return [].
 
@@ -94,11 +93,7 @@ def document_analyzer(file_to_analyze):
         "name": "<YYYY-MM-DD - CategoryLeaf - IssuerOrParty - ShortTitle>",
         "date_received": "YYYY-MM-DD or null",
         "deadlines": [
-            {{
-                "date": "<YYYY-MM-DD>",
-                "description": "<brief description>",
-                "recurrence": "<recurrence or null>"
-            }}
+            ["<YYYY-MM-DD>", "<brief description>", "<recurrence or null>"]
         ]
     }}
 
@@ -117,89 +112,6 @@ def document_analyzer(file_to_analyze):
     )
 
     return response.choices[0].message.content
-
-
-def convert_llm_output_to_document_format(llm_output: str):
-    """
-    Convert LLM output to the new document structure format.
-    Handles both old format (list of arrays) and new format (list of objects).
-    Adds _state_id, pending, complete, overdue arrays, and timestamps.
-    """
-    import json
-    import re
-    import hashlib
-    from datetime import datetime
-    
-    # Extract JSON from LLM output (may be wrapped in markdown code blocks)
-    json_match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', llm_output, re.DOTALL)
-    if json_match:
-        json_str = json_match.group(1)
-    else:
-        # Try to find JSON object directly
-        json_match = re.search(r'\{.*\}', llm_output, re.DOTALL)
-        if json_match:
-            json_str = json_match.group(0)
-        else:
-            raise ValueError("Could not extract JSON from LLM output")
-    
-    # Parse JSON
-    doc = json.loads(json_str)
-    
-    # Convert deadlines to new format if needed
-    deadlines = doc.get("deadlines", [])
-    converted_deadlines = []
-    
-    for i, deadline in enumerate(deadlines):
-        if isinstance(deadline, list):
-            # Old format: [date, description, recurrence]
-            if len(deadline) >= 2:
-                deadline_obj = {
-                    "date": deadline[0],
-                    "description": deadline[1],
-                    "recurrence": deadline[2] if len(deadline) > 2 else None
-                }
-            else:
-                continue
-        elif isinstance(deadline, dict):
-            # New format: {date, description, recurrence}
-            deadline_obj = {
-                "date": deadline.get("date"),
-                "description": deadline.get("description"),
-                "recurrence": deadline.get("recurrence")
-            }
-        else:
-            continue
-        
-        # Generate _state_id
-        base_str = f"{doc.get('name', '')}_{i}_{deadline_obj.get('date', '')}"
-        state_id = hashlib.md5(base_str.encode()).hexdigest()[:24]
-        deadline_obj["_state_id"] = state_id
-        
-        converted_deadlines.append(deadline_obj)
-    
-    # Build final document structure
-    date_received = doc.get("date_received")
-    if date_received and date_received != "null":
-        try:
-            timestamp = datetime.strptime(date_received, "%Y-%m-%d").isoformat()
-        except:
-            timestamp = datetime.now().isoformat()
-    else:
-        timestamp = datetime.now().isoformat()
-    
-    final_doc = {
-        "category": doc.get("category"),
-        "name": doc.get("name"),
-        "date_received": date_received if date_received and date_received != "null" else None,
-        "deadlines": converted_deadlines,
-        "pending": [],
-        "complete": [],
-        "overdue": [],
-        "created_at": timestamp,
-        "updated_at": timestamp
-    }
-    
-    return final_doc
 
 
 def read_text(path: str):
@@ -221,11 +133,11 @@ def read_text(path: str):
 # form filler (existing)
 def fill_in_form(file_to_fill_in):
     text = read_text(file_to_fill_in)
-
+    
     fields_in_the_database = getFieldsFromTheDatabase()
     prompt_to_identify_missing = f'''You are given a document. In this document, some spots are not filled, for example it might have something like: Name: .... or Name: and then nothing. You should identify these, and output a list of them. The answer should be in this format: [field1, field2, field3, ...].
     I am also providing a list of suggested fields: {fields_in_the_database}. If there is a similar thing, you should instead output a suggested field: for example, instead of asking for a "Full Name" ask for "name" if that is a suggested field.
-    The document is: {text}'''
+    The document is: {text}'''    
     response_fields_to_fill = client.chat.completions.create(
         model="gpt-5-nano",
         messages=[
@@ -236,7 +148,7 @@ def fill_in_form(file_to_fill_in):
     )
     fields_to_fill = response_fields_to_fill.choices[0].message.content
     print("LLM1 output: ", fields_to_fill)
-
+    
     s = fields_to_fill.strip()
     if s.startswith("[") and s.endswith("]"):
         s = s[1:-1]
@@ -249,11 +161,11 @@ def fill_in_form(file_to_fill_in):
     for field in fields_textprocessed:
         with_database_results[field] = getFromDatabase(field)
     print("after we get the values from database: ", with_database_results)
-
+    
     prompt_to_impute = f'''You are given a document, and a small database (as a json). In this document, some spots are not filled, for example it might have something like: Name: .... or Name: and then nothing. You should identify these, and impute the relevant field from the database.
     I want you to be understanding: if there is a similar thing in the database you should use that. For example if name: xyz is missing in the database, and the document has Full Name: ...., you should still fill in Full Name: xyz.
     However, if any fields have not even a similar field in the database, you should add that in the end, with "FURTHER INFO NEEDED: field1". If there is no such field, just say null.
-    The database is {with_database_results}. The document is: {text}.'''
+    The database is {with_database_results}. The document is: {text}.'''    
     response_fields_to_fill = client.chat.completions.create(
         model="gpt-5-nano",
         messages=[
@@ -264,7 +176,7 @@ def fill_in_form(file_to_fill_in):
     )
     imputed_form = response_fields_to_fill.choices[0].message.content
     print("imputed form: ", imputed_form)
-
+    
 
 def getFromDatabase(field: str):
     fake_db = {
