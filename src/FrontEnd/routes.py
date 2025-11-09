@@ -26,7 +26,7 @@ def get_category_items(category_name, static_items):
     from datetime import datetime
     
     user_id = session.get("user_id")
-    db_name = session.get("database_name")
+    db_name = "Zane_Dima"
     
     backend_docs = backend_client.get_documents(category_name.lower(), user_id, db_name)
     
@@ -133,7 +133,7 @@ def index():
                     break
     
     user_id = session.get("user_id")
-    db_name = session.get("database_name")
+    db_name = "Zane_Dima"
     
     backend_docs = backend_client.get_documents(user_id=user_id, db_name=db_name)
     
@@ -210,7 +210,7 @@ def login():
             user = result["user"]
             session["user_id"] = user.get("id")
             session["username"] = user.get("username")
-            session["database_name"] = user.get("database_name")
+            session["database_name"] = "Zane_Dima"
             
             if request.is_json:
                 next_url = request.args.get("next", url_for("frontend.index"))
@@ -581,7 +581,7 @@ def settings():
 def api_documents():
     category = request.args.get("category")
     user_id = session.get("user_id")
-    db_name = session.get("database_name")
+    db_name = "Zane_Dima"
     docs = backend_client.get_documents(category, user_id, db_name)
     return jsonify(docs)
 
@@ -592,7 +592,7 @@ def api_create_document():
     if not data:
         return jsonify({"error": "Invalid JSON"}), 400
     user_id = session.get("user_id")
-    db_name = session.get("database_name")
+    db_name = "Zane_Dima"
     if user_id:
         data["user_id"] = user_id
     result = backend_client.create_document(data, db_name=db_name)
@@ -606,7 +606,7 @@ def api_update_document(doc_id):
     data = request.get_json()
     if not data:
         return jsonify({"error": "Invalid JSON"}), 400
-    db_name = session.get("database_name")
+    db_name = "Zane_Dima"
     result = backend_client.update_document(doc_id, data, db_name=db_name)
     if result:
         return jsonify(result), 200
@@ -615,7 +615,7 @@ def api_update_document(doc_id):
 @bp.route("/api/documents/<doc_id>", methods=["DELETE"])
 @login_required
 def api_delete_document(doc_id):
-    db_name = session.get("database_name")
+    db_name = "Zane_Dima"
     result = backend_client.delete_document(doc_id, db_name=db_name)
     if result:
         return jsonify(result), 200
@@ -624,7 +624,7 @@ def api_delete_document(doc_id):
 @bp.route("/api/data")
 @login_required
 def api_data():
-    db_name = session.get("database_name")
+    db_name = "Zane_Dima"
     data = backend_client.get_data(db_name=db_name)
     return jsonify(data)
 
@@ -634,7 +634,7 @@ def api_create_data():
     data = request.get_json()
     if not data:
         return jsonify({"error": "Invalid JSON"}), 400
-    db_name = session.get("database_name")
+    db_name = "Zane_Dima"
     result = backend_client.create_data(data, db_name=db_name)
     if result:
         return jsonify(result), 201

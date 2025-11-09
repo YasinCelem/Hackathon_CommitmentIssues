@@ -90,7 +90,7 @@ def find_user_by_email(email: str) -> Optional[dict]:
 def login_user(username_or_email: str, password: str) -> Optional[dict]:
     """
     Verify credentials across all databases.
-    Returns user dict with database_name if success, None otherwise.
+    Returns user dict with database_name set to Zane_Dima if success, None otherwise.
     """
     user = find_user_by_username(username_or_email) or find_user_by_email(username_or_email)
     if not user:
@@ -103,7 +103,7 @@ def login_user(username_or_email: str, password: str) -> Optional[dict]:
     if user_password == password:
         username = user.get("Username") or user.get("username")
         if username:
-            user["database_name"] = username_to_db_name(username)
+            user["database_name"] = "Zane_Dima"
             user["username"] = username
         return user
     
@@ -112,7 +112,7 @@ def login_user(username_or_email: str, password: str) -> Optional[dict]:
         if check_password_hash(user_password, password):
             username = user.get("Username") or user.get("username")
             if username:
-                user["database_name"] = username_to_db_name(username)
+                user["database_name"] = "Zane_Dima"
                 user["username"] = username
             return user
     except Exception:
@@ -137,7 +137,7 @@ def list_all_users() -> list[dict]:
 
 def register_user(document: dict) -> Optional[str]:
     """
-    Register a new user in their own database.
+    Register a new user in Zane_Dima database.
     Expected keys: username, email, password
     """
     username = document.get("username")
@@ -152,8 +152,7 @@ def register_user(document: dict) -> Optional[str]:
     if find_user_by_email(email):
         raise ValueError("Email already registered.")
 
-    db_name = username_to_db_name(username)
-    db = get_user_db(username)
+    db = get_db("Zane_Dima")
     users_col = db["users"]
     
     document["password"] = generate_password_hash(password)
