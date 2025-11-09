@@ -14,18 +14,26 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+            {% if is_authenticated %}
             <button class="navbar-toggler me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" 
                     aria-controls="sidebar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            {% endif %}
             <a class="navbar-brand" href="{{ url_for('frontend.index') }}">Commitment Issues</a>
             
             <div class="ms-auto">
-                <a href="{{ url_for('frontend.login') }}" class="btn btn-outline-primary">Login</a>
+                {% if is_authenticated %}
+                    <span class="me-3 text-muted">Welcome, {{ current_user.username if current_user else 'User' }}</span>
+                    <a href="{{ url_for('frontend.logout') }}" class="btn btn-outline-danger">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('frontend.login') }}" class="btn btn-outline-primary">Login</a>
+                {% endif %}
             </div>
         </div>
     </nav>
 
+    {% if is_authenticated %}
     <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="sidebarLabel">Menu</h5>
@@ -51,8 +59,8 @@
                             <div class="list-group list-group-flush ms-3">
                                 {% for item in section.children %}
                                     {% if item.endpoint %}
-                                        <a class="list-group-item list-group-item-action" 
-                                           href="{{ url_for(item.endpoint) }}" 
+                                        <a class="list-group-item list-group-item-action"
+                                           href="{{ url_for(item.endpoint) }}"
                                            data-bs-dismiss="offcanvas">
                                             {% if item.label == "Overview" %}
                                                 <strong>{{ item.label }}</strong>
@@ -69,8 +77,8 @@
                             </div>
                         </div>
                     {% else %}
-                        <a class="list-group-item list-group-item-action" 
-                           href="{{ url_for(section.endpoint) }}" 
+                        <a class="list-group-item list-group-item-action"
+                           href="{{ url_for(section.endpoint) }}"
                            data-bs-dismiss="offcanvas">
                             <i class="bi {{ section.icon }} me-2"></i>{{ section.label }}
                         </a>
@@ -79,15 +87,230 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
     <main class="container-fluid py-4">
         {% block content %}{% endblock %}
     </main>
 
+    {% if is_authenticated %}
     <button type="button" class="btn btn-primary rounded-circle ai-action-btn" 
             data-bs-toggle="tooltip" data-bs-placement="left" title="AI Assistant">
         <i class="bi bi-robot"></i>
     </button>
+    {% endif %}
+    {% if is_authenticated %}
+<!-- Notification Bell -->
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050; margin-top: 60px;">
+    <button type="button" class="btn btn-light position-relative" id="notificationBell">
+        <i class="bi bi-bell-fill"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationCount" style="display: none;">
+            0
+        </span>
+    </button>
+</div>
+
+<!-- Modal Backdrop -->
+    <div class="modal-backdrop fade" id="notificationBackdrop" style="display: none;"></div>
+
+<!-- Centered Notification Modal -->
+    <div class="position-fixed top-50 start-50 translate-middle" style="z-index: 1055; display: none;" id="notificationModal">
+    <div class="card shadow-lg" style="min-width: 500px; max-width: 600px;">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0" id="notificationTitle">Notification</h5>
+            <button type="button" class="btn-close" onclick="closeCurrentNotification()" aria-label="Close"></button>
+        </div>
+        <div class="card-body" id="notificationBody">
+            <p id="notificationMessage"></p>
+        </div>
+        <div class="card-footer d-flex justify-content-end gap-2" id="notificationActions">
+        </div>
+    </div>
+</div>
+
+</div>
+    {% endif %}
+
+    <script>
+    // Notification System
+    const notificationModal = document.getElementById('notificationModal');
+    const notificationBackdrop = document.getElementById('notificationBackdrop');
+    const notificationBell = document.getElementById('notificationBell');
+    const notificationCount = document.getElementById('notificationCount');
+    const notificationTitle = document.getElementById('notificationTitle');
+    const notificationMessage = document.getElementById('notificationMessage');
+    const notificationActions = document.getElementById('notificationActions');
+    let notifications = [];
+    let currentNotificationId = null;
+
+    function updateNotificationCount() {
+        const count = notifications.length;
+        if (count > 0) {
+            notificationCount.textContent = count;
+            notificationCount.style.display = 'block';
+        } else {
+            notificationCount.style.display = 'none';
+        }
+    }
+
+    function removeNotification(id) {
+        notifications = notifications.filter(n => n.id !== id);
+        updateNotificationCount();
+        if (notifications.length > 0) {
+            showNextNotification();
+        } else {
+            hideNotificationModal();
+        }
+    }
+
+    function showNotificationModal() {
+        notificationModal.style.display = 'block';
+        notificationBackdrop.style.display = 'block';
+        setTimeout(() => {
+            notificationBackdrop.classList.add('show');
+        }, 10);
+    }
+
+    function hideNotificationModal() {
+        notificationBackdrop.classList.remove('show');
+        setTimeout(() => {
+            notificationModal.style.display = 'none';
+            notificationBackdrop.style.display = 'none';
+            currentNotificationId = null;
+        }, 150);
+    }
+
+    function showNextNotification() {
+        if (notifications.length === 0) {
+            hideNotificationModal();
+            return;
+        }
+
+        const notification = notifications[0];
+        currentNotificationId = notification.id;
+
+        notificationTitle.textContent = notification.title;
+        notificationMessage.textContent = notification.message;
+        notificationActions.innerHTML = '';
+
+        let buttons = '';
+        if (notification.type === 'compare') {
+            buttons = `
+                <button type="button" class="btn btn-primary" onclick="handleCompareOpen(${notification.id}, '${notification.data.docId || ''}')">
+                    <i class="bi bi-eye"></i> Open
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="handleCompareOk(${notification.id})">
+                    CONFIRM
+                </button>
+            `;
+        } else if (notification.type === 'form') {
+            buttons = `
+                <button type="button" class="btn btn-primary" onclick="handleFormView(${notification.id}, '${notification.data.formId || ''}')">
+                    <i class="bi bi-eye"></i> View
+                </button>
+                <button type="button" class="btn btn-warning" onclick="handleFormModify(${notification.id}, '${notification.data.formId || ''}')">
+                    <i class="bi bi-pencil"></i> Modify
+                </button>
+                <button type="button" class="btn btn-success" onclick="handleFormSend(${notification.id}, '${notification.data.formId || ''}')">
+                    <i class="bi bi-send"></i> Send
+                </button>
+            `;
+        } else if (notification.type === 'transaction') {
+            buttons = `
+                <button type="button" class="btn btn-success" onclick="handleTransactionConfirm(${notification.id}, '${notification.data.transactionId || ''}')">
+                    <i class="bi bi-check-circle"></i> Confirm
+                </button>
+                <button type="button" class="btn btn-danger" onclick="handleTransactionDeny(${notification.id}, '${notification.data.transactionId || ''}')">
+                    <i class="bi bi-x-circle"></i> Deny
+                </button>
+            `;
+        }
+
+        notificationActions.innerHTML = buttons;
+        showNotificationModal();
+    }
+
+    function createNotification(type, title, message, data = {}) {
+        const id = Date.now() + Math.random();
+        const notification = { id, type, title, message, data };
+        notifications.push(notification);
+        updateNotificationCount();
+
+        if (!currentNotificationId) {
+            showNextNotification();
+        }
+    }
+
+    // Compare notification handlers
+    function handleCompareOpen(notificationId, docId) {
+        removeNotification(notificationId);
+        window.location.href = `/compare/${docId}`;
+    }
+
+    function handleCompareOk(notificationId) {
+        removeNotification(notificationId);
+    }
+
+    // Form notification handlers
+    function handleFormView(notificationId, formId) {
+        removeNotification(notificationId);
+        window.location.href = `/form/view/${formId}`;
+    }
+
+    function handleFormModify(notificationId, formId) {
+        removeNotification(notificationId);
+        window.location.href = `/form/edit/${formId}`;
+    }
+
+    function handleFormSend(notificationId, formId) {
+        fetch(`/api/form/send/${formId}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                removeNotification(notificationId);
+            });
+    }
+
+    // Transaction notification handlers
+    function handleTransactionConfirm(notificationId, transactionId) {
+        fetch(`/api/transaction/confirm/${transactionId}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                removeNotification(notificationId);
+            });
+    }
+
+    function handleTransactionDeny(notificationId, transactionId) {
+        fetch(`/api/transaction/deny/${transactionId}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                removeNotification(notificationId);
+            });
+    }
+
+    // Bell click handler
+    if (notificationBell) {
+        notificationBell.addEventListener('click', function() {
+            if (notifications.length > 0 && !currentNotificationId) {
+                showNextNotification();
+            }
+        });
+    }
+    const eventSource = new EventSource('/notifications/stream');
+    eventSource.onmessage = function(event) {
+    const notification = JSON.parse(event.data);
+    createNotification(notification.type, notification.title, notification.message, notification.data);
+};
+    // Close button handler
+    function closeCurrentNotification() {
+    if (currentNotificationId) {
+        removeNotification(currentNotificationId);
+    }
+}
+
+
+    // Expose function globally
+    window.addNotification = createNotification;
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>

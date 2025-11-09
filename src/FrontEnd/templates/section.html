@@ -70,15 +70,20 @@
                 {% for item in items %}
                     {% if item.status == "need_attention" %}
                     <div class="col-md-6 col-lg-4">
-                        <div class="card h-100 action-card">
+                        <div class="card h-100 action-card" data-doc-id="{{ item.doc_id }}" data-status="{{ item.status }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ item.title }}</h5>
                                 <p class="card-text text-muted">{{ item.description }}</p>
-                                {% if item.endpoint %}
-                                    <a href="{{ url_for(item.endpoint) }}" class="btn btn-sm btn-outline-primary">View</a>
-                                {% else %}
-                                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-                                {% endif %}
+                                <div class="d-flex gap-2">
+                                    {% if item.endpoint %}
+                                        <a href="{{ url_for(item.endpoint) }}" class="btn btn-sm btn-outline-primary">View</a>
+                                    {% else %}
+                                        <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                                    {% endif %}
+                                    {% if item.doc_id %}
+                                        <button class="btn btn-sm btn-success" onclick="markAsCompleted('{{ item.doc_id }}', this)">OK</button>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -156,6 +161,9 @@
 </div>
 
 <script>
+let initialCompletedCount = 0;
+let dynamicallyCompletedCount = 0;
+
 function switchTab(tabId) {
     var tabElement = document.getElementById(tabId);
     if (tabElement) {
@@ -163,6 +171,124 @@ function switchTab(tabId) {
         tab.show();
     }
 }
+
+function initializeCounts() {
+    const completedTab = document.getElementById('completed');
+    if (completedTab) {
+        const items = completedTab.querySelectorAll('.action-card');
+        initialCompletedCount = items.length;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeCounts();
+    updateCounts();
+});
+
+function updateCounts() {
+    const allTabs = ['need-attention', 'pending', 'completed', 'all'];
+    let needAttentionCount = 0;
+    let pendingCount = 0;
+    let completedCount = 0;
+    
+    allTabs.forEach(tabId => {
+        const tabContent = document.getElementById(tabId);
+        if (tabContent) {
+            const items = tabContent.querySelectorAll('.action-card');
+            items.forEach(card => {
+                const status = card.getAttribute('data-status');
+                if (status === 'need_attention') needAttentionCount++;
+                else if (status === 'pending') pendingCount++;
+                else if (status === 'completed') {
+                    const docId = card.getAttribute('data-doc-id');
+                    if (docId) {
+                        completedCount++;
+                    }
+                }
+            });
+        }
+    });
+    
+    dynamicallyCompletedCount = completedCount;
+    const totalCompletedCount = initialCompletedCount + dynamicallyCompletedCount;
+    
+    const needAttentionCard = document.querySelector('.row.g-4.mb-4 .col-md-3:nth-child(2) .card');
+    const pendingCard = document.querySelector('.row.g-4.mb-4 .col-md-3:nth-child(3) .card');
+    const completedCard = document.querySelector('.row.g-4.mb-4 .col-md-3:nth-child(4) .card');
+    
+    if (needAttentionCard) {
+        const countEl = needAttentionCard.querySelector('h3');
+        if (countEl) {
+            countEl.textContent = needAttentionCount;
+            if (needAttentionCount === 0) {
+                needAttentionCard.classList.remove('border-danger');
+                needAttentionCard.classList.add('border-success');
+                countEl.classList.remove('text-danger');
+                countEl.classList.add('text-success');
+            } else {
+                needAttentionCard.classList.remove('border-success');
+                needAttentionCard.classList.add('border-danger');
+                countEl.classList.remove('text-success');
+                countEl.classList.add('text-danger');
+            }
+        }
+    }
+    
+    if (pendingCard) {
+        const countEl = pendingCard.querySelector('h3');
+        if (countEl) {
+            countEl.textContent = pendingCount;
+        }
+    }
+    
+    if (completedCard) {
+        const countEl = completedCard.querySelector('h3');
+        if (countEl) {
+            countEl.textContent = totalCompletedCount;
+        }
+    }
+}
+
+async function markAsCompleted(docId, buttonElement) {
+    if (!confirm('Mark this item as completed?')) {
+        return;
+    }
+    
+    const card = buttonElement.closest('.action-card');
+    if (!card) return;
+    
+    card.setAttribute('data-status', 'pending');
+    card.classList.add('border-warning');
+    card.classList.remove('border-danger');
+    updateCounts();
+    
+    buttonElement.disabled = true;
+    buttonElement.textContent = 'Processing...';
+    
+    setTimeout(() => {
+        card.setAttribute('data-status', 'completed');
+        card.classList.remove('border-warning');
+        card.classList.add('border-success');
+        
+        buttonElement.remove();
+        
+        const completedTab = document.getElementById('completed');
+        if (completedTab) {
+            const completedRow = completedTab.querySelector('.row.g-4');
+            if (completedRow) {
+                const cardParent = card.parentElement;
+                if (cardParent && cardParent.classList.contains('col-md-6')) {
+                    cardParent.remove();
+                    completedRow.appendChild(cardParent);
+                }
+            }
+        }
+        
+        updateCounts();
+        switchTab('completed-tab');
+    }, 2000);
+}
+
 </script>
 {% endblock %}
 

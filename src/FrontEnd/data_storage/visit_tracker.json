@@ -25,8 +25,99 @@
             "endpoint": "frontend.contracts_drafts",
             "title": "Drafts",
             "icon": "file-earmark-text",
+            "count": 2,
+            "last_visited": "2025-11-09T16:25:51.005339"
+        },
+        {
+            "endpoint": "frontend.settings",
+            "title": "Settings",
+            "icon": "gear",
+            "count": 2,
+            "last_visited": "2025-11-08T19:24:19.355057"
+        },
+        {
+            "endpoint": "frontend.contracts",
+            "title": "Contracts",
+            "icon": "file-earmark-text",
+            "count": 22,
+            "last_visited": "2025-11-09T16:27:15.679821"
+        },
+        {
+            "endpoint": "frontend.contracts_negotiations",
+            "title": "Negotiations",
+            "icon": "file-earmark-text",
             "count": 1,
-            "last_visited": "2025-11-08T16:53:24.556422"
+            "last_visited": "2025-11-08T22:47:36.435302"
+        },
+        {
+            "endpoint": "frontend.assistant",
+            "title": "Assistant",
+            "icon": "robot",
+            "count": 1,
+            "last_visited": "2025-11-08T22:57:02.052784"
+        },
+        {
+            "endpoint": "frontend.documents_recent",
+            "title": "Recent",
+            "icon": "folder2",
+            "count": 27,
+            "last_visited": "2025-11-09T16:30:39.548018"
+        },
+        {
+            "endpoint": "frontend.taxes",
+            "title": "Taxes",
+            "icon": "receipt",
+            "count": 65,
+            "last_visited": "2025-11-09T16:20:21.820647"
+        },
+        {
+            "endpoint": "frontend.vat_oss",
+            "title": "VAT OSS (One-Stop Shop)",
+            "icon": "receipt",
+            "count": 1,
+            "last_visited": "2025-11-09T00:26:40.442384"
+        },
+        {
+            "endpoint": "frontend.kvk",
+            "title": "KvK",
+            "icon": "building",
+            "count": 6,
+            "last_visited": "2025-11-09T16:25:26.845843"
+        },
+        {
+            "endpoint": "frontend.documents",
+            "title": "Documents",
+            "icon": "folder2",
+            "count": 8,
+            "last_visited": "2025-11-09T16:15:07.617497"
+        },
+        {
+            "endpoint": "frontend.finances",
+            "title": "Finances",
+            "icon": "cash-coin",
+            "count": 5,
+            "last_visited": "2025-11-09T06:39:23.407887"
+        },
+        {
+            "endpoint": "frontend.vat_return_payment",
+            "title": "VAT Return & Payment",
+            "icon": "receipt",
+            "count": 4,
+            "last_visited": "2025-11-09T16:30:11.662075"
+        },
+        {
+            "endpoint": "frontend.ubo_register",
+            "title": "UBO Register",
+            "icon": "building",
+            "count": 4,
+            "last_visited": "2025-11-09T16:30:31.994544"
+        },
+        {
+            "endpoint": "frontend.contracts_repository",
+            "title": "Repository",
+            "icon": "file-earmark-text",
+            "count": 1,
+            "last_visited": "2025-11-09T16:25:45.680799"
         }
     ]
 }

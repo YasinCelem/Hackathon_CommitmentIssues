@@ -29,6 +29,14 @@
             </div>
         </div>
     </div>
+    {% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            addNotification('transaction', 'Confirm Bank Transfer?', 'You just received your rental agreement, would you like me to transfer the money?', {docId: '123'});
+        });
+    </script>
+    {% endblock %}
 </div>
 {% endblock %}
+
 
