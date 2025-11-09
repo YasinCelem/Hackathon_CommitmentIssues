@@ -709,6 +709,10 @@ def api_create_data():
 
 notification_queue = queue.Queue()
 
+# Initialize notification helper with the queue
+from src.FrontEnd.notification_helper import set_notification_queue
+set_notification_queue(notification_queue)
+
 @bp.route('/notifications/stream')
 def notification_stream():
     def event_stream():
@@ -717,3 +721,50 @@ def notification_stream():
             yield f"data: {json.dumps(notification)}\n\n"
 
     return Response(event_stream(), mimetype='text/event-stream')
+
+
+@bp.route('/test/notifications', methods=['GET', 'POST'])
+@login_required
+def test_notifications():
+    """Test endpoint to trigger notifications"""
+    from src.FrontEnd.notification_helper import (
+        create_compare_notification,
+        create_form_notification,
+        create_transaction_notification,
+        create_generic_notification
+    )
+    
+    notification_type = request.args.get('type', 'all')
+    
+    if notification_type == 'compare' or notification_type == 'all':
+        create_compare_notification(
+            "Test comparison: Changes detected in rental contract. Key differences include updated rent amount and new terms.",
+            "doc123"
+        )
+    
+    if notification_type == 'form' or notification_type == 'all':
+        create_form_notification(
+            "Form filled successfully. All fields have been completed using your database information.",
+            "form456",
+            "filled_output.pdf"
+        )
+    
+    if notification_type == 'transaction' or notification_type == 'all':
+        create_transaction_notification(
+            "Transaction is pending. Please review and confirm to process.",
+            "trans789"
+        )
+    
+    if notification_type == 'generic' or notification_type == 'all':
+        create_generic_notification(
+            "Test Notification",
+            "This is a generic test notification to verify the notification system is working.",
+            "info",
+            {"test": True}
+        )
+    
+    return jsonify({
+        "success": True,
+        "message": f"Test notifications sent (type: {notification_type})",
+        "queue_size": notification_queue.qsize()
+    }), 200
