@@ -14,3 +14,4 @@ pip install Flask
 pip install PyPDF2
 pip install openai
 pip install dotenv
+pip install google-api-core google-api-python-client google-auth google-auth-httplib2 google-auth-oauthlib googleapis-common-protos
