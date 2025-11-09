@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 
 
 def create_app():
@@ -9,10 +9,15 @@ def create_app():
     app.register_blueprint(frontend_bp)
     
     from src.FrontEnd.nav import NAV
+    from src.FrontEnd.auth import is_authenticated, get_current_user
     
     @app.context_processor
     def inject_nav():
-        return {"nav": NAV}
+        return {
+            "nav": NAV,
+            "is_authenticated": is_authenticated(),
+            "current_user": get_current_user()
+        }
     
     return app
 
