@@ -92,32 +92,11 @@
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-lg-8 mx-auto">
-            <div class="card border-info">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Backend Connection Status</h5>
-                </div>
-                <div class="card-body">
-                    <div id="connection-status" class="mb-3">
-                        <span class="badge bg-secondary">Checking...</span>
-                    </div>
-                    <div id="api-data" class="small text-muted">
-                        <p>Loading data from backend API...</p>
-                    </div>
-                    <button class="btn btn-sm btn-primary" onclick="testBackendConnection()">Test Connection</button>
-                    <button class="btn btn-sm btn-secondary" onclick="loadDocuments()">Load Documents</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
-    const API_BASE = '/api';
-    
     let currentDate = new Date();
     let deadlinesData = {{ all_calendar_deadlines | tojson }};
     
@@ -242,77 +221,6 @@
         calendarTab.addEventListener('shown.bs.tab', function() {
             renderCalendar();
         });
-    });
-
-    async function testBackendConnection() {
-        const statusEl = document.getElementById('connection-status');
-        const dataEl = document.getElementById('api-data');
-        
-        statusEl.innerHTML = '<span class="badge bg-warning">Testing...</span>';
-        dataEl.innerHTML = '<p>Making API call to backend...</p>';
-        
-        try {
-            console.log('Fetching from:', API_BASE + '/data');
-            const response = await fetch(API_BASE + '/data');
-            const data = await response.json();
-            
-            statusEl.innerHTML = '<span class="badge bg-success">Connected ✓</span>';
-            dataEl.innerHTML = `
-                <p class="text-success"><strong>Backend API is connected!</strong></p>
-                <p>Received ${data.length} data items from backend.</p>
-                <pre class="bg-light p-2 rounded small">${JSON.stringify(data.slice(0, 2), null, 2)}</pre>
-            `;
-            console.log('Backend response:', data);
-        } catch (error) {
-            statusEl.innerHTML = '<span class="badge bg-danger">Connection Failed ✗</span>';
-            dataEl.innerHTML = `
-                <p class="text-danger"><strong>Error connecting to backend:</strong></p>
-                <p class="small">${error.message}</p>
-                <p class="small text-muted">Make sure the backend is running on port 5001</p>
-            `;
-            console.error('Backend connection error:', error);
-        }
-    }
-
-    async function loadDocuments() {
-        const dataEl = document.getElementById('api-data');
-        dataEl.innerHTML = '<p>Loading documents from backend...</p>';
-        
-        try {
-            console.log('Fetching documents from:', API_BASE + '/documents');
-            const response = await fetch(API_BASE + '/documents');
-            const documents = await response.json();
-            
-            if (documents.length > 0) {
-                dataEl.innerHTML = `
-                    <p class="text-success"><strong>Loaded ${documents.length} documents from backend!</strong></p>
-                    <div class="list-group mt-2">
-                        ${documents.slice(0, 3).map(doc => `
-                            <div class="list-group-item">
-                                <strong>${doc.name || 'Unnamed Document'}</strong>
-                                <br><small class="text-muted">Category: ${doc.category || 'N/A'}</small>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            } else {
-                dataEl.innerHTML = `
-                    <p class="text-info">No documents found in backend database.</p>
-                    <p class="small">Try creating a document via the API.</p>
-                `;
-            }
-            console.log('Documents loaded:', documents);
-        } catch (error) {
-            dataEl.innerHTML = `
-                <p class="text-danger"><strong>Error loading documents:</strong></p>
-                <p class="small">${error.message}</p>
-            `;
-            console.error('Error loading documents:', error);
-        }
-    }
-
-    window.addEventListener('DOMContentLoaded', function() {
-        testBackendConnection();
     });
 </script>
 {% endblock %}

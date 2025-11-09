@@ -289,32 +289,6 @@ async function markAsCompleted(docId, buttonElement) {
     }, 2000);
 }
 
-{% if documents %}
-async function loadBackendDocuments() {
-    try {
-        console.log('Loading documents from backend API...');
-        const response = await fetch('/api/documents');
-        const docs = await response.json();
-        console.log('Documents loaded from backend:', docs);
-        
-        if (docs && docs.length > 0) {
-            const docsInfo = document.createElement('div');
-            docsInfo.className = 'alert alert-info mt-3';
-            docsInfo.innerHTML = `
-                <strong>Backend Connection Active!</strong><br>
-                <small>Loaded ${docs.length} document(s) from backend API. Check browser console (F12) for details.</small>
-            `;
-            document.querySelector('.container').appendChild(docsInfo);
-        }
-    } catch (error) {
-        console.error('Error loading documents:', error);
-    }
-}
-
-window.addEventListener('DOMContentLoaded', function() {
-    loadBackendDocuments();
-});
-{% endif %}
 </script>
 {% endblock %}
 

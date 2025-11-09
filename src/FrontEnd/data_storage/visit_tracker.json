@@ -67,8 +67,8 @@
             "endpoint": "frontend.taxes",
             "title": "Taxes",
             "icon": "receipt",
-            "count": 58,
-            "last_visited": "2025-11-09T07:47:11.941013"
+            "count": 59,
+            "last_visited": "2025-11-09T07:51:39.935885"
         },
         {
             "endpoint": "frontend.vat_oss",
