@@ -119,7 +119,7 @@
     const API_BASE = '/api';
     
     let currentDate = new Date();
-    let deadlinesData = {{ approvals | tojson }};
+    let deadlinesData = {{ all_calendar_deadlines | tojson }};
     
     function renderCalendar() {
         const year = currentDate.getFullYear();
@@ -163,10 +163,21 @@
                     const isToday = new Date().toDateString() === new Date(year, month, date).toDateString();
                     
                     if (dayDeadlines.length > 0) {
-                        cellClass = 'bg-danger bg-opacity-50';
+                        const hasCompleted = dayDeadlines.some(d => d.is_completed);
+                        const hasPending = dayDeadlines.some(d => !d.is_completed);
+                        
+                        if (hasCompleted && hasPending) {
+                            cellClass = 'bg-warning bg-opacity-50';
+                        } else if (hasCompleted) {
+                            cellClass = 'bg-success bg-opacity-50';
+                        } else {
+                            cellClass = 'bg-danger bg-opacity-50';
+                        }
+                        
                         const deadlineTitles = dayDeadlines.map(d => d.title).join(', ');
                         const deadlineDescriptions = dayDeadlines.map(d => d.description).join('; ');
-                        cellContent = `<div class="fw-bold position-relative">${date}<span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle" title="${deadlineTitles}: ${deadlineDescriptions}"></span></div>`;
+                        const dotColor = hasCompleted && !hasPending ? 'bg-success' : hasCompleted ? 'bg-warning' : 'bg-danger';
+                        cellContent = `<div class="fw-bold position-relative">${date}<span class="position-absolute top-0 start-100 translate-middle p-1 ${dotColor} border border-light rounded-circle" title="${deadlineTitles}: ${deadlineDescriptions}"></span></div>`;
                     }
                     
                     if (isToday) {
@@ -190,7 +201,8 @@
             if (approval.deadline_date && approval.deadline_date === dateStr) {
                 deadlines.push({
                     title: approval.title,
-                    description: approval.description
+                    description: approval.description,
+                    is_completed: approval.is_completed || false
                 });
             }
         });

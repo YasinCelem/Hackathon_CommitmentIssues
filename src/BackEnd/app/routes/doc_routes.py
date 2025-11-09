@@ -90,8 +90,14 @@ def add_doc():
     else:
         data["date_received"] = None
     for deadline in data.get("deadlines", []):
-        if not isinstance(deadline, list) or len(deadline) != 3:
-            return jsonify(success=False, message="Each deadline must be [date, description, recurrence/null]"), 400
+        if isinstance(deadline, list):
+            if len(deadline) != 3:
+                return jsonify(success=False, message="Each deadline must be [date, description, recurrence/null]"), 400
+        elif isinstance(deadline, dict):
+            if "date" not in deadline or "description" not in deadline:
+                return jsonify(success=False, message="Each deadline object must have 'date' and 'description' fields"), 400
+        else:
+            return jsonify(success=False, message="Each deadline must be either [date, description, recurrence] or {date, description, recurrence}"), 400
     data["created_at"] = datetime.utcnow().isoformat()
     
     db_name = request.args.get("db_name") or (request.get_json(silent=True) or {}).get("db_name")

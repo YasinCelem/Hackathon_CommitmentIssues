@@ -39,8 +39,8 @@
             "endpoint": "frontend.contracts",
             "title": "Contracts",
             "icon": "file-earmark-text",
-            "count": 3,
-            "last_visited": "2025-11-08T22:47:45.731951"
+            "count": 17,
+            "last_visited": "2025-11-09T07:46:45.900107"
         },
         {
             "endpoint": "frontend.contracts_negotiations",
@@ -60,15 +60,15 @@
             "endpoint": "frontend.documents_recent",
             "title": "Recent",
             "icon": "folder2",
-            "count": 6,
-            "last_visited": "2025-11-09T01:16:35.761043"
+            "count": 8,
+            "last_visited": "2025-11-09T06:02:15.797700"
         },
         {
             "endpoint": "frontend.taxes",
             "title": "Taxes",
             "icon": "receipt",
-            "count": 10,
-            "last_visited": "2025-11-09T01:16:27.301857"
+            "count": 58,
+            "last_visited": "2025-11-09T07:47:11.941013"
         },
         {
             "endpoint": "frontend.vat_oss",
@@ -81,15 +81,22 @@
             "endpoint": "frontend.kvk",
             "title": "KvK",
             "icon": "building",
-            "count": 2,
-            "last_visited": "2025-11-09T00:33:48.464671"
+            "count": 5,
+            "last_visited": "2025-11-09T06:39:02.368973"
         },
         {
             "endpoint": "frontend.documents",
             "title": "Documents",
             "icon": "folder2",
-            "count": 1,
-            "last_visited": "2025-11-09T01:16:00.711939"
+            "count": 2,
+            "last_visited": "2025-11-09T06:39:32.493324"
+        },
+        {
+            "endpoint": "frontend.finances",
+            "title": "Finances",
+            "icon": "cash-coin",
+            "count": 5,
+            "last_visited": "2025-11-09T06:39:23.407887"
         }
     ]
 }

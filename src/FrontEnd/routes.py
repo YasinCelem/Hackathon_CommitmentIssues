@@ -23,51 +23,79 @@ def track_page_visit(endpoint):
             track_visit(endpoint, title, icon)
 
 def get_category_items(category_name, static_items):
-    from datetime import datetime
+    from datetime import datetime, timedelta
     
     user_id = session.get("user_id")
     db_name = "Zane_Dima"
     
-    backend_docs = backend_client.get_documents(category_name.lower(), user_id, db_name)
+    all_docs = backend_client.get_documents(db_name=db_name)
+    
+    category_prefix = category_name.capitalize()
+    backend_docs = []
+    for doc in all_docs:
+        doc_category = doc.get("category", "")
+        if doc_category and " > " in doc_category:
+            main_category = doc_category.split(" > ")[0].strip()
+            if main_category.lower() == category_name.lower():
+                backend_docs.append(doc)
+        elif doc_category and doc_category.lower() == category_name.lower():
+            backend_docs.append(doc)
     
     static_map = {item["title"]: item for item in static_items}
     
     items = []
     doc_titles = set()
+    today = datetime.now().date()
+    two_months_from_now = today + timedelta(days=60)
     
     for doc in backend_docs:
         doc_name = doc.get("name", "Document")
-        doc_status = doc.get("status", "pending")
+        doc_title = doc.get("title", doc_name)
+        doc_status = None
         
         deadlines = doc.get("deadlines", [])
         if deadlines and len(deadlines) > 0:
             try:
-                deadline_date = deadlines[0][0] if len(deadlines[0]) > 0 else None
+                first_deadline = deadlines[0]
+                if isinstance(first_deadline, dict):
+                    deadline_date = first_deadline.get("date")
+                elif isinstance(first_deadline, list) and len(first_deadline) > 0:
+                    deadline_date = first_deadline[0]
+                else:
+                    deadline_date = None
+                
                 if deadline_date:
                     deadline_obj = datetime.strptime(deadline_date[:10], "%Y-%m-%d")
-                    today = datetime.now().date()
                     deadline_date_obj = deadline_obj.date()
                     
+                    if deadline_date_obj > two_months_from_now:
+                        continue
+                    
                     if deadline_date_obj < today:
-                        doc_status = "need_attention"
-                    elif deadline_date_obj == today:
-                        doc_status = "need_attention"
-                    elif (deadline_date_obj - today).days <= 7:
-                        doc_status = "need_attention"
+                        doc_status = "completed"
                     else:
-                        doc_status = doc_status if doc_status in ["pending", "completed"] else "pending"
+                        doc_status = "need_attention"
+                else:
+                    doc_status = "need_attention"
             except Exception:
-                pass
+                doc_status = "need_attention"
         else:
-            if doc_status not in ["pending", "completed", "need_attention"]:
-                doc_status = "pending"
+            doc_status = "need_attention"
+        
+        if not doc_status:
+            doc_status = "need_attention"
         
         static_item = None
-        if doc_name in static_map:
+        if doc_title in static_map:
+            static_item = static_map[doc_title]
+        elif doc_name in static_map:
             static_item = static_map[doc_name]
         else:
             for static_title, static_item_candidate in static_map.items():
-                if static_title in doc_name or doc_name in static_title:
+                if static_title in doc_title or doc_title in static_title:
+                    static_item = static_item_candidate
+                    break
+                elif static_title in doc_name or doc_name in static_title:
                     static_item = static_item_candidate
                     break
         
@@ -77,17 +105,25 @@ def get_category_items(category_name, static_items):
             item["doc_id"] = str(doc.get("_id"))
             item["title"] = static_item["title"]
         else:
-            short_title = doc_name
-            if " - " in doc_name:
-                parts = doc_name.split(" - ")
+            display_title = doc_title if doc_title and doc_title != doc_name else doc_name
+            if " - " in display_title:
+                parts = display_title.split(" - ")
                 if len(parts) >= 4:
-                    short_title = parts[-1]
+                    display_title = parts[-1]
                 elif len(parts) >= 2:
-                    short_title = parts[-1]
+                    display_title = parts[-1]
+            
+            description = doc.get("type", "Document")
+            if deadlines and len(deadlines) > 0:
+                first_deadline = deadlines[0]
+                if isinstance(first_deadline, dict):
+                    description = first_deadline.get("description", description)
+                elif isinstance(first_deadline, list) and len(first_deadline) > 1:
+                    description = first_deadline[1]
             
             item = {
-                "title": short_title,
-                "description": deadlines[0][1] if deadlines and len(deadlines[0]) > 1 else "Document",
+                "title": display_title,
+                "description": description,
                 "endpoint": None,
                 "info_url": None,
                 "status": doc_status,
@@ -135,52 +171,76 @@ def index():
     user_id = session.get("user_id")
     db_name = "Zane_Dima"
     
-    backend_docs = backend_client.get_documents(user_id=user_id, db_name=db_name)
+    backend_docs = backend_client.get_documents(db_name=db_name)
     
     approvals = []
+    all_calendar_deadlines = []
     from datetime import datetime
     
     if backend_docs:
+        from datetime import timedelta
+        today = datetime.now().date()
+        two_months_from_now = today + timedelta(days=60)
+        
         for i, doc in enumerate(backend_docs, 1):
             deadlines = doc.get("deadlines", [])
             if deadlines:
                 for deadline in deadlines:
-                    if len(deadline) >= 2:
+                    if isinstance(deadline, dict):
+                        deadline_date = deadline.get("date")
+                        deadline_desc = deadline.get("description", "Pending review")
+                    elif isinstance(deadline, list) and len(deadline) >= 2:
                         deadline_date = deadline[0]
                         deadline_desc = deadline[1] if len(deadline) > 1 else "Pending review"
+                    else:
+                        continue
+                    
+                    if not deadline_date:
+                        continue
+                    
+                    try:
+                        deadline_date_obj = datetime.strptime(deadline_date[:10], "%Y-%m-%d").date()
+                        deadline_display = deadline_date_obj.strftime("%d-%m-%Y")
+                        is_completed = deadline_date_obj < today
                         
-                        deadline_display = deadline_date
-                        if deadline_date:
-                            try:
-                                if isinstance(deadline_date, str) and len(deadline_date) >= 10:
-                                    date_obj = datetime.strptime(deadline_date[:10], "%Y-%m-%d")
-                                    deadline_display = date_obj.strftime("%d-%m-%Y")
-                            except Exception:
-                                deadline_display = deadline_date
-                        
-                        approvals.append({
+                        deadline_item = {
                             "id": doc.get("_id", i),
                             "doc_id": doc.get("_id"),
                             "title": doc.get("name", "Document"),
                             "description": deadline_desc,
                             "deadline_date": deadline_date,
                             "deadline_display": deadline_display,
-                            "category": doc.get("category", "")
-                        })
+                            "category": doc.get("category", ""),
+                            "is_completed": is_completed
+                        }
+                        
+                        all_calendar_deadlines.append(deadline_item)
+                        
+                        if deadline_date_obj <= two_months_from_now and deadline_date_obj >= today:
+                            approvals.append(deadline_item)
+                    except Exception:
+                        continue
     
     if not approvals:
         from datetime import timedelta
         today = datetime.now()
-        approvals = [
+    approvals = [
             {"id": 1, "title": "Q4 Tax Return Review", "description": "Pending review from finance team", "deadline_date": (today + timedelta(days=5)).strftime("%Y-%m-%d"), "deadline_display": (today + timedelta(days=5)).strftime("%d-%m-%Y"), "doc_id": None},
             {"id": 2, "title": "Asset Purchase Approval", "description": "New equipment request", "deadline_date": (today + timedelta(days=12)).strftime("%Y-%m-%d"), "deadline_display": (today + timedelta(days=12)).strftime("%d-%m-%Y"), "doc_id": None},
             {"id": 3, "title": "Contract Renewal", "description": "Service agreement extension", "deadline_date": (today + timedelta(days=20)).strftime("%Y-%m-%d"), "deadline_display": (today + timedelta(days=20)).strftime("%d-%m-%Y"), "doc_id": None},
         ]
     
-    approvals.sort(key=lambda x: x.get("deadline_date", "9999-12-31"))
+    def get_sort_date(item):
+        deadline_date = item.get("deadline_date", "9999-12-31")
+        try:
+            return datetime.strptime(deadline_date[:10], "%Y-%m-%d").date()
+        except Exception:
+            return datetime.strptime("9999-12-31", "%Y-%m-%d").date()
+    
+    approvals.sort(key=get_sort_date)
     approvals = approvals[:5]
     
-    return render_template("index.html", frequent=frequent, approvals=approvals)
+    return render_template("index.html", frequent=frequent, approvals=approvals, all_calendar_deadlines=all_calendar_deadlines)
 
 
 @bp.route("/login", methods=["GET", "POST"])
@@ -502,7 +562,7 @@ def documents():
     ]
     user_id = session.get("user_id")
     db_name = session.get("database_name")
-    backend_docs = backend_client.get_documents(user_id=user_id, db_name=db_name)
+    backend_docs = backend_client.get_documents(db_name=db_name)
     items = get_category_items("documents", static_items)
     return render_template("section.html", title="Documents", items=items, documents=backend_docs)
 
@@ -520,7 +580,7 @@ def documents_recent():
     doc_id = request.args.get("doc_id")
     user_id = session.get("user_id")
     db_name = session.get("database_name")
-    backend_docs = backend_client.get_documents(user_id=user_id, db_name=db_name)
+    backend_docs = backend_client.get_documents(db_name=db_name)
     selected_doc = None
     if doc_id:
         selected_doc = next((doc for doc in backend_docs if str(doc.get("_id")) == doc_id), None)
@@ -603,14 +663,17 @@ def api_create_document():
 @bp.route("/api/documents/<doc_id>", methods=["PUT"])
 @login_required
 def api_update_document(doc_id):
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "Invalid JSON"}), 400
-    db_name = "Zane_Dima"
-    result = backend_client.update_document(doc_id, data, db_name=db_name)
-    if result:
-        return jsonify(result), 200
-    return jsonify({"error": "Failed to update document"}), 500
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "Invalid JSON"}), 400
+        db_name = "Zane_Dima"
+        result = backend_client.update_document(doc_id, data, db_name=db_name)
+        if result:
+            return jsonify({"success": True, "message": "Document updated successfully"}), 200
+        return jsonify({"error": "Failed to update document. Document may not exist or no changes were made."}), 404
+    except Exception as e:
+        return jsonify({"error": f"Error updating document: {str(e)}"}), 500
 
 @bp.route("/api/documents/<doc_id>", methods=["DELETE"])
 @login_required
