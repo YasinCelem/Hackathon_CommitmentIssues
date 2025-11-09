@@ -32,7 +32,7 @@
     {% block extra_js %}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            addNotification('compare', 'Document Comparison', 'Changes detected in Rental Contract', {docId: '123'});
+            addNotification('transaction', 'Confirm Bank Transfer?', 'You just received your rental agreement, would you like me to transfer the money?', {docId: '123'});
         });
     </script>
     {% endblock %}

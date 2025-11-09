@@ -29,6 +29,15 @@
             </div>
         </div>
     </div>
+    {% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            addNotification('compare', 'Document Comparison', 'Changes detected in Rental Contract: - Rent: increases from €1,875/month to €2,000/month.\n' +
+                '- Security deposit: increases from €3,750 (two months’ rent) to €4,000 (two months’ rent).\n' +
+                '- All other terms appear unchanged (term dates, due dates, late fees, payment method, utilities, occupancy limits, access, pet rules, insurance, subletting, and default remedies remain the same).', {docId: '123'})
+        });
+    </script>
+    {% endblock %}
 </div>
 {% endblock %}
 

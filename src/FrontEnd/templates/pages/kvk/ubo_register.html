@@ -29,6 +29,13 @@
             </div>
         </div>
     </div>
+    {% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            addNotification('form', 'Filled Document Confirmation', 'The following bank information document has been filled. Confirm to send?', {docId: '123'});
+        });
+    </script>
+    {% endblock %}
 </div>
 {% endblock %}
 
