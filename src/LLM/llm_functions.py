@@ -486,7 +486,7 @@ def messaging(file):
     memory = []
     text = read_text(file)
     prompt = ""
-    while ():
+    #while ():
     pass
 
 def messaging_closed():
@@ -510,22 +510,17 @@ def qa(text, user_prompt):
 
     Edit this Document text if the user asked you to:
     {text}
-
-    Database fields:
-    {json.dumps(db, ensure_ascii=False, indent=2)}
     """
 
     response = client.chat.completions.create(
-        model="gpt-5",
+        model="gpt-5-nano",
         messages=[
-            {"role": "system", "content": "Output only valid JSON."},
+            {"role": "system", "content": "Output either a message that replies to the users questions or an edited file in the case that the user requested some changes and ONLY apply the changes that the user stated."},
             {"role": "user", "content": prompt}
         ],
         temperature=1
     )
 
-    try:
-        return json.loads(response.choices[0].message.content)
-    except Exception:
-        print("⚠️ GPT JSON parse failed.")
-        return {}
+    return response.choices[0].message.content
+
+    
