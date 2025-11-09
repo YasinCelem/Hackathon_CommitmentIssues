@@ -1,0 +1,204 @@
+[
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439301"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "invoice_number": "INV-2025-001",
+    "invoice_date": "2025-10-15",
+    "due_date": "2025-11-14",
+    "customer_name": "Customer XYZ B.V.",
+    "customer_address": {
+      "street": "Keizersgracht 456",
+      "postcode": "1016 GD",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "customer_kvk": "87654321",
+    "customer_vat": "NL87654321B01",
+    "items": [
+      {
+        "description": "Software Development Services - Q3 2025",
+        "quantity": 1,
+        "unit_price": 10000.00,
+        "vat_rate": 21,
+        "vat_amount": 2100.00,
+        "total": 12100.00
+      },
+      {
+        "description": "Consulting Services - October 2025",
+        "quantity": 20,
+        "unit_price": 120.00,
+        "vat_rate": 21,
+        "vat_amount": 504.00,
+        "total": 2904.00
+      }
+    ],
+    "subtotal": 15004.00,
+    "vat_total": 2604.00,
+    "total": 15000.00,
+    "currency": "EUR",
+    "status": "paid",
+    "paid_date": "2025-11-01",
+    "payment_reference": "INV-2025-001",
+    "transaction_id": {"$oid": "507f1f77bcf86cd799439205"},
+    "notes": "Payment received on time",
+    "created_at": "2025-10-15T10:00:00.000000",
+    "updated_at": "2025-11-01T11:45:00.000000"
+  },
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439302"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "invoice_number": "INV-2025-002",
+    "invoice_date": "2025-10-20",
+    "due_date": "2025-11-19",
+    "customer_name": "Marketing Agency BV",
+    "customer_address": {
+      "street": "Prinsengracht 789",
+      "postcode": "1015 GD",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "customer_kvk": "76543210",
+    "customer_vat": "NL76543210B01",
+    "items": [
+      {
+        "description": "Marketing Campaign Services - October 2025",
+        "quantity": 1,
+        "unit_price": 7000.00,
+        "vat_rate": 21,
+        "vat_amount": 1470.00,
+        "total": 8470.00
+      }
+    ],
+    "subtotal": 7000.00,
+    "vat_total": 1470.00,
+    "total": 8500.00,
+    "currency": "EUR",
+    "status": "paid",
+    "paid_date": "2025-11-05",
+    "payment_reference": "INV-2025-002",
+    "transaction_id": {"$oid": "507f1f77bcf86cd799439206"},
+    "notes": "Payment received",
+    "created_at": "2025-10-20T14:30:00.000000",
+    "updated_at": "2025-11-05T09:30:00.000000"
+  },
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439303"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "invoice_number": "INV-2025-003",
+    "invoice_date": "2025-11-01",
+    "due_date": "2025-12-01",
+    "customer_name": "Supplier ABC B.V.",
+    "customer_address": {
+      "street": "Herengracht 123",
+      "postcode": "1015 BG",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "customer_kvk": "65432109",
+    "customer_vat": "NL65432109B01",
+    "items": [
+      {
+        "description": "Technical Support Services - November 2025",
+        "quantity": 1,
+        "unit_price": 2500.00,
+        "vat_rate": 21,
+        "vat_amount": 525.00,
+        "total": 3025.00
+      },
+      {
+        "description": "Training Services",
+        "quantity": 1,
+        "unit_price": 500.00,
+        "vat_rate": 21,
+        "vat_amount": 105.00,
+        "total": 605.00
+      }
+    ],
+    "subtotal": 3000.00,
+    "vat_total": 630.00,
+    "total": 3200.00,
+    "currency": "EUR",
+    "status": "paid",
+    "paid_date": "2025-11-12",
+    "payment_reference": "INV-2025-003",
+    "transaction_id": {"$oid": "507f1f77bcf86cd799439208"},
+    "notes": "Payment received",
+    "created_at": "2025-11-01T09:00:00.000000",
+    "updated_at": "2025-11-12T10:00:00.000000"
+  },
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439304"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "invoice_number": "INV-2025-004",
+    "invoice_date": "2025-11-10",
+    "due_date": "2025-12-10",
+    "customer_name": "Tech Solutions NL B.V.",
+    "customer_address": {
+      "street": "Singel 234",
+      "postcode": "1012 AB",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "customer_kvk": "54321098",
+    "customer_vat": "NL54321098B01",
+    "items": [
+      {
+        "description": "Software Development - November 2025",
+        "quantity": 1,
+        "unit_price": 12000.00,
+        "vat_rate": 21,
+        "vat_amount": 2520.00,
+        "total": 14520.00
+      }
+    ],
+    "subtotal": 12000.00,
+    "vat_total": 2520.00,
+    "total": 14520.00,
+    "currency": "EUR",
+    "status": "pending",
+    "paid_date": null,
+    "payment_reference": null,
+    "transaction_id": null,
+    "notes": "Awaiting payment",
+    "created_at": "2025-11-10T11:00:00.000000",
+    "updated_at": "2025-11-10T11:00:00.000000"
+  },
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439305"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "invoice_number": "INV-2025-005",
+    "invoice_date": "2025-11-15",
+    "due_date": "2025-12-15",
+    "customer_name": "Digital Services BV",
+    "customer_address": {
+      "street": "Rokin 567",
+      "postcode": "1012 KK",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "customer_kvk": "43210987",
+    "customer_vat": "NL43210987B01",
+    "items": [
+      {
+        "description": "Consulting Services - November 2025",
+        "quantity": 15,
+        "unit_price": 150.00,
+        "vat_rate": 21,
+        "vat_amount": 472.50,
+        "total": 2722.50
+      }
+    ],
+    "subtotal": 2250.00,
+    "vat_total": 472.50,
+    "total": 2722.50,
+    "currency": "EUR",
+    "status": "pending",
+    "paid_date": null,
+    "payment_reference": null,
+    "transaction_id": null,
+    "notes": "Awaiting payment",
+    "created_at": "2025-11-15T13:30:00.000000",
+    "updated_at": "2025-11-15T13:30:00.000000"
+  }
+]
+

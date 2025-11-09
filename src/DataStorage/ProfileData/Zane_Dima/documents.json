@@ -6,12 +6,25 @@
     "category": "KvK > UBO Extract",
     "name": "2024-06-01 - UBO Extract - KvK - UBO Extract AISO B.V.",
     "date_received": "2024-06-01",
-    "deadlines": [],
+    "deadlines": [
+      {
+        "_state_id": "efa96ef8ea3570ca92e2ed41",
+        "date": "2026-06-01",
+        "description": "UBO extract renewal",
+        "recurrence": "every year"
+      },
+      {
+        "_state_id": "89037266f21da56ea0188b7a",
+        "date": "2027-06-01",
+        "description": "UBO extract renewal",
+        "recurrence": "every year"
+      }
+    ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2024-06-01T19:10:46.500425",
-    "updated_at": "2024-06-01T19:10:46.500425"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -26,13 +39,19 @@
         "date": "2026-05-31",
         "description": "Annual report filing deadline for 2025",
         "recurrence": "every year"
+      },
+      {
+        "_state_id": "66988b85c3b8a631a9f8832e",
+        "date": "2027-05-31",
+        "description": "Annual report filing deadline for 2026",
+        "recurrence": "every year"
       }
     ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-03-31T18:17:35.371804",
-    "updated_at": "2025-03-31T18:17:35.371804"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -59,7 +78,7 @@
     "complete": [],
     "overdue": [],
     "created_at": "2025-04-30T10:14:52.208802",
-    "updated_at": "2025-04-30T10:14:52.208802"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -86,7 +105,7 @@
     "complete": [],
     "overdue": [],
     "created_at": "2025-07-31T22:09:48.625879",
-    "updated_at": "2025-07-31T22:09:48.625879"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -113,7 +132,7 @@
     "complete": [],
     "overdue": [],
     "created_at": "2025-10-31T12:27:32.331087",
-    "updated_at": "2025-10-31T12:27:32.331087"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -128,13 +147,19 @@
         "date": "2026-01-15",
         "description": "ICP report due Q4 2025",
         "recurrence": "every quarter"
+      },
+      {
+        "_state_id": "9063fc24fad9c2f29bf66274",
+        "date": "2026-04-15",
+        "description": "ICP report due Q1 2026",
+        "recurrence": "every quarter"
       }
     ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-10-15T10:44:06.866872",
-    "updated_at": "2025-10-15T10:44:06.866872"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -149,13 +174,19 @@
         "date": "2026-05-31",
         "description": "VPB return due for 2025",
         "recurrence": "every year"
+      },
+      {
+        "_state_id": "9fb65e8fa709f011e06286d9",
+        "date": "2026-05-31",
+        "description": "VPB return due for 2026",
+        "recurrence": "every year"
       }
     ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-05-31T10:22:13.926856",
-    "updated_at": "2025-05-31T10:22:13.926856"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -176,7 +207,7 @@
     "complete": [],
     "overdue": [],
     "created_at": "2025-08-15T04:53:33.256170",
-    "updated_at": "2025-08-15T04:53:33.256170"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -190,7 +221,7 @@
     "complete": [],
     "overdue": [],
     "created_at": "2025-10-20T00:36:53.348465",
-    "updated_at": "2025-10-20T00:36:53.348465"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -205,13 +236,25 @@
         "date": "2025-10-15",
         "description": "Loonaangifte due September 2025",
         "recurrence": "every month"
+      },
+      {
+        "_state_id": "4301fdc55db8014a15a419ac",
+        "date": "2025-12-15",
+        "description": "Loonaangifte due November 2025",
+        "recurrence": "every month"
+      },
+      {
+        "_state_id": "977ff4bf0fa4b155e8561c6a",
+        "date": "2026-01-15",
+        "description": "Loonaangifte due December 2025",
+        "recurrence": "every month"
       }
     ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-09-15T11:34:01.227802",
-    "updated_at": "2025-09-15T11:34:01.227802"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -238,7 +281,7 @@
     "complete": [],
     "overdue": [],
     "created_at": "2020-01-15T13:22:24.084724",
-    "updated_at": "2020-01-15T13:22:24.084724"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -259,7 +302,7 @@
     "complete": [],
     "overdue": [],
     "created_at": "2024-01-01T08:41:53.997741",
-    "updated_at": "2024-01-01T08:41:53.997741"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -268,12 +311,25 @@
     "category": "Contracts > Repository",
     "name": "2024-05-20 - Repository - AISO B.V. - Privacyverklaring",
     "date_received": "2024-05-20",
-    "deadlines": [],
+    "deadlines": [
+      {
+        "_state_id": "2fe6c07a7f067d0cbe84fa5b",
+        "date": "2026-05-20",
+        "description": "Document review and update",
+        "recurrence": "every year"
+      },
+      {
+        "_state_id": "0f8fa1efe6464b914769eced",
+        "date": "2027-05-20",
+        "description": "Document review and update",
+        "recurrence": "every year"
+      }
+    ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2024-05-20T18:43:36.099973",
-    "updated_at": "2024-05-20T18:43:36.099973"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -287,7 +343,7 @@
     "complete": [],
     "overdue": [],
     "created_at": "2024-06-01T22:52:24.920304",
-    "updated_at": "2024-06-01T22:52:24.920304"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -301,7 +357,7 @@
     "complete": [],
     "overdue": [],
     "created_at": "2024-05-20T09:06:37.757144",
-    "updated_at": "2024-05-20T09:06:37.757144"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -310,12 +366,25 @@
     "category": "KvK > UBO Register",
     "name": "2024-05-15 - UBO Register - KvK - UBO Register Form AISO B.V.",
     "date_received": "2024-05-15",
-    "deadlines": [],
+    "deadlines": [
+      {
+        "_state_id": "82226424ce19f78ff9568302",
+        "date": "2026-06-01",
+        "description": "UBO extract renewal",
+        "recurrence": "every year"
+      },
+      {
+        "_state_id": "f420651c81f414d42d2b2882",
+        "date": "2027-06-01",
+        "description": "UBO extract renewal",
+        "recurrence": "every year"
+      }
+    ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2024-05-15T22:00:24.936083",
-    "updated_at": "2024-05-15T22:00:24.936083"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -330,13 +399,19 @@
         "date": "2026-04-15",
         "description": "Self-file annual report for 2025",
         "recurrence": "every year"
+      },
+      {
+        "_state_id": "af261e781780a9f3672af375",
+        "date": "2027-05-31",
+        "description": "Annual report filing deadline for 2026",
+        "recurrence": "every year"
       }
     ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-04-15T16:49:05.101556",
-    "updated_at": "2025-04-15T16:49:05.101556"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -345,12 +420,25 @@
     "category": "Contracts > Drafts",
     "name": "2025-09-01 - Drafts - Supplier ABC - Service Agreement Draft",
     "date_received": "2025-09-01",
-    "deadlines": [],
+    "deadlines": [
+      {
+        "_state_id": "5ac5f856be4ad14481771191",
+        "date": "2025-12-01",
+        "description": "Draft review deadline",
+        "recurrence": null
+      },
+      {
+        "_state_id": "fe466d70baa68f509cf606f9",
+        "date": "2026-01-15",
+        "description": "Final draft submission",
+        "recurrence": null
+      }
+    ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-09-01T07:10:57.815380",
-    "updated_at": "2025-09-01T07:10:57.815380"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -365,13 +453,25 @@
         "date": "2025-10-10",
         "description": "Negotiation deadline",
         "recurrence": null
+      },
+      {
+        "_state_id": "fb1692c9d236c0059d6cfdd3",
+        "date": "2025-12-10",
+        "description": "Negotiation extension deadline",
+        "recurrence": null
+      },
+      {
+        "_state_id": "33604f2e04a541096dd7db17",
+        "date": "2026-01-10",
+        "description": "Final negotiation deadline",
+        "recurrence": null
       }
     ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-09-10T15:09:04.247554",
-    "updated_at": "2025-09-10T15:09:04.247554"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -386,13 +486,25 @@
         "date": "2025-10-05",
         "description": "Approval deadline",
         "recurrence": null
+      },
+      {
+        "_state_id": "0066cf371bdcefda33157141",
+        "date": "2025-12-20",
+        "description": "Approval extension deadline",
+        "recurrence": null
+      },
+      {
+        "_state_id": "417b6421282ba84cbab09a57",
+        "date": "2026-01-20",
+        "description": "Final approval deadline",
+        "recurrence": null
       }
     ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-09-20T00:33:11.407138",
-    "updated_at": "2025-09-20T00:33:11.407138"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -401,12 +513,25 @@
     "category": "Contracts > Signatures",
     "name": "2025-10-01 - Signatures - Marketing Agency BV - Marketing Agreement Signed",
     "date_received": "2025-10-01",
-    "deadlines": [],
+    "deadlines": [
+      {
+        "_state_id": "0f9ee9ce5bb4e08efb87c56e",
+        "date": "2026-10-01",
+        "description": "Contract review for renewal",
+        "recurrence": "every year"
+      },
+      {
+        "_state_id": "7ab5a0fc435a11aeb07cbcea",
+        "date": "2027-10-01",
+        "description": "Contract review for renewal",
+        "recurrence": "every year"
+      }
+    ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-10-01T17:20:59.351954",
-    "updated_at": "2025-10-01T17:20:59.351954"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -421,13 +546,19 @@
         "date": "2025-12-31",
         "description": "OSS declaration due Q4 2025",
         "recurrence": "every quarter"
+      },
+      {
+        "_state_id": "14319011803227a9f7677c46",
+        "date": "2026-03-31",
+        "description": "OSS declaration due Q1 2026",
+        "recurrence": "every quarter"
       }
     ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-09-30T18:00:30.006846",
-    "updated_at": "2025-09-30T18:00:30.006846"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -436,12 +567,25 @@
     "category": "Taxes > VAT KOR",
     "name": "2025-08-01 - VAT KOR - Belastingdienst - KOR Application 2025",
     "date_received": "2025-08-01",
-    "deadlines": [],
+    "deadlines": [
+      {
+        "_state_id": "c2f3aeeb74ac688f3848d1c5",
+        "date": "2026-01-31",
+        "description": "Tax filing deadline Q4 2025",
+        "recurrence": "every quarter"
+      },
+      {
+        "_state_id": "4a8753e7ff22a93533280cac",
+        "date": "2026-04-30",
+        "description": "Tax filing deadline Q1 2026",
+        "recurrence": "every quarter"
+      }
+    ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-08-01T08:47:45.635081",
-    "updated_at": "2025-08-01T08:47:45.635081"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -450,12 +594,25 @@
     "category": "Taxes > VAT Article 23 (Import)",
     "name": "2025-08-15 - VAT Article 23 (Import) - Belastingdienst - Article 23 Form Import",
     "date_received": "2025-08-15",
-    "deadlines": [],
+    "deadlines": [
+      {
+        "_state_id": "9e8d5f91effd732390fd4908",
+        "date": "2026-01-31",
+        "description": "Tax filing deadline Q4 2025",
+        "recurrence": "every quarter"
+      },
+      {
+        "_state_id": "aab486f67c124127110a6d4b",
+        "date": "2026-04-30",
+        "description": "Tax filing deadline Q1 2026",
+        "recurrence": "every quarter"
+      }
+    ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-08-15T16:05:04.625657",
-    "updated_at": "2025-08-15T16:05:04.625657"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -470,13 +627,19 @@
         "date": "2026-05-01",
         "description": "Income tax return due for 2025",
         "recurrence": "every year"
+      },
+      {
+        "_state_id": "07c668e4934a89d312e21c40",
+        "date": "2027-05-01",
+        "description": "Income tax return due for 2026",
+        "recurrence": "every year"
       }
     ],
     "pending": [],
     "complete": [],
     "overdue": [],
     "created_at": "2025-05-15T01:55:03.409669",
-    "updated_at": "2025-05-15T01:55:03.409669"
+    "updated_at": "2025-11-09T05:37:59.261577"
   },
   {
     "_id": {
@@ -503,6 +666,6 @@
     "complete": [],
     "overdue": [],
     "created_at": "2024-06-15T04:21:07.234177",
-    "updated_at": "2024-06-15T04:21:07.234177"
+    "updated_at": "2025-11-09T05:37:59.261577"
   }
 ]

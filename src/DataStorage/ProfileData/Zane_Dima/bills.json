@@ -1,0 +1,225 @@
+[
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439401"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "bill_number": "BILL-2025-001",
+    "bill_date": "2025-10-15",
+    "due_date": "2025-11-14",
+    "supplier_name": "Belastingdienst",
+    "supplier_address": {
+      "street": "Postbus 100",
+      "postcode": "6400 AC",
+      "city": "Heerlen",
+      "country": "Netherlands"
+    },
+    "supplier_kvk": null,
+    "supplier_vat": null,
+    "items": [
+      {
+        "description": "VPB payment 2024",
+        "quantity": 1,
+        "unit_price": 12500.00,
+        "vat_rate": 0,
+        "vat_amount": 0.00,
+        "total": 12500.00
+      }
+    ],
+    "subtotal": 12500.00,
+    "vat_total": 0.00,
+    "total": 12500.00,
+    "currency": "EUR",
+    "status": "paid",
+    "paid_date": "2025-10-15",
+    "payment_reference": "VPB2024-001",
+    "transaction_id": {"$oid": "507f1f77bcf86cd799439201"},
+    "notes": "Corporate tax payment",
+    "created_at": "2025-10-15T09:30:00.000000",
+    "updated_at": "2025-10-15T09:30:00.000000"
+  },
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439402"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "bill_number": "BILL-2025-002",
+    "bill_date": "2025-10-20",
+    "due_date": "2025-11-19",
+    "supplier_name": "Belastingdienst",
+    "supplier_address": {
+      "street": "Postbus 100",
+      "postcode": "6400 AC",
+      "city": "Heerlen",
+      "country": "Netherlands"
+    },
+    "supplier_kvk": null,
+    "supplier_vat": null,
+    "items": [
+      {
+        "description": "BTW payment Q3 2025",
+        "quantity": 1,
+        "unit_price": 3450.00,
+        "vat_rate": 0,
+        "vat_amount": 0.00,
+        "total": 3450.00
+      }
+    ],
+    "subtotal": 3450.00,
+    "vat_total": 0.00,
+    "total": 3450.00,
+    "currency": "EUR",
+    "status": "paid",
+    "paid_date": "2025-10-20",
+    "payment_reference": "BTW-Q3-2025",
+    "transaction_id": {"$oid": "507f1f77bcf86cd799439202"},
+    "notes": "VAT payment",
+    "created_at": "2025-10-20T10:15:00.000000",
+    "updated_at": "2025-10-20T10:15:00.000000"
+  },
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439403"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "bill_number": "BILL-2025-003",
+    "bill_date": "2025-10-25",
+    "due_date": "2025-11-24",
+    "supplier_name": "Vastgoed BV",
+    "supplier_address": {
+      "street": "Kalverstraat 100",
+      "postcode": "1012 PH",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "supplier_kvk": "11223344",
+    "supplier_vat": "NL11223344B01",
+    "items": [
+      {
+        "description": "Office rent October 2025",
+        "quantity": 1,
+        "unit_price": 2500.00,
+        "vat_rate": 21,
+        "vat_amount": 525.00,
+        "total": 3025.00
+      }
+    ],
+    "subtotal": 2500.00,
+    "vat_total": 525.00,
+    "total": 3025.00,
+    "currency": "EUR",
+    "status": "paid",
+    "paid_date": "2025-10-25",
+    "payment_reference": "RENT-OCT-2025",
+    "transaction_id": {"$oid": "507f1f77bcf86cd799439203"},
+    "notes": "Monthly office rent",
+    "created_at": "2025-10-25T08:00:00.000000",
+    "updated_at": "2025-10-25T08:00:00.000000"
+  },
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439404"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "bill_number": "BILL-2025-004",
+    "bill_date": "2025-10-28",
+    "due_date": "2025-11-27",
+    "supplier_name": "IT Services BV",
+    "supplier_address": {
+      "street": "Wibautstraat 200",
+      "postcode": "1091 GS",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "supplier_kvk": "22334455",
+    "supplier_vat": "NL22334455B01",
+    "items": [
+      {
+        "description": "IT maintenance fee October 2025",
+        "quantity": 1,
+        "unit_price": 500.00,
+        "vat_rate": 21,
+        "vat_amount": 105.00,
+        "total": 605.00
+      }
+    ],
+    "subtotal": 500.00,
+    "vat_total": 105.00,
+    "total": 605.00,
+    "currency": "EUR",
+    "status": "paid",
+    "paid_date": "2025-10-28",
+    "payment_reference": "MAINT-OCT-2025",
+    "transaction_id": {"$oid": "507f1f77bcf86cd799439204"},
+    "notes": "Monthly IT maintenance",
+    "created_at": "2025-10-28T14:20:00.000000",
+    "updated_at": "2025-10-28T14:20:00.000000"
+  },
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439405"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "bill_number": "BILL-2025-005",
+    "bill_date": "2025-11-10",
+    "due_date": "2025-12-10",
+    "supplier_name": "TechProvider BV",
+    "supplier_address": {
+      "street": "Zuidas 300",
+      "postcode": "1082 LA",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "supplier_kvk": "33445566",
+    "supplier_vat": "NL33445566B01",
+    "items": [
+      {
+        "description": "Software license annual subscription",
+        "quantity": 1,
+        "unit_price": 1200.00,
+        "vat_rate": 21,
+        "vat_amount": 252.00,
+        "total": 1452.00
+      }
+    ],
+    "subtotal": 1200.00,
+    "vat_total": 252.00,
+    "total": 1452.00,
+    "currency": "EUR",
+    "status": "paid",
+    "paid_date": "2025-11-10",
+    "payment_reference": "SOFT-LIC-2025",
+    "transaction_id": {"$oid": "507f1f77bcf86cd799439207"},
+    "notes": "Annual software license",
+    "created_at": "2025-11-10T13:15:00.000000",
+    "updated_at": "2025-11-10T13:15:00.000000"
+  },
+  {
+    "_id": {"$oid": "507f1f77bcf86cd799439406"},
+    "company_id": {"$oid": "507f1f77bcf86cd799439012"},
+    "bill_number": "BILL-2025-006",
+    "bill_date": "2025-11-25",
+    "due_date": "2025-12-25",
+    "supplier_name": "Vastgoed BV",
+    "supplier_address": {
+      "street": "Kalverstraat 100",
+      "postcode": "1012 PH",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    "supplier_kvk": "11223344",
+    "supplier_vat": "NL11223344B01",
+    "items": [
+      {
+        "description": "Office rent November 2025",
+        "quantity": 1,
+        "unit_price": 2500.00,
+        "vat_rate": 21,
+        "vat_amount": 525.00,
+        "total": 3025.00
+      }
+    ],
+    "subtotal": 2500.00,
+    "vat_total": 525.00,
+    "total": 3025.00,
+    "currency": "EUR",
+    "status": "pending",
+    "paid_date": null,
+    "payment_reference": null,
+    "transaction_id": null,
+    "notes": "Monthly office rent - due soon",
+    "created_at": "2025-11-25T08:00:00.000000",
+    "updated_at": "2025-11-25T08:00:00.000000"
+  }
+]
+
