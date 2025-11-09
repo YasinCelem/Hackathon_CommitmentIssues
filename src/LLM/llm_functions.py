@@ -11,7 +11,7 @@ import json
 _ = load_dotenv()
 
 client = openai.OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY"),
+    api_key= "sk-lYavX06rFuPJt6m9b06oTA",#os.getenv("OPENAI_API_KEY"),
     base_url="https://fj7qg3jbr3.execute-api.eu-west-1.amazonaws.com/v1"
 )
 

@@ -1,5 +1,7 @@
 import json, time
 from pathlib import Path
+from time import sleep
+
 from .config import QUERY, STATE_PATH, POLL_SECONDS
 from .gmail_client import gmail_service
 from .saver import save_attachments_with_metadata
@@ -21,7 +23,10 @@ from .config import QUERY, POLL_SECONDS
 from .gmail_client import gmail_service
 from .saver import save_attachments_with_metadata
 
-def run_poller():
+from flask import Flask
+
+
+def run_poller(app: Flask):
     svc = gmail_service()
     print("[gmail] poller started (saving attachments + metadata)")
 
@@ -34,7 +39,9 @@ def run_poller():
                 items = save_attachments_with_metadata(full)
                 if items:
                     print(f"[gmail] saved {len(items)} attachment(s) from message {mid}")
-                    decide_file_type()
+                    sleep(5)
+                    with app.app_context():
+                        decide_file_type()
         except Exception as e:
             print("[gmail] error:", e)
 

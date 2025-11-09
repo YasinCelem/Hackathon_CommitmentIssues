@@ -39,8 +39,8 @@
             "endpoint": "frontend.contracts",
             "title": "Contracts",
             "icon": "file-earmark-text",
-            "count": 19,
-            "last_visited": "2025-11-09T08:56:09.946588"
+            "count": 20,
+            "last_visited": "2025-11-09T15:54:44.330531"
         },
         {
             "endpoint": "frontend.contracts_negotiations",
@@ -60,15 +60,15 @@
             "endpoint": "frontend.documents_recent",
             "title": "Recent",
             "icon": "folder2",
-            "count": 23,
-            "last_visited": "2025-11-09T14:46:28.389852"
+            "count": 25,
+            "last_visited": "2025-11-09T16:17:14.089341"
         },
         {
             "endpoint": "frontend.taxes",
             "title": "Taxes",
             "icon": "receipt",
-            "count": 64,
-            "last_visited": "2025-11-09T14:22:19.040426"
+            "count": 65,
+            "last_visited": "2025-11-09T16:20:21.820647"
         },
         {
             "endpoint": "frontend.vat_oss",
@@ -88,8 +88,8 @@
             "endpoint": "frontend.documents",
             "title": "Documents",
             "icon": "folder2",
-            "count": 4,
-            "last_visited": "2025-11-09T14:22:47.346098"
+            "count": 8,
+            "last_visited": "2025-11-09T16:15:07.617497"
         },
         {
             "endpoint": "frontend.finances",
@@ -97,6 +97,13 @@
             "icon": "cash-coin",
             "count": 5,
             "last_visited": "2025-11-09T06:39:23.407887"
+        },
+        {
+            "endpoint": "frontend.vat_return_payment",
+            "title": "VAT Return & Payment",
+            "icon": "receipt",
+            "count": 1,
+            "last_visited": "2025-11-09T16:16:59.343221"
         }
     ]
 }

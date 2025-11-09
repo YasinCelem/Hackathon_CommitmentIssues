@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template, jsonify, request, session, redirect, url_for
+import json
+import queue
+
+from flask import Blueprint, render_template, jsonify, request, session, redirect, url_for, Response
 from .data_storage.visit_tracker import get_top_visits, get_recent_visits, track_visit
 from .nav import NAV
-from .notification_helper import create_compare_notification
 from .services import backend_client
 from .auth import login_required, is_authenticated, get_current_user
 
@@ -704,8 +706,14 @@ def api_create_data():
         return jsonify(result), 201
     return jsonify({"error": "Failed to create data"}), 500
 
-@bp.route('/trigger-notification')
-def trigger_notification():
-    # Example: Send notification data to frontend
-    notification = create_compare_notification('doc123', 'New Comparison Available')
-    return jsonify(notification)
+
+notification_queue = queue.Queue()
+
+@bp.route('/notifications/stream')
+def notification_stream():
+    def event_stream():
+        while True:
+            notification = notification_queue.get()
+            yield f"data: {json.dumps(notification)}\n\n"
+
+    return Response(event_stream(), mimetype='text/event-stream')
