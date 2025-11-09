@@ -83,6 +83,8 @@ def document_analyzer(file_to_analyze):
     - If the document describes a recurring obligation, include the nearest explicit date for the first element and put the cadence in <recurrence>.
     - Do not use RRULEs or relative expressions (no "REL:+14d", no "day 1 each month" in the date field).
     - If no explicit calendar dates exist, return [].
+    - <direct TODO, unique to the situation>:
+    - Give a brief but friendly and possibly punchy explanation on what is to be done. For example, if we have a rent to be paid, you could say "Make sure to pay the rent. I can also assist with this!".
 
     OUTPUT
     - Return exactly one fenced code block containing valid JSON and nothing else.
@@ -93,7 +95,7 @@ def document_analyzer(file_to_analyze):
         "name": "<YYYY-MM-DD - CategoryLeaf - IssuerOrParty - ShortTitle>",
         "date_received": "YYYY-MM-DD or null",
         "deadlines": [
-            ["<YYYY-MM-DD>", "<brief description>", "<recurrence or null>"]
+            ["<YYYY-MM-DD>", "<brief description>", "<recurrence or null>", "<direct TODO, unique to the situation>"]
         ]
     }}
 
@@ -483,10 +485,6 @@ def update_message():
     pass
 
 def messaging(file):
-    memory = []
-    text = read_text(file)
-    prompt = ""
-    while ():
     pass
 
 def messaging_closed():
