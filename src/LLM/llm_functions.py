@@ -178,7 +178,7 @@ def fill_in_form(file_to_fill_in):
     print("imputed form: ", imputed_form)
 
 
-def getFromDatabase(field: str):
+def getFromDatabase(field: str): ### ---------------- need to do
     fake_db = {
         "student-number": "1234456",
         "status": "unmarried",
@@ -196,7 +196,7 @@ def getFromDatabase(field: str):
     return fake_db.get(field)
 
 
-def getFieldsFromTheDatabase():
+def getFieldsFromTheDatabase(): ### ---------------- need to do
     fake_db = {
         "student-number": "1234456",
         "status": "unmarried",
@@ -477,3 +477,55 @@ def fill_in_form_pdf(file_to_fill_in):
 
     print("✅ PDF form filling complete.")
     return output_pdf
+
+
+def update_message():
+    pass
+
+def messaging(file):
+    memory = []
+    text = read_text(file)
+    prompt = ""
+    while ():
+    pass
+
+def messaging_closed():
+    pass
+
+def qa(text, user_prompt):
+    prompt = f"""
+    You are a smart PDF form filler assistant.
+    The document text includes blanks such as 'Name: ____' or 'Email: ____'.
+    Detect those blanks and match them with the most relevant database fields.
+
+    Return valid JSON ONLY with key-value pairs for filling.
+    Example:
+    {{"name": "Avery Doe", "address": "123 Maple Street"}}
+    
+    These were your previous instructions, now some information changed and the user is requetsing we change certain details in the text.
+    Keep in mind the user might ask a question about the file, in this case just answer normally and if its related to the data, ask if you should change it.
+
+    Here is the user wants to change or edit:
+    {user_prompt}
+
+    Document text:
+    {text}
+
+    Database fields:
+    {json.dumps(db, ensure_ascii=False, indent=2)}
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-5",
+        messages=[
+            {"role": "system", "content": "Output only valid JSON."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=1
+    )
+
+    try:
+        return json.loads(response.choices[0].message.content)
+    except Exception:
+        print("⚠️ GPT JSON parse failed.")
+        return {}
