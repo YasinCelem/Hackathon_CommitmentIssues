@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Commitment Issues{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-person-plus display-1 text-primary"></i>
+                        <h2 class="mt-3 mb-1">Create Account</h2>
+                        <p class="text-muted">Sign up to get started</p>
+                    </div>
+
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                    {% endif %}
+                    {% if success %}
+                    <div class="alert alert-success" role="alert">{{ success }}</div>
+                    {% endif %}
+                    <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+                    <div id="success-message" class="alert alert-success d-none" role="alert"></div>
+
+                    <form id="register-form" method="POST" action="{{ url_for('frontend.register') }}">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Register</button>
+                    </form>
+
+                    <div class="text-center">
+                        <p class="mb-0">Already have an account? <a href="{{ url_for('frontend.login') }}">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.getElementById('register-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const errorEl = document.getElementById('error-message');
+    const successEl = document.getElementById('success-message');
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    
+    errorEl.classList.add('d-none');
+    successEl.classList.add('d-none');
+    
+    if (password !== confirmPassword) {
+        errorEl.textContent = 'Passwords do not match!';
+        errorEl.classList.remove('d-none');
+        return;
+    }
+    
+    const formData = new FormData(this);
+    
+    try {
+        const response = await fetch('{{ url_for("frontend.api_register") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: formData.get('username'),
+                email: formData.get('email'),
+                password: formData.get('password')
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            successEl.textContent = 'Registration successful! Redirecting to login...';
+            successEl.classList.remove('d-none');
+            setTimeout(() => {
+                window.location.href = '{{ url_for("frontend.login") }}';
+            }, 1500);
+        } else {
+            errorEl.textContent = data.error || 'Registration failed. Please try again.';
+            errorEl.classList.remove('d-none');
+        }
+    } catch (error) {
+        errorEl.textContent = 'An error occurred. Please try again.';
+        errorEl.classList.remove('d-none');
+        console.error('Registration error:', error);
+    }
+});
+</script>
+{% endblock %}
+

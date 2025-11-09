@@ -1,0 +1,102 @@
+{
+    "visits": [
+        {
+            "endpoint": "frontend.assistant_chat",
+            "title": "Chat",
+            "icon": "robot",
+            "count": 1,
+            "last_visited": "2025-11-08T16:52:04.338728"
+        },
+        {
+            "endpoint": "frontend.bank_connections",
+            "title": "Bank Connections",
+            "icon": "cash-coin",
+            "count": 1,
+            "last_visited": "2025-11-08T16:52:10.986328"
+        },
+        {
+            "endpoint": "frontend.assistant_recommendations",
+            "title": "Recommendations",
+            "icon": "robot",
+            "count": 1,
+            "last_visited": "2025-11-08T16:53:19.544689"
+        },
+        {
+            "endpoint": "frontend.contracts_drafts",
+            "title": "Drafts",
+            "icon": "file-earmark-text",
+            "count": 1,
+            "last_visited": "2025-11-08T16:53:24.556422"
+        },
+        {
+            "endpoint": "frontend.settings",
+            "title": "Settings",
+            "icon": "gear",
+            "count": 2,
+            "last_visited": "2025-11-08T19:24:19.355057"
+        },
+        {
+            "endpoint": "frontend.contracts",
+            "title": "Contracts",
+            "icon": "file-earmark-text",
+            "count": 19,
+            "last_visited": "2025-11-09T08:56:09.946588"
+        },
+        {
+            "endpoint": "frontend.contracts_negotiations",
+            "title": "Negotiations",
+            "icon": "file-earmark-text",
+            "count": 1,
+            "last_visited": "2025-11-08T22:47:36.435302"
+        },
+        {
+            "endpoint": "frontend.assistant",
+            "title": "Assistant",
+            "icon": "robot",
+            "count": 1,
+            "last_visited": "2025-11-08T22:57:02.052784"
+        },
+        {
+            "endpoint": "frontend.documents_recent",
+            "title": "Recent",
+            "icon": "folder2",
+            "count": 8,
+            "last_visited": "2025-11-09T06:02:15.797700"
+        },
+        {
+            "endpoint": "frontend.taxes",
+            "title": "Taxes",
+            "icon": "receipt",
+            "count": 59,
+            "last_visited": "2025-11-09T07:51:39.935885"
+        },
+        {
+            "endpoint": "frontend.vat_oss",
+            "title": "VAT OSS (One-Stop Shop)",
+            "icon": "receipt",
+            "count": 1,
+            "last_visited": "2025-11-09T00:26:40.442384"
+        },
+        {
+            "endpoint": "frontend.kvk",
+            "title": "KvK",
+            "icon": "building",
+            "count": 5,
+            "last_visited": "2025-11-09T06:39:02.368973"
+        },
+        {
+            "endpoint": "frontend.documents",
+            "title": "Documents",
+            "icon": "folder2",
+            "count": 2,
+            "last_visited": "2025-11-09T06:39:32.493324"
+        },
+        {
+            "endpoint": "frontend.finances",
+            "title": "Finances",
+            "icon": "cash-coin",
+            "count": 5,
+            "last_visited": "2025-11-09T06:39:23.407887"
+        }
+    ]
+}

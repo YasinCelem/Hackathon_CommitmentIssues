@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Commitment Issues{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Welcome</h1>
+        <p class="lead text-muted">Manage your commitments with ease</p>
+    </div>
+
+    <div class="row g-4 mb-5">
+        {% for action in frequent %}
+        <div class="col-md-4">
+            <a href="{{ url_for(action.endpoint) }}" class="text-decoration-none">
+                <div class="card h-100 action-card">
+                    <div class="card-body text-center">
+                        <i class="bi bi-{{ action.icon }} display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">{{ action.title }}</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <h2 class="mb-4">Approvals Due</h2>
+            
+            <ul class="nav nav-tabs mb-3" id="approvalsTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="list-tab" data-bs-toggle="tab" data-bs-target="#list" type="button" role="tab" aria-controls="list" aria-selected="true">List</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar" type="button" role="tab" aria-controls="calendar" aria-selected="false">Calendar</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="approvalsTabsContent">
+                <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
+                    <div id="approvals-list" class="list-group">
+                        {% for approval in approvals %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">{{ approval.title }}</h6>
+                                <p class="mb-0 text-muted small">{{ approval.description }}</p>
+                                {% if approval.deadline_display %}
+                                <p class="mb-0 text-muted small"><i class="bi bi-calendar"></i> Deadline: {{ approval.deadline_display }}</p>
+                                {% elif approval.deadline_date %}
+                                <p class="mb-0 text-muted small"><i class="bi bi-calendar"></i> Deadline: {{ approval.deadline_date }}</p>
+                                {% endif %}
+                            </div>
+                            <div>
+                                {% if approval.doc_id %}
+                                <a href="{{ url_for('frontend.documents_recent') }}?doc_id={{ approval.doc_id }}" class="btn btn-sm btn-outline-primary me-2">Open</a>
+                                {% else %}
+                                <a href="{{ url_for('frontend.documents_recent') }}" class="btn btn-sm btn-outline-primary me-2">Open</a>
+                                {% endif %}
+                                <button class="btn btn-sm btn-success" onclick="markApprovalComplete('{{ approval.id }}')">OK</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% if not approvals %}
+                        <div class="list-group-item text-center text-muted">
+                            <p class="mb-0">No approvals due at this time.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0" id="calendar-month-year"></h5>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="previousMonth()">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="nextMonth()">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-primary ms-2" onclick="goToToday()">Today</button>
+                                </div>
+                            </div>
+                            <div id="calendar-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    let currentDate = new Date();
+    let deadlinesData = {{ all_calendar_deadlines | tojson }};
+    
+    function renderCalendar() {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                           'July', 'August', 'September', 'October', 'November', 'December'];
+        
+        document.getElementById('calendar-month-year').textContent = 
+            `${monthNames[month]} ${year}`;
+        
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startingDayOfWeek = firstDay.getDay();
+        
+        const calendarContainer = document.getElementById('calendar-container');
+        let html = '<table class="table table-bordered text-center">';
+        html += '<thead><tr>';
+        const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        dayNames.forEach(day => {
+            html += `<th class="bg-light">${day}</th>`;
+        });
+        html += '</tr></thead><tbody>';
+        
+        let date = 1;
+        for (let i = 0; i < 6; i++) {
+            html += '<tr>';
+            for (let j = 0; j < 7; j++) {
+                if (i === 0 && j < startingDayOfWeek) {
+                    html += '<td class="text-muted"></td>';
+                } else if (date > daysInMonth) {
+                    html += '<td class="text-muted"></td>';
+                } else {
+                    const currentDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+                    const dayDeadlines = getDeadlinesForDate(currentDateStr);
+                    
+                    let cellClass = '';
+                    let cellContent = `<div class="fw-bold">${date}</div>`;
+                    
+                    const isToday = new Date().toDateString() === new Date(year, month, date).toDateString();
+                    
+                    if (dayDeadlines.length > 0) {
+                        const hasCompleted = dayDeadlines.some(d => d.is_completed);
+                        const hasPending = dayDeadlines.some(d => !d.is_completed);
+                        
+                        if (hasCompleted && hasPending) {
+                            cellClass = 'bg-warning bg-opacity-50';
+                        } else if (hasCompleted) {
+                            cellClass = 'bg-success bg-opacity-50';
+                        } else {
+                            cellClass = 'bg-danger bg-opacity-50';
+                        }
+                        
+                        const deadlineTitles = dayDeadlines.map(d => d.title).join(', ');
+                        const deadlineDescriptions = dayDeadlines.map(d => d.description).join('; ');
+                        const dotColor = hasCompleted && !hasPending ? 'bg-success' : hasCompleted ? 'bg-warning' : 'bg-danger';
+                        cellContent = `<div class="fw-bold position-relative">${date}<span class="position-absolute top-0 start-100 translate-middle p-1 ${dotColor} border border-light rounded-circle" title="${deadlineTitles}: ${deadlineDescriptions}"></span></div>`;
+                    }
+                    
+                    if (isToday) {
+                        cellClass += ' border border-primary border-3';
+                    }
+                    
+                    html += `<td class="${cellClass}" style="min-height: 80px; vertical-align: top; padding: 8px;" title="${dayDeadlines.length > 0 ? dayDeadlines.map(d => d.title + ': ' + d.description).join('; ') : ''}">${cellContent}</td>`;
+                    date++;
+                }
+            }
+            html += '</tr>';
+            if (date > daysInMonth) break;
+        }
+        html += '</tbody></table>';
+        calendarContainer.innerHTML = html;
+    }
+    
+    function getDeadlinesForDate(dateStr) {
+        const deadlines = [];
+        deadlinesData.forEach(approval => {
+            if (approval.deadline_date && approval.deadline_date === dateStr) {
+                deadlines.push({
+                    title: approval.title,
+                    description: approval.description,
+                    is_completed: approval.is_completed || false
+                });
+            }
+        });
+        return deadlines;
+    }
+    
+    function previousMonth() {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+    }
+    
+    function nextMonth() {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+    }
+    
+    function goToToday() {
+        currentDate = new Date();
+        renderCalendar();
+    }
+    
+    function markApprovalComplete(approvalId) {
+        if (confirm('Mark this approval as complete?')) {
+            const approvalItem = event.target.closest('.list-group-item');
+            if (approvalItem) {
+                approvalItem.style.opacity = '0.5';
+                approvalItem.style.textDecoration = 'line-through';
+                setTimeout(() => {
+                    approvalItem.remove();
+                }, 500);
+            }
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const calendarTab = document.getElementById('calendar-tab');
+        calendarTab.addEventListener('shown.bs.tab', function() {
+            renderCalendar();
+        });
+    });
+</script>
+{% endblock %}
+

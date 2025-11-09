@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Commitment Issues{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-5 fw-bold">Settings</h1>
+            <p class="lead text-muted">Manage your account and preferences</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action active" data-bs-toggle="tab" href="#account" role="tab">Account Information</a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="tab" href="#privacy" role="tab">Privacy</a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="tab" href="#data" role="tab">Data</a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="tab" href="#notifications" role="tab">Notifications</a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="tab" href="#security" role="tab">Security</a>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="account" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Account Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" placeholder="Enter your full name">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" placeholder="Enter your email">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="Enter your phone number">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" class="form-control" placeholder="Enter company name">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Language</label>
+                                <select class="form-select">
+                                    <option selected>English</option>
+                                    <option>Dutch</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Timezone</label>
+                                <select class="form-select">
+                                    <option selected>Europe/Amsterdam (CET)</option>
+                                    <option>UTC</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="privacy" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Privacy Settings</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="profileVisibility" checked>
+                                    <label class="form-check-label" for="profileVisibility">Make profile visible to team members</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="dataSharing">
+                                    <label class="form-check-label" for="dataSharing">Allow data sharing for analytics</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="cookies" checked>
+                                    <label class="form-check-label" for="cookies">Accept cookies</label>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary">Save Privacy Settings</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="data" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Data Management</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Export Data</label>
+                                <p class="text-muted small">Download all your data in a portable format</p>
+                                <button type="button" class="btn btn-outline-primary">Export Data</button>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Delete Account</label>
+                                <p class="text-muted small">Permanently delete your account and all associated data</p>
+                                <button type="button" class="btn btn-outline-danger">Delete Account</button>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Data Backup</label>
+                                <p class="text-muted small">Last backup: Never</p>
+                                <button type="button" class="btn btn-outline-secondary">Create Backup</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="notifications" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Notification Preferences</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                    <label class="form-check-label" for="emailNotifications">Email notifications</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="smsNotifications">
+                                    <label class="form-check-label" for="smsNotifications">SMS notifications</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="pushNotifications" checked>
+                                    <label class="form-check-label" for="pushNotifications">Push notifications</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Notification Frequency</label>
+                                <select class="form-select">
+                                    <option selected>Real-time</option>
+                                    <option>Daily digest</option>
+                                    <option>Weekly summary</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-primary">Save Notification Settings</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="security" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Security Settings</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control" placeholder="Enter current password">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" placeholder="Enter new password">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" placeholder="Confirm new password">
+                            </div>
+                            <button type="button" class="btn btn-primary">Change Password</button>
+                            <hr>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="twoFactor" checked>
+                                    <label class="form-check-label" for="twoFactor">Enable two-factor authentication</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="sessionTimeout">
+                                    <label class="form-check-label" for="sessionTimeout">Auto-logout after inactivity</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

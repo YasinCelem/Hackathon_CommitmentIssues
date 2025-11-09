@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Repository - Contracts{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('frontend.contracts') }}">Contracts</a></li>
+                    <li class="breadcrumb-item active">Repository</li>
+                </ol>
+            </nav>
+            <h1 class="display-5 fw-bold">Repository</h1>
+            <p class="lead text-muted">View all contracts</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Repository</h5>
+                    <p class="card-text">This page will contain functionality for viewing all contracts.</p>
+                    <p class="text-muted">Content coming soon...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

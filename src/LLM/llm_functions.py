@@ -74,13 +74,14 @@ def document_analyzer(file_to_analyze):
     - date_received = the document's own issue/creation date, if clearly present. Otherwise null.
 
     DEADLINES
-    - Return a list of triples: [ "<YYYY-MM-DD>", "<what/why>", "<recurrence>" ].
-    - <YYYY-MM-DD>: an exact calendar date only (ISO format).
-    - <what/why>: brief description of the obligation (e.g., "Monthly rent due", "BTW payment due Q1 2026").
-    - <recurrence>: 
+    - Return a list of deadline objects with the following structure:
+    - Each deadline must have: "date", "description", and "recurrence" fields.
+    - "date": an exact calendar date in YYYY-MM-DD format (ISO format).
+    - "description": brief description of the obligation (e.g., "Monthly rent due", "BTW payment due Q1 2026").
+    - "recurrence": 
     - Use short text like "every month", "every 2 weeks", "every quarter", "every year" when the document clearly states a cadence.
     - Otherwise use null.
-    - If the document describes a recurring obligation, include the nearest explicit date for the first element and put the cadence in <recurrence>.
+    - If the document describes a recurring obligation, include the nearest explicit date for the first element and put the cadence in "recurrence".
     - Do not use RRULEs or relative expressions (no "REL:+14d", no "day 1 each month" in the date field).
     - If no explicit calendar dates exist, return [].
 
@@ -93,7 +94,11 @@ def document_analyzer(file_to_analyze):
         "name": "<YYYY-MM-DD - CategoryLeaf - IssuerOrParty - ShortTitle>",
         "date_received": "YYYY-MM-DD or null",
         "deadlines": [
-            ["<YYYY-MM-DD>", "<brief description>", "<recurrence or null>"]
+            {{
+                "date": "<YYYY-MM-DD>",
+                "description": "<brief description>",
+                "recurrence": "<recurrence or null>"
+            }}
         ]
     }}
 
@@ -112,6 +117,89 @@ def document_analyzer(file_to_analyze):
     )
 
     return response.choices[0].message.content
+
+
+def convert_llm_output_to_document_format(llm_output: str):
+    """
+    Convert LLM output to the new document structure format.
+    Handles both old format (list of arrays) and new format (list of objects).
+    Adds _state_id, pending, complete, overdue arrays, and timestamps.
+    """
+    import json
+    import re
+    import hashlib
+    from datetime import datetime
+    
+    # Extract JSON from LLM output (may be wrapped in markdown code blocks)
+    json_match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', llm_output, re.DOTALL)
+    if json_match:
+        json_str = json_match.group(1)
+    else:
+        # Try to find JSON object directly
+        json_match = re.search(r'\{.*\}', llm_output, re.DOTALL)
+        if json_match:
+            json_str = json_match.group(0)
+        else:
+            raise ValueError("Could not extract JSON from LLM output")
+    
+    # Parse JSON
+    doc = json.loads(json_str)
+    
+    # Convert deadlines to new format if needed
+    deadlines = doc.get("deadlines", [])
+    converted_deadlines = []
+    
+    for i, deadline in enumerate(deadlines):
+        if isinstance(deadline, list):
+            # Old format: [date, description, recurrence]
+            if len(deadline) >= 2:
+                deadline_obj = {
+                    "date": deadline[0],
+                    "description": deadline[1],
+                    "recurrence": deadline[2] if len(deadline) > 2 else None
+                }
+            else:
+                continue
+        elif isinstance(deadline, dict):
+            # New format: {date, description, recurrence}
+            deadline_obj = {
+                "date": deadline.get("date"),
+                "description": deadline.get("description"),
+                "recurrence": deadline.get("recurrence")
+            }
+        else:
+            continue
+        
+        # Generate _state_id
+        base_str = f"{doc.get('name', '')}_{i}_{deadline_obj.get('date', '')}"
+        state_id = hashlib.md5(base_str.encode()).hexdigest()[:24]
+        deadline_obj["_state_id"] = state_id
+        
+        converted_deadlines.append(deadline_obj)
+    
+    # Build final document structure
+    date_received = doc.get("date_received")
+    if date_received and date_received != "null":
+        try:
+            timestamp = datetime.strptime(date_received, "%Y-%m-%d").isoformat()
+        except:
+            timestamp = datetime.now().isoformat()
+    else:
+        timestamp = datetime.now().isoformat()
+    
+    final_doc = {
+        "category": doc.get("category"),
+        "name": doc.get("name"),
+        "date_received": date_received if date_received and date_received != "null" else None,
+        "deadlines": converted_deadlines,
+        "pending": [],
+        "complete": [],
+        "overdue": [],
+        "created_at": timestamp,
+        "updated_at": timestamp
+    }
+    
+    return final_doc
 
 
 def read_text(path: str):
