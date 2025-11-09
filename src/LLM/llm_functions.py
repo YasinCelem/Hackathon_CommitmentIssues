@@ -1,4 +1,3 @@
-#imports
 import PyPDF2
 import openai
 import os
@@ -6,8 +5,10 @@ import re
 import unicodedata
 from dotenv import load_dotenv
 from textwrap import dedent
-_ = load_dotenv()
+import fitz
+import json
 
+_ = load_dotenv()
 
 client = openai.OpenAI(
     api_key=os.getenv("OPENAI_API_KEY"),
@@ -15,7 +16,7 @@ client = openai.OpenAI(
 )
 
 
-#functions
+# functions
 def clean_text(text: str) -> str:
     """Remove control characters and normalize spacing so the gateway doesn't error."""
     text = unicodedata.normalize("NFKC", text)
@@ -25,13 +26,14 @@ def clean_text(text: str) -> str:
     text = text.encode("utf-8", "ignore").decode("utf-8", "ignore")
     return text.strip()
 
-#takes as input a file (either pdf or text file?)
-#returns (text)
+
+# takes as input a file (either pdf or text file?)
+# returns (text)
 # * key fields
 # * deadlines & obligations
 # * EFFECT: save key fields and deadlines & obligations to the database
 def document_analyzer(file_to_analyze):
-    text = read_text(file_to_analyze)   # ← this converts the PDF to UTF-8 text
+    text = read_text(file_to_analyze)  # ← this converts the PDF to UTF-8 text
 
     prompt = prompt = f"""\
     You are a disciplined back-office assistant. Follow the output format EXACTLY. Be literal; do not guess. If a value is missing in the document, return null. Dates must be YYYY-MM-DD (assume Europe/Amsterdam naming if month names appear).
@@ -102,7 +104,8 @@ def document_analyzer(file_to_analyze):
     response = client.chat.completions.create(
         model="gpt-5-nano",
         messages=[
-            {"role": "system", "content": "You are a disciplined back-office assistant. Follow the output format EXACTLY. Be literal; do not guess. If a value is missing in the document, return null. Dates must be YYYY-MM-DD (assume Europe/Amsterdam naming if month names appear)."},
+            {"role": "system",
+             "content": "You are a disciplined back-office assistant. Follow the output format EXACTLY. Be literal; do not guess. If a value is missing in the document, return null. Dates must be YYYY-MM-DD (assume Europe/Amsterdam naming if month names appear)."},
             {"role": "user", "content": prompt}
         ],
         temperature=1
@@ -119,7 +122,7 @@ def read_text(path: str):
                 r = PyPDF2.PdfReader(f)
                 for p in r.pages:
                     pages.append(p.extract_text() or "")
-            return clean_text("\n".join(pages)) # i need this to be utf-8
+            return clean_text("\n".join(pages))  # i need this to be utf-8
         except Exception:
             raise RuntimeError("PDF read failed. ")
     else:
@@ -127,19 +130,14 @@ def read_text(path: str):
             return f.read()
 
 
-#form filler
-# returns a filled in form
-# also returns some text explanation (what exactly was filled,
-#   what we are unsure about,
-#   what we need more data on)
+# form filler (existing)
 def fill_in_form(file_to_fill_in):
     text = read_text(file_to_fill_in)
-    
-    #we first use the LLM + the list of fields we have in the database to identify the fields that are missing.
+
     fields_in_the_database = getFieldsFromTheDatabase()
     prompt_to_identify_missing = f'''You are given a document. In this document, some spots are not filled, for example it might have something like: Name: .... or Name: and then nothing. You should identify these, and output a list of them. The answer should be in this format: [field1, field2, field3, ...].
     I am also providing a list of suggested fields: {fields_in_the_database}. If there is a similar thing, you should instead output a suggested field: for example, instead of asking for a "Full Name" ask for "name" if that is a suggested field.
-    The document is: {text}'''    
+    The document is: {text}'''
     response_fields_to_fill = client.chat.completions.create(
         model="gpt-5-nano",
         messages=[
@@ -150,12 +148,10 @@ def fill_in_form(file_to_fill_in):
     )
     fields_to_fill = response_fields_to_fill.choices[0].message.content
     print("LLM1 output: ", fields_to_fill)
-    
-    #helper part, text processing
+
     s = fields_to_fill.strip()
     if s.startswith("[") and s.endswith("]"):
         s = s[1:-1]
-    # split on commas, trim whitespace & optional quotes
     fields_textprocessed = [
         f.strip().strip('"').strip("'")
         for f in s.split(",")
@@ -165,12 +161,11 @@ def fill_in_form(file_to_fill_in):
     for field in fields_textprocessed:
         with_database_results[field] = getFromDatabase(field)
     print("after we get the values from database: ", with_database_results)
-    
-    #we then use the retrieved data from the database + the original file + the LLM to fill it back in. 
+
     prompt_to_impute = f'''You are given a document, and a small database (as a json). In this document, some spots are not filled, for example it might have something like: Name: .... or Name: and then nothing. You should identify these, and impute the relevant field from the database.
     I want you to be understanding: if there is a similar thing in the database you should use that. For example if name: xyz is missing in the database, and the document has Full Name: ...., you should still fill in Full Name: xyz.
     However, if any fields have not even a similar field in the database, you should add that in the end, with "FURTHER INFO NEEDED: field1". If there is no such field, just say null.
-    The database is {with_database_results}. The document is: {text}.'''    
+    The database is {with_database_results}. The document is: {text}.'''
     response_fields_to_fill = client.chat.completions.create(
         model="gpt-5-nano",
         messages=[
@@ -181,70 +176,61 @@ def fill_in_form(file_to_fill_in):
     )
     imputed_form = response_fields_to_fill.choices[0].message.content
     print("imputed form: ", imputed_form)
-    
-    #maybe convert this into a PDF file? idk
-    #TODO
 
-def getFromDatabase(field: str): #this is just a mockup! add database integration later
-    """User-provided function. Example stub."""
+
+def getFromDatabase(field: str):
     fake_db = {
-        "name": "Avery Doe",
-        "email": "avery@example.com",
-        "address": "123 Maple Street, Utrecht",
+        "student-number": "1234456",
+        "status": "unmarried",
+        "firstname": "Avery",
+        "lastname": "Doe",
+        "name_of_account_holder": "Avery Doe",
+        "IBAN": "NL1234456787",
+        "BIC": "1234AB",
         "date_of_birth": "1990-03-14",
-        "phone": "+31 6 1234 5678",
+        "address": "123 Maple Street, Utrecht",
+        "city_bank": "Utrecht",
+        "country_bank": "Netherlands",
+        "name_bank": "Revolut",
     }
     return fake_db.get(field)
 
-def getFieldsFromTheDatabase(): #very much just a mockup...
-    """User-provided function. Example stub."""
+
+def getFieldsFromTheDatabase():
     fake_db = {
-        "name": "Avery Doe",
-        "email": "avery@example.com",
-        "address": "123 Maple Street, Utrecht",
+        "student-number": "1234456",
+        "status": "unmarried",
+        "firstname": "Avery",
+        "lastname": "Doe",
+        "name_of_account_holder": "Avery Doe",
+        "IBAN": "NL1234456787",
+        "BIC": "1234AB",
         "date_of_birth": "1990-03-14",
-        "phone": "+31 6 1234 5678",
+        "address": "123 Maple Street, Utrecht",
+        "city_bank": "Utrecht",
+        "country_bank": "Netherlands",
+        "name_bank": "Revolut",
     }
-    return fake_db.keys()
+    return fake_db
 
-#checks the difference betweeen the files
-#returns 
+
 def find_difference(file1, file2):
-
     text1 = read_text(file1)
     text2 = read_text(file2)
 
-    prompt = prompt = f"""\
+    prompt = f"""\
     You are a contract comparer. Compare FILE_OLD (previous year) vs FILE_NEW (this year).
     Return a SHORT, human-friendly overview of the most important differences.
-
-    RULES
-    - Be precise and neutral. No legal advice.
-    - Show only material differences (money, dates, notice/penalties, deposits, insurance, pets, maintenance thresholds, access/entry, utilities, subletting, clauses added/removed).
-    - Max 12 bullets. Each bullet ≤ 110 characters.
-    - Use tags [HIGH], [MED], [LOW] for likely impact on the tenant.
-    - Format as Markdown; no preface, no conclusions, no extra text.
-    - Prefer “Old → New” style for clarity.
-    - If no differences, output: "_No material differences found._"
-
-    OUTPUT FORMAT (Markdown only)
-    - A heading: "### Differences"
-    - Then up to 12 bullets, each one line:
-    - "<tag> Section/Field: Old → New"
-    - Example: "[HIGH] Rent: €1,650 → €1,725"
-    - Optionally (only if present), a compact "Added/Removed Clauses" section with up to 3 bullets each.
-
-    This is the initial document:
     {text1}
 
-    and this is the new document:
+    NEW:
     {text2}
     """
 
     response = client.chat.completions.create(
         model="gpt-5-nano",
         messages=[
-            {"role": "system", "content": "You are a contract comparer. Compare FILE_OLD (previous year) vs FILE_NEW (this year). Return a SHORT, human-friendly overview of the most important differences."},
+            {"role": "system", "content": "You are a contract comparer."},
             {"role": "user", "content": prompt}
         ],
         temperature=1
@@ -253,12 +239,241 @@ def find_difference(file1, file2):
     return response.choices[0].message.content
 
 
-# create a reminder depending on the kind of file edited
 def create_reminder():
     pass
 
-# send reminder
+
 def send_reminder():
     pass
 
+def get_fields_to_fill_pdf(text, db):
+    """Use GPT-5 to detect blanks and map them to database fields."""
+    prompt = f"""
+    You are a smart PDF form filler assistant.
+    The document text includes blanks such as 'Name: ____' or 'Email: ____'.
+    Detect those blanks and match them with the most relevant database fields.
 
+    Return valid JSON ONLY with key–value pairs for filling.
+    Example:
+    {{"name": "Avery Doe", "address": "123 Maple Street"}}
+
+    Document text:
+    {text}
+
+    Database fields:
+    {json.dumps(db, ensure_ascii=False, indent=2)}
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-5",
+        messages=[
+            {"role": "system", "content": "Output only valid JSON."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=1
+    )
+
+    try:
+        return json.loads(response.choices[0].message.content)
+    except Exception:
+        print("⚠️ GPT JSON parse failed.")
+        return {}
+
+
+def get_pdf_form_fields(pdf_path):
+    """Return AcroForm fields if present using PyMuPDF with enhanced detection."""
+    try:
+        doc = fitz.open(pdf_path)
+        fields = {}
+
+        for page_num in range(len(doc)):
+            page = doc[page_num]
+            widgets = page.widgets()
+
+            if widgets:
+                for widget in widgets:
+                    # Try multiple ways to get the field name
+                    field_name = widget.field_name
+
+                    # Fallback: use field_label if field_name is empty
+                    if not field_name:
+                        field_name = widget.field_label
+
+                    # Fallback: generate name from position
+                    if not field_name:
+                        field_name = f"field_{page_num}_{widget.rect.x0}_{widget.rect.y0}"
+
+                    if field_name:
+                        fields[field_name] = {
+                            'type': widget.field_type,
+                            'rect': widget.rect,
+                            'page': page_num,
+                            'value': widget.field_value
+                        }
+                        print(f"✅ Found field: {field_name} (type: {widget.field_type})")
+
+        doc.close()
+
+        if not fields:
+            print("⚠️ No form fields detected. This may be a static PDF or use a different form technology.")
+        else:
+            print(f"📋 Total fields found: {len(fields)}")
+
+        return fields
+    except Exception as e:
+        print(f"⚠️ Field detection error: {e}")
+        return {}
+
+
+def diagnose_pdf_structure(pdf_path):
+    """Debug function to inspect PDF structure with enhanced detection."""
+    try:
+        doc = fitz.open(pdf_path)
+        print(f"📄 PDF Pages: {len(doc)}")
+        print(f"📄 PDF Metadata: {doc.metadata}")
+
+        for page_num in range(len(doc)):
+            page = doc[page_num]
+            print(f"\n--- Page {page_num + 1} ---")
+
+            # Fix: convert generator to list
+            widgets = list(page.widgets())
+            annots = list(page.annots()) if page.annots() else []
+
+            print(f"Widgets: {len(widgets)}")
+            print(f"Annotations: {len(annots)}")
+
+            for widget in widgets:
+                print(f"  Widget: name='{widget.field_name}', label='{widget.field_label}', type={widget.field_type}")
+
+        doc.close()
+    except Exception as e:
+        print(f"❌ Diagnosis failed: {e}")
+        import traceback
+        traceback.print_exc()
+
+
+def fill_pdf_form(input_pdf, output_pdf, data):
+    """Fill a fillable (AcroForm) PDF using PyMuPDF with intelligent field mapping."""
+    try:
+        doc = fitz.open(input_pdf)
+
+        # First pass: collect field info for GPT mapping
+        field_info = {}
+        for page_num in range(len(doc)):
+            page = doc[page_num]
+
+            for widget in page.widgets():
+                field_name = widget.field_name or widget.field_label
+                if field_name:
+                    rect = widget.rect
+                    nearby_text = page.get_text("text", clip=fitz.Rect(
+                        rect.x0 - 100, rect.y0 - 20,
+                        rect.x0, rect.y1 + 20
+                    ))
+                    field_info[field_name] = {
+                        'context': nearby_text.strip(),
+                        'page': page_num  # Store only page number, not widget
+                    }
+
+        if not field_info:
+            print("⚠️ No fillable fields found")
+            doc.close()
+            return
+
+        # Use GPT to map fields
+        print("🤖 Mapping database fields to PDF form fields...")
+        mapping_prompt = f"""
+You have a PDF with form fields that have technical IDs, and a database with human-readable field names.
+Map each PDF field ID to the most appropriate database field by analyzing the context text near each field.
+
+PDF Fields with context:
+{json.dumps({k: v['context'] for k, v in field_info.items()}, indent=2)}
+
+Database fields:
+{json.dumps(data, indent=2)}
+
+Return ONLY valid JSON mapping PDF field IDs to database keys:
+{{"dhFormfield-XXX": "name", "dhFormfield-YYY": "email", ...}}
+
+If a PDF field has no good match, omit it from the mapping.
+"""
+
+        response = client.chat.completions.create(
+            model="gpt-5",
+            messages=[
+                {"role": "system", "content": "Output only valid JSON."},
+                {"role": "user", "content": mapping_prompt}
+            ],
+            temperature=1
+        )
+
+        try:
+            field_mapping = json.loads(response.choices[0].message.content)
+            print(f"📋 Field mapping: {field_mapping}")
+        except:
+            print("⚠️ Failed to parse field mapping")
+            doc.close()
+            return
+
+        # Second pass: fill fields using the mapping
+        filled_count = 0
+        for page_num in range(len(doc)):
+            page = doc[page_num]
+
+            for widget in page.widgets():
+                field_name = widget.field_name or widget.field_label
+
+                if field_name in field_mapping:
+                    db_field_key = field_mapping[field_name]
+                    if db_field_key in data:
+                        value = data[db_field_key]
+                        try:
+                            widget.field_value = str(value)
+                            widget.update()
+                            filled_count += 1
+                            print(f"✅ Filled '{field_name}' ({db_field_key}) = '{value}'")
+                        except Exception as e:
+                            print(f"⚠️ Failed to fill '{field_name}': {e}")
+
+        if filled_count == 0:
+            print("⚠️ No fields were filled!")
+        else:
+            print(f"✅ Successfully filled {filled_count} field(s)")
+
+        doc.save(output_pdf, garbage=4, deflate=True)
+        doc.close()
+        print(f"💾 PDF saved to {output_pdf}")
+
+    except Exception as e:
+        print(f"❌ Fill operation failed: {e}")
+        import traceback
+        traceback.print_exc()
+
+
+def fill_in_form_pdf(file_to_fill_in):
+    """
+    New function: fills an actual PDF (fillable or not)
+    using GPT-5 for reasoning + coordinate estimation.
+    """
+    db = getFieldsFromTheDatabase()
+    text = read_text(file_to_fill_in)
+
+    print("🤖 Using GPT-5 to detect and match fields...")
+    field_data = get_fields_to_fill_pdf(text, db)
+    if not field_data:
+        print("⚠️ No fillable fields detected.")
+        return None
+
+    output_pdf = "filled_output.pdf"
+    form_fields = get_pdf_form_fields(file_to_fill_in)
+
+    if form_fields:
+        print("📋 Fillable (AcroForm) PDF detected.")
+        fill_pdf_form(file_to_fill_in, output_pdf, field_data)
+    else:
+        print("⚠️ No fillable fields detected; static PDF filling not implemented yet.")
+        return None
+
+    print("✅ PDF form filling complete.")
+    return output_pdf
