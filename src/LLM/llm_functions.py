@@ -133,11 +133,11 @@ def read_text(path: str):
 # form filler (existing)
 def fill_in_form(file_to_fill_in):
     text = read_text(file_to_fill_in)
-    
+
     fields_in_the_database = getFieldsFromTheDatabase()
     prompt_to_identify_missing = f'''You are given a document. In this document, some spots are not filled, for example it might have something like: Name: .... or Name: and then nothing. You should identify these, and output a list of them. The answer should be in this format: [field1, field2, field3, ...].
     I am also providing a list of suggested fields: {fields_in_the_database}. If there is a similar thing, you should instead output a suggested field: for example, instead of asking for a "Full Name" ask for "name" if that is a suggested field.
-    The document is: {text}'''    
+    The document is: {text}'''
     response_fields_to_fill = client.chat.completions.create(
         model="gpt-5-nano",
         messages=[
@@ -148,7 +148,7 @@ def fill_in_form(file_to_fill_in):
     )
     fields_to_fill = response_fields_to_fill.choices[0].message.content
     print("LLM1 output: ", fields_to_fill)
-    
+
     s = fields_to_fill.strip()
     if s.startswith("[") and s.endswith("]"):
         s = s[1:-1]
@@ -161,11 +161,11 @@ def fill_in_form(file_to_fill_in):
     for field in fields_textprocessed:
         with_database_results[field] = getFromDatabase(field)
     print("after we get the values from database: ", with_database_results)
-    
+
     prompt_to_impute = f'''You are given a document, and a small database (as a json). In this document, some spots are not filled, for example it might have something like: Name: .... or Name: and then nothing. You should identify these, and impute the relevant field from the database.
     I want you to be understanding: if there is a similar thing in the database you should use that. For example if name: xyz is missing in the database, and the document has Full Name: ...., you should still fill in Full Name: xyz.
     However, if any fields have not even a similar field in the database, you should add that in the end, with "FURTHER INFO NEEDED: field1". If there is no such field, just say null.
-    The database is {with_database_results}. The document is: {text}.'''    
+    The database is {with_database_results}. The document is: {text}.'''
     response_fields_to_fill = client.chat.completions.create(
         model="gpt-5-nano",
         messages=[
@@ -176,9 +176,9 @@ def fill_in_form(file_to_fill_in):
     )
     imputed_form = response_fields_to_fill.choices[0].message.content
     print("imputed form: ", imputed_form)
-    
 
-def getFromDatabase(field: str):
+
+def getFromDatabase(field: str): ### ---------------- need to do
     fake_db = {
         "student-number": "1234456",
         "status": "unmarried",
@@ -196,7 +196,7 @@ def getFromDatabase(field: str):
     return fake_db.get(field)
 
 
-def getFieldsFromTheDatabase():
+def getFieldsFromTheDatabase(): ### ---------------- need to do
     fake_db = {
         "student-number": "1234456",
         "status": "unmarried",
@@ -477,3 +477,55 @@ def fill_in_form_pdf(file_to_fill_in):
 
     print("✅ PDF form filling complete.")
     return output_pdf
+
+
+def update_message():
+    pass
+
+def messaging(file):
+    memory = []
+    text = read_text(file)
+    prompt = ""
+    while ():
+    pass
+
+def messaging_closed():
+    pass
+
+def qa(text, user_prompt):
+    prompt = f"""
+    You are a smart PDF form filler assistant.
+    The document text includes blanks such as 'Name: ____' or 'Email: ____'.
+    Detect those blanks and match them with the most relevant database fields.
+
+    Return valid JSON ONLY with key-value pairs for filling.
+    Example:
+    {{"name": "Avery Doe", "address": "123 Maple Street"}}
+    
+    These were your previous instructions, now some information changed and the user is requetsing we change certain details in the text.
+    Keep in mind the user might ask a question about the file, in this case just answer normally and if its related to the data, ask if you should change it.
+
+    Here is the user prompt which might say that the user wants to change or edit the document file:
+    {user_prompt}
+
+    Edit this Document text if the user asked you to:
+    {text}
+
+    Database fields:
+    {json.dumps(db, ensure_ascii=False, indent=2)}
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-5",
+        messages=[
+            {"role": "system", "content": "Output only valid JSON."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=1
+    )
+
+    try:
+        return json.loads(response.choices[0].message.content)
+    except Exception:
+        print("⚠️ GPT JSON parse failed.")
+        return {}
