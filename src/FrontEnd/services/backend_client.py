@@ -42,13 +42,15 @@ class BackendClient:
         return result if result else []
     
     def create_document(self, data: Dict, db_name: Optional[str] = None) -> Optional[Dict]:
-        user_id = data.pop("user_id", None)
+        # Make a copy to avoid modifying the original dict
+        data_copy = data.copy()
+        user_id = data_copy.pop("user_id", None)
         params = {}
         if user_id:
             params["user_id"] = user_id
         if db_name:
             params["db_name"] = db_name
-        return self._request("POST", "/api/docs/", json=data, params=params if params else None)
+        return self._request("POST", "/api/docs/", json=data_copy, params=params if params else None)
     
     def update_document(self, doc_id: str, data: Dict, db_name: Optional[str] = None) -> Optional[Dict]:
         params = {}
