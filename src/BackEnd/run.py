@@ -1,6 +1,11 @@
-# from app import create_app
+import sys
+from pathlib import Path
 
-# app = create_app()
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
 
-# if __name__ == "__main__":
-#     app.run(debug=True, host="0.0.0.0", port=5001)
+from src.BackEnd.app import create_app
+
+if __name__ == "__main__":
+    app = create_app()
+    app.run(debug=True, host="0.0.0.0", port=5001)

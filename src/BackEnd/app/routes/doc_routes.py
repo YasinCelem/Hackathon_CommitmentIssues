@@ -1,13 +1,20 @@
 from flask import Blueprint, jsonify, request
-from ..services import user_service
-from ..helpers import to_json
+from bson import ObjectId
+from datetime import datetime
+from src.DataStorage.services import (
+    list_documents,
+    find_document_by_id,
+    create_document,
+    update_document,
+    delete_document
+)
 
 docs_bp = Blueprint("docs", __name__, url_prefix="/api/docs")
 
 
 @docs_bp.get("/")
 def list_docs():
-    """List all documents (optionally filter by category)
+    """List all documents (optionally filter by category and user_id)
     ---
     tags: [Documents]
     parameters:
@@ -17,16 +24,21 @@ def list_docs():
         required: false
         schema:
           type: string
+      - name: user_id
+        in: query
+        description: Filter by user_id
+        required: false
+        schema:
+          type: string
     responses:
       200:
         description: Returns a list of documents
     """
     category = request.args.get("category")
-    query = {"category": category} if category else {}
-
-    docs = list(mongo.db["documents"].find(query))
-    for doc in docs:
-        doc["_id"] = str(doc["_id"])
+    user_id = request.args.get("user_id")
+    db_name = request.args.get("db_name")
+    
+    docs = list_documents(category=category, user_id=user_id, db_name=db_name)
     return jsonify(docs), 200
 
 @docs_bp.post("/")
@@ -81,9 +93,11 @@ def add_doc():
         if not isinstance(deadline, list) or len(deadline) != 3:
             return jsonify(success=False, message="Each deadline must be [date, description, recurrence/null]"), 400
     data["created_at"] = datetime.utcnow().isoformat()
+    
+    db_name = request.args.get("db_name") or (request.get_json(silent=True) or {}).get("db_name")
 
-    mongo.db["documents"].insert_one(data)
-    return jsonify(success=True, message="Document added successfully"), 201
+    doc_id = create_document(data, db_name=db_name)
+    return jsonify(success=True, message="Document added successfully", id=doc_id), 201
 
 
 @docs_bp.put("/<doc_id>")
@@ -123,12 +137,11 @@ def update_doc(doc_id):
     if not data:
         return jsonify(success=False, message="Missing update data"), 400
 
-    result = mongo.db["documents"].update_one(
-        {"_id": ObjectId(doc_id)},
-        {"$set": data}
-    )
+    db_name = request.args.get("db_name") or (data.get("db_name") if data else None)
+    update_data = {k: v for k, v in data.items() if k != "db_name"}
 
-    if result.matched_count == 0:
+    updated = update_document(doc_id, update_data, db_name=db_name)
+    if not updated:
         return jsonify(success=False, message="Document not found"), 404
 
     return jsonify(success=True, message="Document updated successfully"), 200
@@ -148,9 +161,10 @@ def delete_doc(doc_id):
       200:
         description: Document deleted successfully
     """
-    result = mongo.db["documents"].delete_one({"_id": ObjectId(doc_id)})
-
-    if result.deleted_count == 0:
+    db_name = request.args.get("db_name")
+    
+    deleted = delete_document(doc_id, db_name=db_name)
+    if not deleted:
         return jsonify(success=False, message="Document not found"), 404
 
     return jsonify(success=True, message="Document deleted successfully"), 200

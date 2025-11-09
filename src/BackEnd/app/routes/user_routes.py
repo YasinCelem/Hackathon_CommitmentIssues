@@ -1,6 +1,12 @@
 # src/BackEnd/app/routes/user_routes.py
 from flask import Blueprint, request, jsonify
-from ..services import user_service
+from src.DataStorage.services import (
+    find_user_by_id,
+    find_user_by_username,
+    register_user,
+    login_user,
+    delete_user
+)
 
 user_bp = Blueprint("user", __name__, url_prefix="/users")
 
@@ -47,7 +53,7 @@ def register():
     """
     data = request.get_json() or {}
     try:
-        user_id = user_service.register(data)
+        user_id = register_user(data)
         return jsonify({"message": "User registered successfully", "id": user_id}), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
@@ -96,11 +102,18 @@ def login():
                 error: { type: string, example: "Invalid username or password" }
     """
     data = request.get_json() or {}
-    user = user_service.login(data.get("username_or_email"), data.get("password"))
+    user = login_user(data.get("username_or_email"), data.get("password"))
     if user:
+        user_id = str(user["_id"])
+        username = user.get("username") or user.get("Username")
+        db_name = user.get("database_name")
         return jsonify({
             "message": "Login successful",
-            "user": {"id": str(user["_id"]), "username": user["username"]}
+            "user": {
+                "id": user_id,
+                "username": username,
+                "database_name": db_name
+            }
         }), 200
     return jsonify({"error": "Invalid username or password"}), 401
 
@@ -138,7 +151,7 @@ def get_user(user_id: str):
               properties:
                 error: { type: string, example: "User not found" }
     """
-    user = user_service.find_by_id(user_id)
+    user = find_user_by_id(user_id)
     if not user:
         return jsonify({"error": "User not found"}), 404
     user["_id"] = str(user["_id"])
@@ -178,7 +191,7 @@ def get_user_profile(username: str):
               properties:
                 error: { type: string, example: "User not found" }
     """
-    user = user_service.find_by_username(username)
+    user = find_user_by_username(username)
     if not user:
         return jsonify({"error": "User not found"}), 404
     user["_id"] = str(user["_id"])
@@ -232,7 +245,7 @@ def delete_user(user_id: str):
                   example: "Invalid user_id format"
     """
     try:
-        deleted = user_service.delete(user_id)
+        deleted = delete_user(user_id)
     except Exception:
         return jsonify({"error": "Invalid user_id format"}), 400
 

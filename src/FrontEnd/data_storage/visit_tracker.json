@@ -34,6 +34,62 @@
             "icon": "gear",
             "count": 2,
             "last_visited": "2025-11-08T19:24:19.355057"
+        },
+        {
+            "endpoint": "frontend.contracts",
+            "title": "Contracts",
+            "icon": "file-earmark-text",
+            "count": 3,
+            "last_visited": "2025-11-08T22:47:45.731951"
+        },
+        {
+            "endpoint": "frontend.contracts_negotiations",
+            "title": "Negotiations",
+            "icon": "file-earmark-text",
+            "count": 1,
+            "last_visited": "2025-11-08T22:47:36.435302"
+        },
+        {
+            "endpoint": "frontend.assistant",
+            "title": "Assistant",
+            "icon": "robot",
+            "count": 1,
+            "last_visited": "2025-11-08T22:57:02.052784"
+        },
+        {
+            "endpoint": "frontend.documents_recent",
+            "title": "Recent",
+            "icon": "folder2",
+            "count": 6,
+            "last_visited": "2025-11-09T01:16:35.761043"
+        },
+        {
+            "endpoint": "frontend.taxes",
+            "title": "Taxes",
+            "icon": "receipt",
+            "count": 10,
+            "last_visited": "2025-11-09T01:16:27.301857"
+        },
+        {
+            "endpoint": "frontend.vat_oss",
+            "title": "VAT OSS (One-Stop Shop)",
+            "icon": "receipt",
+            "count": 1,
+            "last_visited": "2025-11-09T00:26:40.442384"
+        },
+        {
+            "endpoint": "frontend.kvk",
+            "title": "KvK",
+            "icon": "building",
+            "count": 2,
+            "last_visited": "2025-11-09T00:33:48.464671"
+        },
+        {
+            "endpoint": "frontend.documents",
+            "title": "Documents",
+            "icon": "folder2",
+            "count": 1,
+            "last_visited": "2025-11-09T01:16:00.711939"
         }
     ]
 }
